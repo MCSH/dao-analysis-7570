@@ -11,7 +11,7 @@ To do the analysis in MakerDAO, we have to have a good understanding of the Make
 A protocol is a set of standard rules that allow computers or devices to communicate regardless what operating systems or computers you are using. For example, you can send emails from an iPhone to Android device because they are using the same standard mail protocol.
 In MakerDao protocol, which are built on smart contracts based on the Ethereum blockchain. It is a decentralized financial system that supports Multi-Collateral DAI, which is a stablecoin that targets pegging on US dollar.
 
- ![MakerDAO!](/pics/Picture1.png "MakerDao Relationship")
+![MakerDAO!](pics/Picture1.png "MakerDao Relationship")
 
 
 MakerDAO system consists of several types of players, smart contracts, ERC-20 tokens. The types of players, maintainers, governors, and users, implement the security and advantages of the network, maintain the stability of DAI token, and facilitate and benefit from using the DAI token.
@@ -19,7 +19,7 @@ MakerDAO system consists of several types of players, smart contracts, ERC-20 to
 In this part of the article we focus on the users who are DAI holders and Vault owners.
 The first question is what is DAI, Where are they from?
 In short 1 DAI = 1 USD, and this is the mission that MakerDAO protocol is trying hard to maintain. DAI is a stablecoin cryptocurrency developed on Ethereum blockchain.
- ![MakerDAO!](/pics/Picture2.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture2.png "MakerDao Relationship")
 Users generate DAI by depositing collateral assets into Maker Vaults within the Maker Protocol.  For example, suppose you have $1000 worth ETH, then you are a Vault owner, you can access the Maker Vault to deposit your ETH to exchange DAI.
 Oasis.app is a platform to deposit your collateral and generate DAI.
 
@@ -28,16 +28,16 @@ So you don’t have to sell your asset but also liquidate it to serve any other 
 
 In this part of the article we focus on the types of players. The diagram above shows the Maker Protocol consists of three roles and the subset of individuals inside each title position. We will discuss them one by one first.
 
- ![MakerDAO!](/pics/Picture3.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture3.png "MakerDao Relationship")
 Developers are also part of the leaders or founders,and they also call them DAO teams. They are individuals and service providers, their mission is to provide development support while driving MakerDAO toward decentralization in a safe and secure way.
 
 We checked they have 55 members and 8 openings. 
 https://makerdao.com/en/careers/
 
- ![MakerDAO!](/pics/Picture4.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture4.png "MakerDao Relationship")
 In a simple way, oracles are information, a real-time dynamic information, such as the volatile price of ETH, the weather of now, or generate a random number for gambling. It’s like a third party API for data feed to update the information that smart contracts need.
  
- ![MakerDAO!](/pics/Picture5.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture5.png "MakerDao Relationship")
 Oracle has the responsibility to feed real world real time data to a smart contract. 
 
 In MakerDAO, there are two major types of Oracles: Price Oracles and Emergency Oracles. Inside each type, there are smaller components for different data feed, technical responsibility etc. We will talk about the technical details later.
@@ -59,7 +59,7 @@ Then we go deeper to those data feeds nodes, who or what are they?
 Data Feeds are bots that are run by individuals or organizations.
 https://blog.makerdao.com/introducing-oracles-v2-and-defi-feeds/
 
- ![MakerDAO!](/pics/Picture6.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture6.png "MakerDao Relationship")
 
 There are 14 feeds for the Oracle price used by Single-collateral DAI.
 
@@ -67,15 +67,15 @@ Then the next question is what is motivating the individual or organization node
  ![MakerDAO!](/pics/Picture7.png "MakerDao Relationship")
  
 
- ![MakerDAO!](/pics/Picture8.png "MakerDao Relationship")Keepers keep the DAI soft pegged on USD, the target is 1 DAI = 1 USD. They buy DAI when 1DAI < 1USD, they sell DAI when 1DAI > 1 USD.
+ ![MakerDAO!](pics/Picture8.png "MakerDao Relationship")Keepers keep the DAI soft pegged on USD, the target is 1 DAI = 1 USD. They buy DAI when 1DAI < 1USD, they sell DAI when 1DAI > 1 USD.
 
- ![MakerDAO!](/pics/Picture9.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture9.png "MakerDao Relationship")
 Next, we can talk about the other role player is Governors.
 Before we talk about who are or what the responsibilities of Governor, we have to introduce the ERC-token in MakerDao Protocol: MKR.
 
 Then first question is what is MKR, where are they come from. 
 To answer this question, MKR is created with the launching of MakerDao protocol, there are 1,000,000 tokens at its inception. When you are hold MKRs your are part of the governors, then you can vote on a number of different things. That also means you have the responsibility to take care of the stability of the DAI soft pegged on the USD dollar.
- ![MakerDAO!](/pics/Picture10.png "MakerDao Relationship")
+ ![MakerDAO!](pics/Picture10.png "MakerDao Relationship")
 https://etherscan.io/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2#balances
 
 Here is the top 15 MKR holders who are individuals, organizations or smart contracts.
@@ -101,5 +101,3 @@ In conclusion, MakerDAO is not as simple as Bitcoin. The inner relationships exi
 
 
 
-
-+
