@@ -7,6 +7,7 @@ Bitcoin was invented by Satoshi Nakomoto in late 2008, the purpose of the Bitcoi
 
 Double spending problem existed for a long time, computer scientists and engineers had thought conquering it for decades. (Bitcoin’s Academic Pedigree) Double spending problem is that the cash can be spent twice. In the physical world, a dollar bill can not to be spent twice, since you only have one copy paper for each bill. But in the virtual network, there are risk to spend a digital currency twice. Bitcoin cleverly solved the problem by using proof of work consensus. The algorithm is defended by using the computational power to store the  transactions onto a internet chain that any one can publicly check and see. The chain of transaction records can not be tampered without competing with the rest of the Bitcoin and changed without redoing the proof-of-work.(Bitcoin: A Peer-to-Peer Electronic Cash System).
 
+
 To do the analysis in MakerDAO, we have to have a good understanding of the MakerDao protocol.
 A protocol is a set of standard rules that allow computers or devices to communicate regardless what operating systems or computers you are using. For example, you can send emails from an iPhone to Android device because they are using the same standard mail protocol.
 In MakerDao protocol, which are built on smart contracts based on the Ethereum blockchain. It is a decentralized financial system that supports Multi-Collateral DAI, which is a stablecoin that targets pegging on US dollar.
@@ -91,7 +92,7 @@ Here is the top 15 MKR holders who are individuals, organizations or smart contr
 We also made the data gathering process to analyze the patterns of using MakerDao. We gathered data from Smart Contracts, Transaction Blocks, Running Contracts. There are Accounts: 146356, Actions: 918816, Ethereum Blocks: 316423.
 
 The first pattern we found is the network usesage over time.
- ![MakerDAO!](pics/Picture11.png "Network Usage over Time")
+ ![MakerDAO!](/res/time.png "Network Usage over Time")
 
 Those are the main functions called in the smartcontracts.
 
@@ -106,15 +107,17 @@ Those are the main functions called in the smartcontracts.
 
 Then we found the actions in graph.
 
-![MakerDAO!](pics/Picture15.png "actions")
-
+![MakerDAO!](/res/actions.png "actions")
 And actions over time pattern.
-![MakerDAO!](pics/Picture12.png "actions over Time")
+![MakerDAO!](/res/action_times.png "actions over Time")
 
 Then we found the patterns in debt collaterals.
 
-![MakerDAO!](pics/Picture13.png "debt collateral")
-![MakerDAO!](pics/Picture14.png "debt collateral2")
+![MakerDAO!](/res/debt.png "debt collateral")
+![MakerDAO!](/res/collateral.png "debt collateral2")
+
+And the ratio relationship.
+![MakerDAO!](/res/ratio.png "debt ratio")
 
 
 
