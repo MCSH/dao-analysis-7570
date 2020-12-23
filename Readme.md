@@ -27,4 +27,6 @@ This includes the data used in the processing algorithm.
 
 There might be manual interventions required on the data, since its been developed by multiple parties and partially processed data has been 
 
-**Due to size limitations imposed by Github, this folder has been removed from the repository, contact me if you need it**
+**Due to size limitations imposed by Github, this folder has been replaced with a sample data, contact me if you need the full data**
+
+the ByteCodeDecompiled are the byte codes of the smart contracts, the accounts are samples of what actions of an account look like and cdp is the account summary. Keep in mind that to keep things small we have shared only a sample of what this data looks like.
