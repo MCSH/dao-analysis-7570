@@ -9,6 +9,11 @@ pd.io.json._json.loads = lambda s, *a, **kw: json.loads(s)
 
 
 def concat_mkrs(cdp='cdp.json'):
+    '''
+    Flatten out the account information to form the csv file used in next steps
+    
+    Must be used after the acts.py script has finished its job
+    '''
     # Load the account ids
     df = pd.read_json(cdp)
 

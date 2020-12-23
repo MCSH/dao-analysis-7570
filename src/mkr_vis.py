@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt  # Used to plot
 
 
 def vis(df_file):
+    '''
+    Performs visualization of the data and numerical analysis used in the report.
+    
+    The input is the csv file produced in mkr_concat
+    '''
     df = pd.read_csv(df_file)
 
     # Cleanup column name and timestamps
