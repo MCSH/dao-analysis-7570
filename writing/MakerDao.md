@@ -1,11 +1,46 @@
 
-MakerDao has been become the third largest stable coin in the world.( https://coincodex.com/cryptocurrencies/sector/stablecoins/) Before we are diving into the concept of Dai of MakerDAO we have to talk about some financial concept and cryptocurrency such as Bitcoin and Ethereum, to let us have a better and easier understanding of the development and application of MakerDAO`s DAI. But we can summarize in one scentence that DAI of MakerDAO is the electronic US cash of the internet, since 1 DAI = 1 USD. MakerDAO is the protocol to ensure the security and privacy of the network. Then we are going to talk about the development of the ideas inspired MakerDAO protocol, they are Bitcoin and Ethereim. Finally we are going to talk about the MakerDAO.
+MakerDao has been become the third largest stable coin in the world[[1]](#1). Before we are diving into the concept of Dai of MakerDAO we have to talk about some financial concept and cryptocurrency such as Bitcoin and Ethereum, to let us have a better and easier understanding of the development and application of MakerDAO`s DAI. But we can summarize in one scentence that DAI of MakerDAO is the electronic US cash of the internet, since 1 DAI = 1 USD. MakerDAO is the protocol to ensure the security and privacy of the network. Then we are going to talk about the development of the ideas inspired MakerDAO protocol, they are Bitcoin and Ethereim. Finally we are going to talk about the MakerDAO.
 
 Bitcoin created the blue ocean peer-to-peer online payment without trusting the third party regulations, it is designed as the electronic cash of the internet, but you can’t have the cash with too much high volatility, for example, using one bitcoin you may buy a pizza today, however it is worth a house tomorrow. The internet needs a better and more stable currency, which is called Stablecoins. Stablecoins are designed to mediate the volatility of crypto assets by looking up to an anchor which is a non-volatility currency such as the US dollar. The volatility of Bitcoin made it more like an investment than cash, so the Maker protocol created Dai, which is a collateral based cryptocurrency pegged  to the US dollar, as the internet of cash. The collateral based stablecoins give freedom and trust to the cryptocurrency world.
 
-Bitcoin was invented by Satoshi Nakomoto in late 2008, the purpose of the Bitcoin is to create an electronic cash to allow end users or organizations to make trading directly without using or even trusting a third-party organization. (https://bitcoin.org/bitcoin.pdf) Or we can say that Bitcoin accomplished the concept of decentralization financial system that allow peer-to-peer value exchanges, when later Ethereum and MakerDAO are extending the decentralization concept to a better and broader development and application. Bitcoin successfully solved the double spending problem and built the decentralized trust across the internet.
+Bitcoin was invented by Satoshi Nakomoto in late 2008, the purpose of the Bitcoin is to create an electronic cash to allow end users or organizations to make trading directly without using or even trusting a third-party organization. [[2]](#2) Or we can say that Bitcoin accomplished the concept of decentralization financial system that allow peer-to-peer value exchanges, when later Ethereum and MakerDAO are extending the decentralization concept to a better and broader development and application. Bitcoin successfully solved the double spending problem and built the decentralized trust across the internet.
 
 Double spending problem existed for a long time, computer scientists and engineers had thought conquering it for decades. (Bitcoin’s Academic Pedigree) Double spending problem is that the cash can be spent twice. In the physical world, a dollar bill can not to be spent twice, since you only have one copy paper for each bill. But in the virtual network, there are risk to spend a digital currency twice. Bitcoin cleverly solved the problem by using proof of work consensus. The algorithm is defended by using the computational power to store the  transactions onto a internet chain that any one can publicly check and see. The chain of transaction records can not be tampered without competing with the rest of the Bitcoin and changed without redoing the proof-of-work.(Bitcoin: A Peer-to-Peer Electronic Cash System).
+
+Then Ethereum was created to develop a decentralized platform to support smart contracts, more complex applications, and decentralized autonomous organizations[[4]](#4).
+
+We can introduce Ethereum as such: Platform that uses Blockchain technology that allows users to create their own DAPPS. Applications can be deployed on Blockchain in the form of “Smart Contracts”.
+
+First is Smart contract.
+Smart Contract
+A piece of code that can be deployed and executed on Ethereum.
+“Smart” is somewhere misleading since it does not have any artificial intelligence.
+A contract can be executed by users after paying a certain amount of Gas Fee.
+
+For example: a Vending Machine
+![MakerDAO!](pics/Picture16.png "Vending Machine")
+A consumer pays some dollars	Gas-fee
+Press the item to be purchased call the function in code. Get the item in return leverage the service provided by the contract
+
+How is it useful? 
+A consumer pays some dollars	Gas-fee
+Press the item to be purchased call the function in code.
+Get the item in return leverage the service provided by the contract.
+
+The next topic we will shift to Oracles. What are Oracles?
+Oracle is an entity that connects blockchain with an off-chain data.
+When a user needs to validate a transaction, the data will be present in the blockchain itself.
+
+![MakerDAO!](pics/Picture17.png "EVM")
+
+Use Case: Application to Get price of Ether
+Step 1: User 1 calls the contract.
+Step 2: Contract calls an API to get Ether Price.
+Step 3: User gets x as a result.
+
+After 10s: User 2 has to validate the transaction.
+Step 1: User 2 calls the same API to get Ether price.
+Step 2: User 2 gets y as a result.
 
 
 To do the analysis in MakerDAO, we have to have a good understanding of the MakerDao protocol.
@@ -13,6 +48,8 @@ A protocol is a set of standard rules that allow computers or devices to communi
 In MakerDao protocol, which are built on smart contracts based on the Ethereum blockchain. It is a decentralized financial system that supports Multi-Collateral DAI, which is a stablecoin that targets pegging on US dollar.
 
 ![MakerDAO!](pics/Picture1.png "MakerDao Relationship")
+
+
 
 
 MakerDAO system consists of several types of players, smart contracts, ERC-20 tokens. The types of players, maintainers, governors, and users, implement the security and advantages of the network, maintain the stability of DAI token, and facilitate and benefit from using the DAI token.
@@ -62,8 +99,7 @@ This decentralized Oracle infrastructure is a mechanism that consists of a broad
 There is one main task is to ensure the collateral price is sufficient to back up the DAI generated. 
 
 Then we go deeper to those data feeds nodes, who or what are they?
-Data Feeds are bots that are run by individuals or organizations.
-https://blog.makerdao.com/introducing-oracles-v2-and-defi-feeds/
+Data Feeds are bots that are run by individuals or organizations[[3]](#3).
 
  ![MakerDAO!](pics/Picture6.png "MakerDao Relationship")
 
@@ -123,8 +159,20 @@ And the ratio relationship.
 
 In conclusion, MakerDAO is not as simple as Bitcoin. The inner relationships existing inside MakerDAO is much more complicated and complex. That's why MakerDAO is can be more updated and full functional in mutiple domains, such as borrowing and lending processes. MakerDAO also makes sure to keep DAI soft pegged on US dollar, in order to secure the assest value to investors and users. MakerDAO protocol is driving the decentralized financial system into a new era.
 
+## References
+<a id="1">[1]</a> 
+Coincodex, Web. 20 Dec 2020
+https://coincodex.com/cryptocurrencies/sector/stablecoins/
 
+<a id="2">[2]</a> 
+Nakamoto, Satoshi. N.p.. Web. 20 Dec 2020. https://bitcoin.org/bitcoin.pdf
 
+<a id="3">[3]</a> 
+MakerDAO, Web. 20 Dec 2020
+https://blog.makerdao.com/introducing-oracles-v2-and-defi-feeds/
+
+<a id="4">[4]</a> 
+Buterin, Vitalik. Web. 20 Dec 2020. < https://ethereum.org/en/whitepaper/>
 
 
 
