@@ -1,0 +1,843 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xbaa65281c2FA2baAcb2cb550BA051525A480D3F4
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  unknown4a847390Address is addr at storage 2
+  unknown5f35a49dAddress is addr at storage 3
+  unknownb94fdb8eAddress is addr at storage 4
+  unknown199bead4Address is addr at storage 5
+  unknown39ca1defAddress is addr at storage 6
+  unknown29ced7a0Address is addr at storage 7
+  unknown39c98420Address is addr at storage 8
+  unknown783e10fcAddress is addr at storage 9
+  unknown7c91e177Address is addr at storage 10
+  unknown92ed5460Address is addr at storage 11
+  unknowneae131a9Address is addr at storage 12
+  unknownef0add5bAddress is addr at storage 13
+  unknown64336cd0Address is addr at storage 14
+  unknownc8e334a9Address is addr at storage 15
+  unknown36569e77Address is addr at storage 16
+  stor16 is uint256 at storage 16
+  unknown84718d89Address is addr at storage 17
+  stor17 is uint256 at storage 17
+  stor18 is uint256 at storage 18
+  unknown626cb3c5Address is addr at storage 18
+  catAddress is addr at storage 19
+  stor19 is uint256 at storage 19
+  daiAddress is addr at storage 20
+  stor20 is uint256 at storage 20
+  stor21 is uint256 at storage 21
+  unknownc11645bcAddress is addr at storage 21
+  unknown0e01198bAddress is addr at storage 22
+  stor22 is uint256 at storage 22
+  unknownbbbb0d7bAddress is addr at storage 23
+  stor23 is uint256 at storage 23
+  unknown2e77468dAddress is addr at storage 24
+  stor24 is uint256 at storage 24
+  potAddress is addr at storage 25
+  stor25 is uint256 at storage 25
+  endAddress is addr at storage 26
+  stor26 is uint256 at storage 26
+  unknownaf41b248Address is addr at storage 27
+  stor27 is uint256 at storage 27
+  stor28 is uint256 at storage 28
+  pauseAddress is addr at storage 28
+  unknownd9638d36 is mapping of struct at storage 29
+  step is uint8 at storage 30
+
+def unknown0e01198b() payable: 
+  return addr(unknown0e01198bAddress)
+
+def unknown199bead4() payable: 
+  return unknown199bead4Address
+
+def unknown29ced7a0() payable: 
+  return unknown29ced7a0Address
+
+def unknown2e77468d() payable: 
+  return addr(unknown2e77468dAddress)
+
+def unknown36569e77() payable: 
+  return addr(unknown36569e77Address)
+
+def unknown39c98420() payable: 
+  return unknown39c98420Address
+
+def unknown39ca1def() payable: 
+  return unknown39ca1defAddress
+
+def unknown4a847390() payable: 
+  return unknown4a847390Address
+
+def pot() payable: 
+  return addr(potAddress)
+
+def unknown5f35a49d() payable: 
+  return unknown5f35a49dAddress
+
+def unknown626cb3c5() payable: 
+  return addr(unknown626cb3c5Address)
+
+def unknown64336cd0() payable: 
+  return unknown64336cd0Address
+
+def unknown783e10fc() payable: 
+  return unknown783e10fcAddress
+
+def unknown7c91e177() payable: 
+  return unknown7c91e177Address
+
+def pause() payable: 
+  return addr(pauseAddress)
+
+def unknown84718d89() payable: 
+  return addr(unknown84718d89Address)
+
+def owner() payable: 
+  return owner
+
+def unknown92ed5460() payable: 
+  return unknown92ed5460Address
+
+def unknownaf41b248() payable: 
+  return addr(unknownaf41b248Address)
+
+def unknownb94fdb8e() payable: 
+  return unknownb94fdb8eAddress
+
+def unknownbbbb0d7b() payable: 
+  return addr(unknownbbbb0d7bAddress)
+
+def authority() payable: 
+  return authorityAddress
+
+def unknownc11645bc() payable: 
+  return addr(unknownc11645bcAddress)
+
+def unknownc8e334a9() payable: 
+  return unknownc8e334a9Address
+
+def unknownd9638d36(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownd9638d36[_param1].field_0, unknownd9638d36[_param1].field_256
+
+def step() payable: 
+  return step
+
+def cat() payable: 
+  return addr(catAddress)
+
+def unknowneae131a9() payable: 
+  return unknowneae131a9Address
+
+def unknownef0add5b() payable: 
+  return unknownef0add5bAddress
+
+def end() payable: 
+  return addr(endAddress)
+
+def dai() payable: 
+  return addr(daiAddress)
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def setOwner(address _new) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def unknownb3731c78(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  require ext_code.size(unknownd9638d36[_param1].field_0)
+  call unknownd9638d36[_param1].field_0.deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown2800a568() payable: 
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if addr(unknown36569e77Address):
+      revert with 0, 'VAT already deployed'
+  require ext_code.size(unknown4a847390Address)
+  call unknown4a847390Address.0x4b66490d with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor16) = ext_call.return_data or Mask(96, 160, uint256(stor16))
+  require ext_code.size(unknown92ed5460Address)
+  call unknown92ed5460Address.0xffca333e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor24) = ext_call.return_data or Mask(96, 160, uint256(stor24))
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown64b07f21(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not addr(unknown36569e77Address):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknown39ca1defAddress)
+  call unknown39ca1defAddress.0xccceb2e6 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor20) = ext_call.return_data or Mask(96, 160, uint256(stor20))
+  require ext_code.size(unknown29ced7a0Address)
+  call unknown29ced7a0Address.0xac8f7a6b with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address), addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor21) = ext_call.return_data or Mask(96, 160, uint256(stor21))
+  require ext_code.size(addr(daiAddress))
+  call addr(daiAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknowndcc91c9b() payable: 
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not addr(unknown626cb3c5Address):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknown199bead4Address)
+  call unknown199bead4Address.0xf3de0c73 with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor19) = ext_call.return_data or Mask(96, 160, uint256(stor19))
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x766f770000000000000000000000000000000000000000000000000000000000, addr(unknown626cb3c5Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(catAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown626cb3c5Address))
+  call addr(unknown626cb3c5Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(catAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown80e7cd89() payable: 
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not addr(unknown36569e77Address):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknown5f35a49dAddress)
+  call unknown5f35a49dAddress.0x715609b2 with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor17) = ext_call.return_data or Mask(96, 160, uint256(stor17))
+  require ext_code.size(unknowneae131a9Address)
+  call unknowneae131a9Address.0x46c7dffc with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor25) = ext_call.return_data or Mask(96, 160, uint256(stor25))
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(unknown84718d89Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(potAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown70402bb9() payable: 
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(catAddress))
+  call addr(catAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown626cb3c5Address))
+  call addr(unknown626cb3c5Address).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown84718d89Address))
+  call addr(unknown84718d89Address).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(potAddress))
+  call addr(potAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(daiAddress))
+  call addr(daiAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown2e77468dAddress))
+  call addr(unknown2e77468dAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown0e01198bAddress))
+  call addr(unknown0e01198bAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknownbbbb0d7bAddress))
+  call addr(unknownbbbb0d7bAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).deny(address operator) with:
+       gas gas_remaining wei
+      args this.address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknowncc3f5ec1(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not _param1:
+      revert with 0, 'Missing GOV address'
+  if not addr(unknown84718d89Address):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknown39c98420Address)
+  call unknown39c98420Address.0xec5c21c2 with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor22) = ext_call.return_data or Mask(96, 160, uint256(stor22))
+  require ext_code.size(unknown783e10fcAddress)
+  call unknown783e10fcAddress.0xdc1bf59c with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor23) = ext_call.return_data or Mask(96, 160, uint256(stor23))
+  require ext_code.size(unknownb94fdb8eAddress)
+  call unknownb94fdb8eAddress.0x8dfc3d3f with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address), addr(unknown0e01198bAddress), addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor18) = ext_call.return_data or Mask(96, 160, uint256(stor18))
+  require ext_code.size(addr(unknown84718d89Address))
+  call addr(unknown84718d89Address).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x766f770000000000000000000000000000000000000000000000000000000000, addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(potAddress))
+  call addr(potAddress).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x766f770000000000000000000000000000000000000000000000000000000000, addr(unknown626cb3c5Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown0e01198bAddress))
+  call addr(unknown0e01198bAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(unknown626cb3c5Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknownbbbb0d7bAddress))
+  call addr(unknownbbbb0d7bAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(unknown626cb3c5Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown7d3fdfa1(uint256 _param1, addr _param2, addr _param3) payable: 
+  require calldata.size - 4 >= 96
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not _param1:
+      revert with 0, 'Missing ilk name'
+  if not _param2:
+      revert with 0, 'Missing join address'
+  if not _param3:
+      revert with 0, 'Missing pip address'
+  if not addr(pauseAddress):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknown7c91e177Address)
+  call unknown7c91e177Address.0xd711f46b with:
+       gas gas_remaining wei
+      args addr(unknown36569e77Address), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  unknownd9638d36[_param1].field_0 = addr(ext_call.return_data)
+  unknownd9638d36[_param1].field_256 = _param2
+  require ext_code.size(addr(unknown2e77468dAddress))
+  call addr(unknown2e77468dAddress).0xebecb39d with:
+       gas gas_remaining wei
+      args _param1, 0x7069700000000000000000000000000000000000000000000000000000000000, _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(catAddress))
+  call addr(catAddress).0xebecb39d with:
+       gas gas_remaining wei
+      args _param1, 0x666c697000000000000000000000000000000000000000000000000000000000, unknownd9638d36[_param1].field_0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x3b663195 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown84718d89Address))
+  call addr(unknown84718d89Address).0x3b663195 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknownd9638d36[_param1].field_0)
+  call unknownd9638d36[_param1].field_0.0x65fae35e with:
+       gas gas_remaining wei
+      args addr(catAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknownd9638d36[_param1].field_0)
+  call unknownd9638d36[_param1].field_0.0x65fae35e with:
+       gas gas_remaining wei
+      args addr(endAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(unknownd9638d36[_param1].field_0)
+  call unknownd9638d36[_param1].field_0.0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownb0a842a8(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 96
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not addr(catAddress):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknownef0add5bAddress)
+  call unknownef0add5bAddress.0x1e261699 with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor26) = ext_call.return_data or Mask(96, 160, uint256(stor26))
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x7661740000000000000000000000000000000000000000000000000000000000, addr(unknown36569e77Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x6361740000000000000000000000000000000000000000000000000000000000, addr(catAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x766f770000000000000000000000000000000000000000000000000000000000, addr(unknown626cb3c5Address)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x706f740000000000000000000000000000000000000000000000000000000000, addr(potAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).0xd4e8be83 with:
+       gas gas_remaining wei
+      args 0x73706f7400000000000000000000000000000000000000000000000000000000, addr(unknown2e77468dAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(endAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(catAddress))
+  call addr(catAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(endAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown626cb3c5Address))
+  call addr(unknown626cb3c5Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(endAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(potAddress))
+  call addr(potAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(endAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(unknown2e77468dAddress))
+  call addr(unknown2e77468dAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(endAddress)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknown64336cd0Address)
+  call unknown64336cd0Address.0x429baf68 with:
+       gas gas_remaining wei
+      args 0, 0, addr(endAddress), addr(_param1), _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor27) = ext_call.return_data or Mask(96, 160, uint256(stor27))
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownce96193b(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not addr(daiAddress):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  if not addr(endAddress):
+      revert with 0, 32, 21, 0xfe4d697373696e672070726576696f7573207374657000000000000000000000
+  require ext_code.size(unknownc8e334a9Address)
+  call unknownc8e334a9Address.0x4f2ff4a6 with:
+       gas gas_remaining wei
+      args _param1, 0, _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  uint256(stor28) = ext_call.return_data or Mask(96, 160, uint256(stor28))
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(unknown36569e77Address))
+  call addr(unknown36569e77Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(catAddress))
+  call addr(catAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(unknown626cb3c5Address))
+  call addr(unknown626cb3c5Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(unknown84718d89Address))
+  call addr(unknown84718d89Address).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(potAddress))
+  call addr(potAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(unknown2e77468dAddress))
+  call addr(unknown2e77468dAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(unknown0e01198bAddress))
+  call addr(unknown0e01198bAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(unknownbbbb0d7bAddress))
+  call addr(unknownbbbb0d7bAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(pauseAddress))
+  static call addr(pauseAddress).proxy() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(endAddress))
+  call addr(endAddress).0x65fae35e with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+

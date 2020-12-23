@@ -1,0 +1,556 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x794e6e91555438aFc3ccF1c5076A74F42133d08D
+# 
+#  Let's make the world open source 
+# 
+#
+#  I failed with these: 
+#  - sellAllAmount(address _pay_gem, uint256 _pay_amt, address _buy_gem, uint256 _min_fill_amount)
+#  - offer(uint256 _pay_amt, address _pay_gem, uint256 _buy_amt, address _buy_gem, uint256 _pos)
+#  - insert(uint256 _id, uint256 _pos)
+#  - cancel(uint256 _imageId)
+#  - take(bytes32 _id, uint128 _maxTakeAmount)
+#  - buyAllAmount(address _buy_gem, uint256 _buy_amt, address _pay_gem, uint256 _max_fill_amount)
+#  - kill(bytes32 _id)
+#  - buy(uint256 _x, uint256 _y)
+#  - offer(uint256 _pay_amt, address _pay_gem, uint256 _buy_amt, address _buy_gem, uint256 _pos, bool _rounding)
+#  All the rest is below.
+#
+
+const getTime = uint64(block.timestamp)
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  last_offer_id is uint256 at storage 2
+  offers is mapping of struct at storage 3
+  stor4 is uint256 at storage 4 offset 80
+  stor4 is uint8 at storage 4
+  stor4 is uint256 at storage 4 offset 88
+  close_time is uint64 at storage 4 offset 8
+  stopped is uint8 at storage 4 offset 72
+  buyEnabled is uint8 at storage 4 offset 80
+  matchingEnabled is uint8 at storage 4 offset 88
+  _rank is mapping of struct at storage 5
+  bestOffer is mapping of uint256 at storage 6
+  _span is mapping of uint256 at storage 7
+  minSell is mapping of uint256 at storage 8
+  _near is mapping of uint256 at storage 9
+  firstUnsortedOffer is uint256 at storage 10
+  unknown56ad8764 is uint256 at storage 11
+
+def matchingEnabled() payable: 
+  return bool(matchingEnabled)
+
+def getBestOffer(address _sell_gem, address _buy_gem) payable: 
+  require calldata.size - 4 >= 64
+  return bestOffer[addr(_sell_gem)][addr(_buy_gem)]
+
+def last_offer_id() payable: 
+  return last_offer_id
+
+def getOffer(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  return offers[_id].field_0, offers[_id].field_256, offers[_id].field_512, offers[_id].field_768
+
+def getMinSell(address _pay_gem) payable: 
+  require calldata.size - 4 >= 32
+  return minSell[addr(_pay_gem)]
+
+def unknown56ad8764() payable: 
+  return unknown56ad8764
+
+def getNextUnsortedOffer(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  return _near[_id]
+
+def close_time() payable: 
+  return close_time
+
+def _span(address _param1, address _param2) payable: 
+  require calldata.size - 4 >= 64
+  return _span[_param1][_param2]
+
+def _best(address _param1, address _param2) payable: 
+  require calldata.size - 4 >= 64
+  return bestOffer[_param1][_param2]
+
+def stopped() payable: 
+  return bool(stopped)
+
+def getOfferCount(address _sell_gem, address _buy_gem) payable: 
+  require calldata.size - 4 >= 64
+  return _span[addr(_sell_gem)][addr(_buy_gem)]
+
+def isActive(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  return bool(offers[_id].field_1184)
+
+def offers(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return offers[_param1].field_0, 
+         offers[_param1].field_256,
+         offers[_param1].field_512,
+         offers[_param1].field_768,
+         offers[_param1].field_1024,
+         offers[_param1].field_1024
+
+def getFirstUnsortedOffer() payable: 
+  return firstUnsortedOffer
+
+def owner() payable: 
+  return owner
+
+def getBetterOffer(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  return _rank[_id].field_0
+
+def _dust(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return minSell[_param1]
+
+def getWorseOffer(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  return _rank[_id].field_256
+
+def _near(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return _near[_param1]
+
+def authority() payable: 
+  return authorityAddress
+
+def _rank(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return _rank[_param1].field_0, _rank[_param1].field_256, _rank[_param1].field_512
+
+def getOwner(uint256 _ownerIndex) payable: 
+  require calldata.size - 4 >= 32
+  return offers[_ownerIndex].field_1024
+
+def buyEnabled() payable: 
+  return bool(buyEnabled)
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def isClosed() payable: 
+  if stopped:
+      return bool(stopped)
+  return (uint64(block.timestamp) > close_time)
+
+def isOfferSorted(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  if _rank[_id].field_0:
+      return bool(_rank[_id].field_0)
+  if _rank[_id].field_256:
+      return bool(_rank[_id].field_256)
+  return (bestOffer[stor3[_id].field_256][stor3[_id].field_768] == _id)
+
+def stop() payable: 
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  stopped = 1
+
+def del_rank(uint256 _id) payable: 
+  require calldata.size - 4 >= 32
+  if uint8(stor4.field_0):
+      revert with 0, 'Reentrancy attempt'
+  require not offers[_id].field_1184
+  require _rank[_id].field_512
+  require block.number - 10 > _rank[_id].field_512
+  _rank[_id].field_0 = 0
+  _rank[_id].field_256 = 0
+  _rank[_id].field_512 = 0
+  log LogDelete(
+        address keeper=caller,
+        uint256 id=_id)
+  return 1
+
+def bump(bytes32 _id) payable: 
+  require calldata.size - 4 >= 32
+  require offers[_id_].field_1184
+  require not stopped
+  require uint64(block.timestamp) <= close_time
+  log LogBump(
+        bytes32 id=offers[_id_].field_256,
+        bytes32 pair=offers[_id_].field_768,
+        address maker=offers[_id_].field_0,
+        address haveToken=offers[_id_].field_512,
+        address wantToken=offers[_id_].field_1184,
+        uint128 haveAmount=_id_,
+        uint128 wantAmount=sha3(offers[_id_].field_256, offers[_id_].field_768),
+        uint64 timestamp=offers[_id_].field_1024)
+
+def setOwner(address _new) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def setBuyEnabled(bool _buyEnabled) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  Mask(176, 0, stor4.field_80) = Mask(176, 0, _buyEnabled_)
+  log LogBuyEnabled(bool isEnabled=bool(0 or uint8(_buyEnabled_)))
+  return 1
+
+def setMatchingEnabled(bool _matchingEnabled) payable: 
+  require calldata.size - 4 >= 32
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  Mask(168, 0, stor4.field_88) = Mask(168, 0, _matchingEnabled_)
+  log LogMatchingEnabled(bool isEnabled=bool(0 or uint8(_matchingEnabled_)))
+  return 1
+
+def setMinSell(address _pay_gem, uint256 _dust) payable: 
+  require calldata.size - 4 >= 64
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, _dust
+  minSell[addr(_pay_gem)] = _dust
+  log LogMinSell(
+        address pay_gem=addr(_pay_gem),
+        uint256 min_amount=_dust)
+  return 1
+
+def getPayAmount(address _pay_gem, address _buy_gem, uint256 _buy_amt) payable: 
+  require calldata.size - 4 >= 96
+  s = bestOffer[addr(_buy_gem)][addr(_pay_gem)]
+  t = 0
+  idx = _buy_amt
+  while idx > offers[stor6[addr(_buy_gem)][addr(_pay_gem)]].field_0:
+      if t + offers[s].field_512 < t:
+          revert with 0, 'ds-math-add-overflow'
+      if idx - offers[s].field_0 > idx:
+          revert with 0, 'ds-math-sub-underflow'
+      if not idx - offers[s].field_0:
+          mem[0] = s
+          mem[32] = 3
+          s = s
+          t = t + offers[s].field_512
+          idx = idx - offers[s].field_0
+          continue 
+      require _rank[s].field_256
+      mem[0] = _rank[s].field_256
+      mem[32] = 3
+      s = _rank[s].field_256
+      t = t + offers[s].field_512
+      idx = idx - offers[s].field_0
+      continue 
+  if 1000000000 * 10^18 * offers[s].field_512 / 1000000000 * 10^18 != offers[s].field_512:
+      revert with 0, 'ds-math-mul-overflow'
+  if (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 < 1000000000 * 10^18 * offers[s].field_512:
+      revert with 0, 'ds-math-add-overflow'
+  require offers[s].field_0
+  if not (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0:
+      if t < t:
+          revert with 0, 'ds-math-add-overflow'
+      return t
+  require (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0
+  if 10^9 * idx * (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0 / (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0 != 10^9 * idx:
+      revert with 0, 'ds-math-mul-overflow'
+  if (10^9 * idx * (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0) + 500000000 * 10^18 < 10^9 * idx * (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0:
+      revert with 0, 'ds-math-add-overflow'
+  if t + ((10^9 * idx * (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0) + 500000000 * 10^18 / 1000000000 * 10^18 / 10^9) < t:
+      revert with 0, 'ds-math-add-overflow'
+  return (t + ((10^9 * idx * (1000000000 * 10^18 * offers[s].field_512) + offers[s].field_1 / offers[s].field_0) + 500000000 * 10^18 / 1000000000 * 10^18 / 10^9))
+
+def getBuyAmount(address _buy_gem, address _pay_gem, uint256 _pay_amt) payable: 
+  require calldata.size - 4 >= 96
+  s = bestOffer[addr(_buy_gem)][addr(_pay_gem)]
+  t = 0
+  idx = _pay_amt
+  while idx > offers[stor6[addr(_buy_gem)][addr(_pay_gem)]].field_512:
+      if t + offers[s].field_0 < t:
+          revert with 0, 'ds-math-add-overflow'
+      if idx - offers[s].field_512 > idx:
+          revert with 0, 'ds-math-sub-underflow'
+      if not idx - offers[s].field_512:
+          mem[0] = s
+          mem[32] = 3
+          s = s
+          t = t + offers[s].field_0
+          idx = idx - offers[s].field_512
+          continue 
+      require _rank[s].field_256
+      mem[0] = _rank[s].field_256
+      mem[32] = 3
+      s = _rank[s].field_256
+      t = t + offers[s].field_0
+      idx = idx - offers[s].field_512
+      continue 
+  if 1000000000 * 10^18 * offers[s].field_0 / 1000000000 * 10^18 != offers[s].field_0:
+      revert with 0, 'ds-math-mul-overflow'
+  if (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 < 1000000000 * 10^18 * offers[s].field_0:
+      revert with 0, 'ds-math-add-overflow'
+  require offers[s].field_512
+  if not (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512:
+      if t < t:
+          revert with 0, 'ds-math-add-overflow'
+      return t
+  require (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512
+  if 10^9 * idx * (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512 / (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512 != 10^9 * idx:
+      revert with 0, 'ds-math-mul-overflow'
+  if (10^9 * idx * (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512) + 500000000 * 10^18 < 10^9 * idx * (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512:
+      revert with 0, 'ds-math-add-overflow'
+  if t + ((10^9 * idx * (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512) + 500000000 * 10^18 / 1000000000 * 10^18 / 10^9) < t:
+      revert with 0, 'ds-math-add-overflow'
+  return (t + ((10^9 * idx * (1000000000 * 10^18 * offers[s].field_0) + offers[s].field_513 / offers[s].field_512) + 500000000 * 10^18 / 1000000000 * 10^18 / 10^9))
+
+def make(address _haveToken, address _wantToken, uint128 _haveAmount, uint128 _wantAmount) payable: 
+  require calldata.size - 4 >= 128
+  if uint8(stor4.field_0):
+      revert with 0, 'Reentrancy attempt'
+  if not matchingEnabled:
+      require not stopped
+      require uint64(block.timestamp) <= close_time
+      require not uint8(stor4.field_0)
+      uint8(stor4.field_0) = 1
+      require _haveAmount == _haveAmount
+      require _wantAmount == _wantAmount
+      require _haveAmount > 0
+      require _haveToken
+      require _wantAmount > 0
+      require _wantToken
+      require _haveToken != _wantToken
+      last_offer_id++
+      offers[stor2 + 1].field_0 = _haveAmount
+      offers[stor2 + 1].field_128 = 0
+      offers[stor2 + 1].field_256 = _haveToken
+      offers[stor2 + 1].field_512 = _wantAmount
+      offers[stor2 + 1].field_640 = 0
+      offers[stor2 + 1].field_768 = _wantToken
+      offers[stor2 + 1].field_1024 = caller
+      offers[stor2 + 1].field_1184 = uint64(block.timestamp)
+      require ext_code.size(_haveToken)
+      call _haveToken.transferFrom(address from, address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, this.address, _haveAmount
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require ext_call.return_data[0]
+      log LogItemUpdate(uint256 id=(last_offer_id + 1))
+      log LogMake(
+            bytes32 id=addr(_haveToken),
+            bytes32 pair=addr(_wantToken),
+            address maker=_haveAmount << 128,
+            address haveToken=_wantAmount << 128,
+            address wantToken=uint64(block.timestamp),
+            uint128 haveAmount=last_offer_id + 1,
+            uint128 wantAmount=sha3(_haveToken, _wantToken),
+            uint64 timestamp=caller)
+      uint8(stor4.field_0) = 0
+  else:
+      require _haveAmount >= minSell[addr(_haveToken)]
+      require not stopped
+      require uint64(block.timestamp) <= close_time
+      require not uint8(stor4.field_0)
+      uint8(stor4.field_0) = 1
+      require _haveAmount == _haveAmount
+      require _wantAmount == _wantAmount
+      require _haveAmount > 0
+      require _haveToken
+      require _wantAmount > 0
+      require _wantToken
+      require _haveToken != _wantToken
+      last_offer_id++
+      offers[stor2 + 1].field_0 = _haveAmount
+      offers[stor2 + 1].field_128 = 0
+      offers[stor2 + 1].field_256 = _haveToken
+      offers[stor2 + 1].field_512 = _wantAmount
+      offers[stor2 + 1].field_640 = 0
+      offers[stor2 + 1].field_768 = _wantToken
+      offers[stor2 + 1].field_1024 = caller
+      offers[stor2 + 1].field_1184 = uint64(block.timestamp)
+      require ext_code.size(_haveToken)
+      call _haveToken.transferFrom(address from, address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, this.address, _haveAmount
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require ext_call.return_data[0]
+      log LogItemUpdate(uint256 id=(last_offer_id + 1))
+      log LogMake(
+            bytes32 id=addr(_haveToken),
+            bytes32 pair=addr(_wantToken),
+            address maker=_haveAmount << 128,
+            address haveToken=_wantAmount << 128,
+            address wantToken=uint64(block.timestamp),
+            uint128 haveAmount=last_offer_id + 1,
+            uint128 wantAmount=sha3(_haveToken, _wantToken),
+            uint64 timestamp=caller)
+      uint8(stor4.field_0) = 0
+      _near[stor2 + 1] = firstUnsortedOffer
+      firstUnsortedOffer = last_offer_id + 1
+      log LogUnsortedOffer(uint256 id=(last_offer_id + 1))
+  return (last_offer_id + 1)
+
+def offer(uint256 _sell_how_much, address _sell_which_token, uint256 _buy_how_much, address _buy_which_token) payable: 
+  require calldata.size - 4 >= 128
+  if uint8(stor4.field_0):
+      revert with 0, 'Reentrancy attempt'
+  if not matchingEnabled:
+      require not stopped
+      require uint64(block.timestamp) <= close_time
+      require not uint8(stor4.field_0)
+      uint8(stor4.field_0) = 1
+      require _sell_how_much == uint128(_sell_how_much)
+      require uint128(_buy_how_much) == _buy_how_much
+      require _sell_how_much > 0
+      require _sell_which_token
+      require _buy_how_much > 0
+      require _buy_which_token
+      require _sell_which_token != _buy_which_token
+      last_offer_id++
+      offers[stor2 + 1].field_0 = _sell_how_much
+      offers[stor2 + 1].field_256 = _sell_which_token
+      offers[stor2 + 1].field_512 = _buy_how_much
+      offers[stor2 + 1].field_768 = _buy_which_token
+      offers[stor2 + 1].field_1024 = caller
+      offers[stor2 + 1].field_1184 = uint64(block.timestamp)
+      require ext_code.size(_sell_which_token)
+      call _sell_which_token.transferFrom(address from, address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, this.address, _sell_how_much
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require ext_call.return_data[0]
+      log LogItemUpdate(uint256 id=(last_offer_id + 1))
+      log LogMake(
+            bytes32 id=addr(_sell_which_token),
+            bytes32 pair=addr(_buy_which_token),
+            address maker=_sell_how_much << 128,
+            address haveToken=_buy_how_much << 128,
+            address wantToken=uint64(block.timestamp),
+            uint128 haveAmount=last_offer_id + 1,
+            uint128 wantAmount=sha3(_sell_which_token, _buy_which_token),
+            uint64 timestamp=caller)
+      uint8(stor4.field_0) = 0
+  else:
+      require _sell_how_much >= minSell[addr(_sell_which_token)]
+      require not stopped
+      require uint64(block.timestamp) <= close_time
+      require not uint8(stor4.field_0)
+      uint8(stor4.field_0) = 1
+      require _sell_how_much == uint128(_sell_how_much)
+      require uint128(_buy_how_much) == _buy_how_much
+      require _sell_how_much > 0
+      require _sell_which_token
+      require _buy_how_much > 0
+      require _buy_which_token
+      require _sell_which_token != _buy_which_token
+      last_offer_id++
+      offers[stor2 + 1].field_0 = _sell_how_much
+      offers[stor2 + 1].field_256 = _sell_which_token
+      offers[stor2 + 1].field_512 = _buy_how_much
+      offers[stor2 + 1].field_768 = _buy_which_token
+      offers[stor2 + 1].field_1024 = caller
+      offers[stor2 + 1].field_1184 = uint64(block.timestamp)
+      require ext_code.size(_sell_which_token)
+      call _sell_which_token.transferFrom(address from, address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, this.address, _sell_how_much
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require ext_call.return_data[0]
+      log LogItemUpdate(uint256 id=(last_offer_id + 1))
+      log LogMake(
+            bytes32 id=addr(_sell_which_token),
+            bytes32 pair=addr(_buy_which_token),
+            address maker=_sell_how_much << 128,
+            address haveToken=_buy_how_much << 128,
+            address wantToken=uint64(block.timestamp),
+            uint128 haveAmount=last_offer_id + 1,
+            uint128 wantAmount=sha3(_sell_which_token, _buy_which_token),
+            uint64 timestamp=caller)
+      uint8(stor4.field_0) = 0
+      _near[stor2 + 1] = firstUnsortedOffer
+      firstUnsortedOffer = last_offer_id + 1
+      log LogUnsortedOffer(uint256 id=(last_offer_id + 1))
+  return (last_offer_id + 1)
+

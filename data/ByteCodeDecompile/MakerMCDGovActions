@@ -1,0 +1,143 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x4F5f0933158569c026d617337614d00Ee6589B6E
+# 
+#  Let's make the world open source 
+# 
+
+def _fallback() payable: # default function
+  revert
+
+def unknownb169542c(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  require ext_code.size(_param1)
+  call _param1.cage() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownd95270f1(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  call _param1.0x65fae35e with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown6d21e4e2(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  call _param1.0xe177246e with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def init(address _multiAsset, bytes32 _symbol) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_multiAsset)
+  call _multiAsset.0x3b663195 with:
+       gas gas_remaining wei
+      args _symbol
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknowne43c09f4(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  call _param1.deny(address operator) with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknowne7796f33(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  call _param1.setAuthority(address authority_) with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownf1f169e7(addr _param1, uint256 _param2, addr _param3) payable: 
+  require calldata.size - 4 >= 96
+  require ext_code.size(_param1)
+  call _param1.0xd4e8be83 with:
+       gas gas_remaining wei
+      args _param2, _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownb7beac59(addr _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  require ext_code.size(_param1)
+  call _param1.0x29ae8114 with:
+       gas gas_remaining wei
+      args _param2, _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown2d9f080e(addr _param1, uint256 _param2, uint256 _param3, addr _param4) payable: 
+  require calldata.size - 4 >= 128
+  require ext_code.size(_param1)
+  call _param1.0xebecb39d with:
+       gas gas_remaining wei
+      args _param2, _param3, _param4
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownfa6b6f6d(addr _param1, uint256 _param2, uint256 _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  require ext_code.size(_param1)
+  call _param1.0x1a0b287e with:
+       gas gas_remaining wei
+      args _param2, _param3, _param4
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknowne3c277dd(addr _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  require ext_code.size(_param1)
+  call _param1.drip() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0x29ae8114 with:
+       gas gas_remaining wei
+      args _param2, _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknownd9c6f876(addr _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  require ext_code.size(_param1)
+  call _param1.setAuthority(address authority_) with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0xe177246e with:
+       gas gas_remaining wei
+      args _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def unknown86c09ded(addr _param1, uint256 _param2, uint256 _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  require ext_code.size(_param1)
+  call _param1.0x44e2a5a8 with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0x1a0b287e with:
+       gas gas_remaining wei
+      args _param2, _param3, _param4
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+

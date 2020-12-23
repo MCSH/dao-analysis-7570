@@ -1,0 +1,223 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xdfE0fb1bE2a52CDBf8FB962D5701d7fd0902db9f
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  bids is mapping of struct at storage 1
+  unknown36569e77Address is addr at storage 2
+  gemAddress is addr at storage 3
+  unknown7d780d82 is uint256 at storage 4
+  unknown4e8b1dd5 is uint64 at storage 5
+  tau is uint64 at storage 5 offset 48
+  unknowncfdd3302 is uint256 at storage 6
+  live is uint256 at storage 7
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def bids(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return bids[_param1].field_0, 
+         bids[_param1].field_256,
+         bids[_param1].field_512,
+         bids[_param1].field_512,
+         bids[_param1].field_720
+
+def unknown4e8b1dd5() payable: 
+  return unknown4e8b1dd5
+
+def gem() payable: 
+  return gemAddress
+
+def unknown7d780d82() payable: 
+  return unknown7d780d82
+
+def live() payable: 
+  return live
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def tau() payable: 
+  return tau
+
+def unknowncfdd3302() payable: 
+  return unknowncfdd3302
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Flapper/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Flapper/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def cage(uint256 _fix) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Flapper/not-authorized'
+  live = 0
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args addr(this.address), caller, _fix_
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data
+
+def unknown29ae8114(uint256 _param1, uint64 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Flapper/not-authorized'
+  if _param1 == 'beg':
+      unknown7d780d82 = _param2
+  else:
+      if _param1 == 'ttl':
+          unknown4e8b1dd5 = _param2 % 281474976710656
+      else:
+          if _param1 != 'tau':
+              revert with 0, 'Flapper/file-unrecognized-param'
+          tau = _param2 % 281474976710656
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownfc7b6aee(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if bids[_param1].field_720 >= block.timestamp:
+      revert with 0, 'Flapper/not-finished'
+  if bids[_param1].field_672:
+      revert with 0, 'Flapper/bid-already-placed'
+  require block.timestamp + tau % 281474976710656 >= block.timestamp % 281474976710656
+  bids[_param1].field_720 = block.timestamp + tau % 281474976710656
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown26e027f1(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if live:
+      revert with 0, 'Flapper/still-live'
+  if not bids[_param1].field_512:
+      revert with 0, 'Flapper/guy-not-set'
+  require ext_code.size(gemAddress)
+  call gemAddress.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args addr(this.address), bids[_param1].field_512, bids[_param1].field_0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  bids[_param1].field_0 = 0
+  bids[_param1].field_256 = 0
+  bids[_param1].field_512 = 0
+  bids[_param1].field_672 = 0
+  bids[_param1].field_512 = bids[_param1].field_512
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownca40c419(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Flapper/not-authorized'
+  if live != 1:
+      revert with 0, 'Flapper/not-live'
+  if unknowncfdd3302 >= -1:
+      revert with 0, 'Flapper/overflow'
+  unknowncfdd3302++
+  bids[stor6 + 1].field_0 = _param2
+  bids[stor6 + 1].field_256 = _param1
+  bids[stor6 + 1].field_512 = caller
+  require block.timestamp + tau % 281474976710656 >= block.timestamp % 281474976710656
+  bids[stor6 + 1].field_720 = block.timestamp + tau % 281474976710656
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0xe6dde59c: unknowncfdd3302 + 1, _param1, _param2
+  return (unknowncfdd3302 + 1)
+
+def unknownc959c42b(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if live != 1:
+      revert with 0, 'Flapper/not-live'
+  if not bids[_param1].field_672:
+      revert with 0, 'Flapper/not-finished'
+  if bids[_param1].field_672 >= block.timestamp:
+      if bids[_param1].field_720 >= block.timestamp:
+          revert with 0, 'Flapper/not-finished'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args addr(this.address), bids[_param1].field_512, bids[_param1].field_256
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(gemAddress)
+  call gemAddress.burn(address guy, uint256 wad) with:
+       gas gas_remaining wei
+      args addr(this.address), bids[_param1].field_0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  bids[_param1].field_0 = 0
+  bids[_param1].field_256 = 0
+  bids[_param1].field_512 = 0
+  bids[_param1].field_672 = 0
+  bids[_param1].field_512 = bids[_param1].field_512
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown4b43ed12(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if live != 1:
+      revert with 0, 'Flapper/not-live'
+  if not bids[_param1].field_512:
+      revert with 0, 'Flapper/guy-not-set'
+  if bids[_param1].field_672 <= block.timestamp:
+      if bids[_param1].field_672:
+          revert with 0, 'Flapper/already-finished-tic'
+  if bids[_param1].field_720 <= block.timestamp:
+      revert with 0, 'Flapper/already-finished-end'
+  if _param2 != bids[_param1].field_256:
+      revert with 0, 'Flapper/lot-not-matching'
+  if _param3 <= bids[_param1].field_0:
+      revert with 0, 'Flapper/bid-not-higher'
+  if not bids[_param1].field_0:
+      require 10^18 * _param3 / 10^18 == _param3
+      if 10^18 * _param3 < 0:
+          revert with 0, 'Flapper/insufficient-increase'
+  else:
+      require bids[_param1].field_0
+      require unknown7d780d82 * bids[_param1].field_0 / bids[_param1].field_0 == unknown7d780d82
+      require 10^18 * _param3 / 10^18 == _param3
+      if 10^18 * _param3 < unknown7d780d82 * bids[_param1].field_0:
+          revert with 0, 'Flapper/insufficient-increase'
+  require ext_code.size(gemAddress)
+  call gemAddress.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, bids[_param1].field_512, bids[_param1].field_0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(gemAddress)
+  call gemAddress.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _param3 - bids[_param1].field_0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  bids[_param1].field_512 = caller
+  bids[_param1].field_0 = _param3
+  require block.timestamp + unknown4e8b1dd5 % 281474976710656 >= block.timestamp % 281474976710656
+  bids[_param1].field_672 = block.timestamp + unknown4e8b1dd5 % 281474976710656
+  log 0x0: 32, 224, call.data1, _param2
+

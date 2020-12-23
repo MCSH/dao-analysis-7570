@@ -1,0 +1,289 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  unknown0bebac86 is mapping of uint256 at storage 1
+  unknown2c69ed58 is uint256 at storage 2
+  unknown487bf082 is uint256 at storage 3
+  chi is uint256 at storage 4
+  unknown36569e77Address is addr at storage 5
+  unknown626cb3c5Address is addr at storage 6
+  rho is uint256 at storage 7
+  live is uint256 at storage 8
+
+def unknown0bebac86(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknown0bebac86[_param1]
+
+def rho() payable: 
+  return rho
+
+def unknown2c69ed58() payable: 
+  return unknown2c69ed58
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def unknown487bf082() payable: 
+  return unknown487bf082
+
+def unknown626cb3c5() payable: 
+  return unknown626cb3c5Address
+
+def live() payable: 
+  return live
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def chi() payable: 
+  return chi
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def cage() payable: 
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Pot/not-authorized'
+  live = 0
+  unknown487bf082 = 1000000000 * 10^18
+  log 0x0: 32, 224, call.data1, _param2
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Pot/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Pot/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownd4e8be83(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Pot/not-authorized'
+  if _param1 != 'vow':
+      revert with 0, 'Pot/file-unrecognized-param'
+  unknown626cb3c5Address = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown29ae8114(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Pot/not-authorized'
+  if live != 1:
+      revert with 0, 'Pot/not-live'
+  if rho != block.timestamp:
+      revert with 0, 'Pot/rho-not-updated'
+  if _param1 != 'dsr':
+      revert with 0, 'Pot/file-unrecognized-param'
+  unknown487bf082 = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def exit(uint256 _wad) payable: 
+  require calldata.size - 4 >= 32
+  require unknown0bebac86[caller] - _wad <= unknown0bebac86[caller]
+  unknown0bebac86[caller] -= _wad
+  require unknown2c69ed58 - _wad <= unknown2c69ed58
+  unknown2c69ed58 -= _wad
+  if not _wad:
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+           gas gas_remaining wei
+          args addr(this.address), caller, 0
+  else:
+      require _wad
+      require chi * _wad / _wad == chi
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+           gas gas_remaining wei
+          args addr(this.address), caller, chi * _wad
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data
+
+def join(uint256 _wad) payable: 
+  require calldata.size - 4 >= 32
+  if rho != block.timestamp:
+      revert with 0, 'Pot/rho-not-updated'
+  require unknown0bebac86[caller] + _wad >= unknown0bebac86[caller]
+  unknown0bebac86[caller] += _wad
+  require unknown2c69ed58 + _wad >= unknown2c69ed58
+  unknown2c69ed58 += _wad
+  if not _wad:
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+           gas gas_remaining wei
+          args caller, addr(this.address), 0
+  else:
+      require _wad
+      require chi * _wad / _wad == chi
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+           gas gas_remaining wei
+          args caller, addr(this.address), chi * _wad
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data
+
+def drip() payable: 
+  if block.timestamp < rho:
+      revert with 0, 'Pot/invalid-now'
+  if not unknown487bf082:
+      if not block.timestamp - rho:
+          if not chi:
+              require -chi <= 0
+              chi = 0
+              rho = block.timestamp
+              if not -chi:
+                  require ext_code.size(unknown36569e77Address)
+                  call unknown36569e77Address.0xf24e23eb with:
+                       gas gas_remaining wei
+                      args unknown626cb3c5Address, addr(this.address), 0
+              else:
+                  require -chi
+                  require -1 * unknown2c69ed58 * chi / -chi == unknown2c69ed58
+                  require ext_code.size(unknown36569e77Address)
+                  call unknown36569e77Address.0xf24e23eb with:
+                       gas gas_remaining wei
+                      args unknown626cb3c5Address, addr(this.address), -1 * unknown2c69ed58 * chi
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              log 0x0: 32, 224, call.data1, _param2
+              return 0
+          require chi
+          require 1000000000 * 10^18 * chi / chi == 1000000000 * 10^18
+          require (1000000000 * 10^18 * chi / 1000000000 * 10^18) - chi <= 1000000000 * 10^18 * chi / 1000000000 * 10^18
+          chi = 1000000000 * 10^18 * chi / 1000000000 * 10^18
+          rho = block.timestamp
+          if not (1000000000 * 10^18 * chi / 1000000000 * 10^18) - chi:
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0xf24e23eb with:
+                   gas gas_remaining wei
+                  args unknown626cb3c5Address, addr(this.address), 0
+          else:
+              require (1000000000 * 10^18 * chi / 1000000000 * 10^18) - chi
+              require (1000000000 * 10^18 * chi / 1000000000 * 10^18 * unknown2c69ed58) - (chi * unknown2c69ed58) / (1000000000 * 10^18 * chi / 1000000000 * 10^18) - chi == unknown2c69ed58
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0xf24e23eb with:
+                   gas gas_remaining wei
+                  args unknown626cb3c5Address, addr(this.address), (1000000000 * 10^18 * chi / 1000000000 * 10^18 * unknown2c69ed58) - (chi * unknown2c69ed58)
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          log 0x0: 32, 224, call.data1, _param2
+          return (1000000000 * 10^18 * chi / 1000000000 * 10^18)
+      if chi:
+          require chi
+          require not 0 / chi
+      require -chi <= 0
+      chi = 0
+      rho = block.timestamp
+      if not -chi:
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0xf24e23eb with:
+               gas gas_remaining wei
+              args unknown626cb3c5Address, addr(this.address), 0
+      else:
+          require -chi
+          require -1 * unknown2c69ed58 * chi / -chi == unknown2c69ed58
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0xf24e23eb with:
+               gas gas_remaining wei
+              args unknown626cb3c5Address, addr(this.address), -1 * unknown2c69ed58 * chi
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      log 0x0: 32, 224, call.data1, _param2
+      return 0
+  if not bool(block.timestamp - rho):
+      s = 1000000000 * 10^18
+      idx = block.timestamp - rho / 2
+      t = unknown487bf082
+      while idx:
+          require t * t / t == t
+          require (t * t) + 500000000 * 10^18 >= t * t
+          if not bool(idx):
+              s = s
+              idx = idx / 2
+              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+              continue 
+          require not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 or s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          idx = idx / 2
+          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          continue 
+  else:
+      s = unknown487bf082
+      idx = block.timestamp - rho / 2
+      t = unknown487bf082
+      while idx:
+          require t * t / t == t
+          require (t * t) + 500000000 * 10^18 >= t * t
+          if not bool(idx):
+              s = s
+              idx = idx / 2
+              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+              continue 
+          require not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 or s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          idx = idx / 2
+          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          continue 
+  if not chi:
+      require -chi <= 0
+      chi = 0
+      rho = block.timestamp
+      if not -chi:
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0xf24e23eb with:
+               gas gas_remaining wei
+              args unknown626cb3c5Address, addr(this.address), 0
+      else:
+          require -chi
+          require -1 * unknown2c69ed58 * chi / -chi == unknown2c69ed58
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0xf24e23eb with:
+               gas gas_remaining wei
+              args unknown626cb3c5Address, addr(this.address), -1 * unknown2c69ed58 * chi
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      log 0x0: 32, 224, call.data1, _param2
+      return 0
+  require chi
+  require s * chi / chi == s
+  require (s * chi / 1000000000 * 10^18) - chi <= s * chi / 1000000000 * 10^18
+  chi = s * chi / 1000000000 * 10^18
+  rho = block.timestamp
+  if not (s * chi / 1000000000 * 10^18) - chi:
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0xf24e23eb with:
+           gas gas_remaining wei
+          args unknown626cb3c5Address, addr(this.address), 0
+  else:
+      require (s * chi / 1000000000 * 10^18) - chi
+      require (s * chi / 1000000000 * 10^18 * unknown2c69ed58) - (chi * unknown2c69ed58) / (s * chi / 1000000000 * 10^18) - chi == unknown2c69ed58
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0xf24e23eb with:
+           gas gas_remaining wei
+          args unknown626cb3c5Address, addr(this.address), (s * chi / 1000000000 * 10^18 * unknown2c69ed58) - (chi * unknown2c69ed58)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+  return (s * chi / 1000000000 * 10^18)
+

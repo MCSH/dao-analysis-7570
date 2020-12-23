@@ -1,0 +1,870 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x5ef30b9986345249bc32d8928B7ee64DE9435E39
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknown36569e77Address is addr at storage 0
+  unknownb3d178f2 is uint256 at storage 1
+  unknown2726b073 is mapping of uint32 at storage 2
+  list is mapping of struct at storage 3
+  unknown8161b120 is mapping of addr at storage 4
+  unknown2c2cb9fd is mapping of uint32 at storage 5
+  unknownfc73d771 is mapping of uint256 at storage 6
+  unknown9a816f7d is mapping of uint256 at storage 7
+  count is mapping of uint256 at storage 8
+  unknown5aebb460 is mapping of uint256 at storage 9
+  unknownb2b192e6 is mapping of uint256 at storage 10
+
+def count(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return count[_param1]
+
+def unknown2726b073(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return addr(unknown2726b073[_param1])
+
+def unknown2c2cb9fd(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return uint256(unknown2c2cb9fd[_param1])
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def unknown5aebb460(addr _param1, uint256 _param2, addr _param3) payable: 
+  require calldata.size - 4 >= 96
+  return unknown5aebb460[_param1][_param2][_param3]
+
+def list(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return list[_param1].field_0, list[_param1].field_256
+
+def unknown8161b120(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknown8161b120[_param1]
+
+def unknown9a816f7d(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknown9a816f7d[_param1]
+
+def unknownb2b192e6(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  return unknownb2b192e6[_param1][_param2]
+
+def unknownb3d178f2() payable: 
+  return unknownb3d178f2
+
+def unknownfc73d771(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownfc73d771[_param1]
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def unknownb68f4004(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  unknownb2b192e6[caller][addr(_param1)] = _param2
+
+def unknown0b63fb62(uint256 _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknown8161b120[_param1] != caller:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  unknown5aebb460[stor4[_param1]][_param1][addr(_param2)] = _param3
+
+def unknown18af4d60(uint32 _param1, uint256 _param2, addr _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  if unknown8161b120[_param2] != caller:
+      if unknown5aebb460[stor4[_param2]][_param2][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x6111be2e with:
+       gas gas_remaining wei
+      args 0, _param1, addr(unknown2726b073[_param2]), addr(_param3), _param4
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownf9f30db6(uint256 _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknown8161b120[_param1] != caller:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args addr(unknown2726b073[_param1]), addr(_param2), _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown9bb8f838(uint256 _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknown8161b120[_param1] != caller:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x6111be2e with:
+       gas gas_remaining wei
+      args 0, uint32(unknown2c2cb9fd[_param1]), addr(unknown2726b073[_param1]), addr(_param2), _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown45e6bdcd(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknown8161b120[_param1] != caller:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x76088703 with:
+       gas gas_remaining wei
+      args 0, uint32(unknown2c2cb9fd[_param1]), addr(unknown2726b073[_param1]), addr(unknown2726b073[_param1]), addr(unknown2726b073[_param1]), _param2, _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown7e348b7d(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if _param1 != caller:
+      if unknownb2b192e6[addr(_param1)][caller] != 1:
+          revert with 0, 'urn-not-allowed'
+  if unknown8161b120[_param2] != caller:
+      if unknown5aebb460[stor4[_param2]][_param2][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  require ext_code.size(unknown36569e77Address)
+  static call unknown36569e77Address.0x2424be5c with:
+          gas gas_remaining wei
+         args uint256(unknown2c2cb9fd[_param2]), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  require ext_call.return_data >=′ 0
+  require ext_call.return_data >=′ 0
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x870c616d with:
+       gas gas_remaining wei
+      args 0, ext_call.return_dataaddr(unknown2726b073[_param2]), ext_call.return_data[0], ext_call.return_data[32]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown1b0dbf72(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknown8161b120[_param1] != caller:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  if _param2 != caller:
+      if unknownb2b192e6[addr(_param2)][caller] != 1:
+          revert with 0, 'urn-not-allowed'
+  require ext_code.size(unknown36569e77Address)
+  static call unknown36569e77Address.0x2424be5c with:
+          gas gas_remaining wei
+         args uint256(unknown2c2cb9fd[_param1]), addr(unknown2726b073[_param1])
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  require ext_call.return_data >=′ 0
+  require ext_call.return_data >=′ 0
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x870c616d with:
+       gas gas_remaining wei
+      args 0, ext_call.return_datauint32(unknown2726b073[_param1]), addr(_param2), ext_call.return_data[0], ext_call.return_data[32]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknowne50322a2(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknown8161b120[_param1] != caller:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  if unknown8161b120[_param2] != caller:
+      if unknown5aebb460[stor4[_param2]][_param2][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+  if uint256(unknown2c2cb9fd[_param1]) != uint256(unknown2c2cb9fd[_param2]):
+      revert with 0, 'non-matching-cdps'
+  require ext_code.size(unknown36569e77Address)
+  static call unknown36569e77Address.0x2424be5c with:
+          gas gas_remaining wei
+         args uint256(unknown2c2cb9fd[_param1]), addr(unknown2726b073[_param1])
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  require ext_call.return_data >=′ 0
+  require ext_call.return_data >=′ 0
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x870c616d with:
+       gas gas_remaining wei
+      args 0, ext_call.return_datauint32(unknown2726b073[_param1]), addr(unknown2726b073[_param2]), ext_call.return_data[0], ext_call.return_data[32]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown6090dec5(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if not _param2:
+      revert with 0, 'usr-address-0'
+  else:
+      require unknownb3d178f2 + 1 >= unknownb3d178f2
+      unknownb3d178f2++
+      create contract with 0 wei
+                      code: 0xfe6080604052348015600f57600080fd5b5060405161012438038061012483398181016040526020811015603157600080fd5b81019080805190602001909291905050508073ffffffffffffffffffffffffffffffffffffffff1663a3b22fc4336040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050600060405180830381600087803b15801560c057600080fd5b505af115801560d3573d6000803e3d6000fd5b5050505050603e806100e66000396000f3fe6080604052600080fdfea265627a7a7231582011d8228e4d52a33e72559199f2a9e6502500acb18f172cf552c647d56fee044f64736f6c634300050c00, unknown36569e77Address
+      if not create.new_address:
+          revert with ext_call.return_data[0 len return_data.size]
+      else:
+          addr(unknown2726b073[stor1]) = addr(create.new_address)
+          unknown8161b120[stor1] = _param2
+          uint256(unknown2c2cb9fd[stor1]) = _param1
+          if unknownfc73d771[addr(_param2)]:
+              if not unknown9a816f7d[addr(_param2)]:
+                  unknown9a816f7d[addr(_param2)] = unknownb3d178f2
+                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                  count[addr(_param2)]++
+                  log 0xd6be0bc1: caller, _param2, unknownb3d178f2
+                  log 0x0: 32, 224, call.data1, _param2
+                  return unknownb3d178f2
+              else:
+                  list[stor1].field_0 = unknown9a816f7d[addr(_param2)]
+                  list[stor7[addr(_param2)]].field_256 = unknownb3d178f2
+                  unknown9a816f7d[addr(_param2)] = unknownb3d178f2
+                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                  count[addr(_param2)]++
+                  log 0xd6be0bc1: caller, _param2, unknownb3d178f2
+                  log 0x0: 32, 224, call.data1, _param2
+                  return unknownb3d178f2
+          else:
+              unknownfc73d771[addr(_param2)] = unknownb3d178f2
+              if not unknown9a816f7d[addr(_param2)]:
+                  unknown9a816f7d[addr(_param2)] = unknownb3d178f2
+                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                  count[addr(_param2)]++
+                  log 0xd6be0bc1: caller, _param2, unknownb3d178f2
+                  log 0x0: 32, 224, call.data1, _param2
+                  return unknownb3d178f2
+              else:
+                  list[stor1].field_0 = unknown9a816f7d[addr(_param2)]
+                  list[stor7[addr(_param2)]].field_256 = unknownb3d178f2
+                  unknown9a816f7d[addr(_param2)] = unknownb3d178f2
+                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                  count[addr(_param2)]++
+                  log 0xd6be0bc1: caller, _param2, unknownb3d178f2
+                  log 0x0: 32, 224, call.data1, _param2
+                  return unknownb3d178f2
+
+def unknownfcafcc68(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if caller == unknown8161b120[_param1]:
+      if not _param2:
+          revert with 0, 'dst-address-0'
+      else:
+          if _param2 == unknown8161b120[_param1]:
+              revert with 0, 'dst-already-owner'
+          else:
+              if not list[_param1].field_0:
+                  if not list[_param1].field_256:
+                      unknown9a816f7d[stor4[_param1]] = list[_param1].field_0
+                      if unknownfc73d771[stor4[_param1]] != _param1:
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                      else:
+                          unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                  else:
+                      list[list[_param1].field_256].field_0 = list[_param1].field_0
+                      if unknownfc73d771[stor4[_param1]] != _param1:
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                      else:
+                          unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+              else:
+                  list[list[_param1].field_0].field_256 = list[_param1].field_256
+                  if not list[_param1].field_256:
+                      unknown9a816f7d[stor4[_param1]] = list[_param1].field_0
+                      if unknownfc73d771[stor4[_param1]] != _param1:
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                      else:
+                          unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                  else:
+                      list[list[_param1].field_256].field_0 = list[_param1].field_0
+                      if unknownfc73d771[stor4[_param1]] != _param1:
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                      else:
+                          unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                          require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                          count[stor4[_param1]]--
+                          unknown8161b120[_param1] = _param2
+                          list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                          list[_param1].field_256 = 0
+                          if not unknown9a816f7d[addr(_param2)]:
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                          else:
+                              list[stor7[addr(_param2)]].field_256 = _param1
+                              if unknownfc73d771[addr(_param2)]:
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+                              else:
+                                  unknownfc73d771[addr(_param2)] = _param1
+                                  unknown9a816f7d[addr(_param2)] = _param1
+                                  require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                  count[addr(_param2)]++
+                                  log 0x0: 32, 224, call.data1, _param2
+                                  stop
+  else:
+      if unknown5aebb460[stor4[_param1]][_param1][caller] != 1:
+          revert with 0, 'cdp-not-allowed'
+      else:
+          if not _param2:
+              revert with 0, 'dst-address-0'
+          else:
+              if _param2 == unknown8161b120[_param1]:
+                  revert with 0, 'dst-already-owner'
+              else:
+                  if not list[_param1].field_0:
+                      if not list[_param1].field_256:
+                          unknown9a816f7d[stor4[_param1]] = list[_param1].field_0
+                          if unknownfc73d771[stor4[_param1]] != _param1:
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                          else:
+                              unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                      else:
+                          list[list[_param1].field_256].field_0 = list[_param1].field_0
+                          if unknownfc73d771[stor4[_param1]] != _param1:
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                          else:
+                              unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                  else:
+                      list[list[_param1].field_0].field_256 = list[_param1].field_256
+                      if not list[_param1].field_256:
+                          unknown9a816f7d[stor4[_param1]] = list[_param1].field_0
+                          if unknownfc73d771[stor4[_param1]] != _param1:
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                          else:
+                              unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                      else:
+                          list[list[_param1].field_256].field_0 = list[_param1].field_0
+                          if unknownfc73d771[stor4[_param1]] != _param1:
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                          else:
+                              unknownfc73d771[stor4[_param1]] = list[_param1].field_256
+                              require count[stor4[_param1]] - 1 <= count[stor4[_param1]]
+                              count[stor4[_param1]]--
+                              unknown8161b120[_param1] = _param2
+                              list[_param1].field_0 = unknown9a816f7d[addr(_param2)]
+                              list[_param1].field_256 = 0
+                              if not unknown9a816f7d[addr(_param2)]:
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                              else:
+                                  list[stor7[addr(_param2)]].field_256 = _param1
+                                  if unknownfc73d771[addr(_param2)]:
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+                                  else:
+                                      unknownfc73d771[addr(_param2)] = _param1
+                                      unknown9a816f7d[addr(_param2)] = _param1
+                                      require count[addr(_param2)] + 1 >= count[addr(_param2)]
+                                      count[addr(_param2)]++
+                                      log 0x0: 32, 224, call.data1, _param2
+                                      stop
+

@@ -1,0 +1,107 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xad37fd42185Ba63009177058208dd1be4b136e6b
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknown36569e77Address is addr at storage 0
+  unknownc5ce281e is uint256 at storage 1
+  gemAddress is addr at storage 2
+  unknownb3bcfa82 is uint256 at storage 3
+  live is uint256 at storage 4
+  unknownbf353dbb is mapping of uint256 at storage 5
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def gem() payable: 
+  return gemAddress
+
+def live() payable: 
+  return live
+
+def unknownb3bcfa82() payable: 
+  return unknownb3bcfa82
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def unknownc5ce281e() payable: 
+  return unknownc5ce281e
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def cage() payable: 
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'AuthGemJoin/non-authed'
+  live = 0
+  log 0x0: 32, 224, call.data1, _param2
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'AuthGemJoin/non-authed'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'AuthGemJoin/non-authed'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownef693bed(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if _param2 > 0x8000000000000000000000000000000000000000000000000000000000000000:
+      revert with 0, 'AuthGemJoin/overflow'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x7cdd3fde with:
+       gas gas_remaining wei
+      args unknownc5ce281e, caller, -_param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(gemAddress)
+  call gemAddress.transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args addr(_param1), _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if not ext_call.return_data[0]:
+      revert with 0, 'AuthGemJoin/failed-transfer'
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown3b4da69f(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'AuthGemJoin/non-authed'
+  if live != 1:
+      revert with 0, 'AuthGemJoin/not-live'
+  if _param2 <′ 0:
+      revert with 0, 'AuthGemJoin/overflow'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x7cdd3fde with:
+       gas gas_remaining wei
+      args unknownc5ce281e, addr(_param1), _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(gemAddress)
+  call gemAddress.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if not ext_call.return_data[0]:
+      revert with 0, 'AuthGemJoin/failed-transfer'
+  log 0x0: 32, 224, call.data1, _param2
+

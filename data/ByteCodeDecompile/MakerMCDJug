@@ -1,0 +1,183 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x19c0976f590D67707E62397C87829d896Dc0f1F1
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  unknownd9638d36 is mapping of struct at storage 1
+  unknown36569e77Address is addr at storage 2
+  unknown626cb3c5Address is addr at storage 3
+  base is uint256 at storage 4
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def base() payable: 
+  return base
+
+def unknown626cb3c5() payable: 
+  return unknown626cb3c5Address
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def unknownd9638d36(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownd9638d36[_param1].field_0, unknownd9638d36[_param1].field_256
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Jug/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Jug/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown29ae8114(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Jug/not-authorized'
+  if _param1 != 'base':
+      revert with 0, 'Jug/file-unrecognized-param'
+  base = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownd4e8be83(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Jug/not-authorized'
+  if _param1 != 'vow':
+      revert with 0, 'Jug/file-unrecognized-param'
+  unknown626cb3c5Address = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown3b663195(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Jug/not-authorized'
+  if unknownd9638d36[_param1].field_0:
+      revert with 0, 'Jug/ilk-already-init'
+  unknownd9638d36[_param1].field_0 = 1000000000 * 10^18
+  unknownd9638d36[_param1].field_256 = block.timestamp
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown1a0b287e(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Jug/not-authorized'
+  if unknownd9638d36[_param1].field_256 != block.timestamp:
+      revert with 0, 'Jug/rho-not-updated'
+  if _param2 != 'duty':
+      revert with 0, 'Jug/file-unrecognized-param'
+  unknownd9638d36[_param1].field_0 = _param3
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown44e2a5a8(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if block.timestamp < unknownd9638d36[_param1].field_256:
+      revert with 0, 'Jug/invalid-now'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xd9638d36 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  require base + unknownd9638d36[_param1].field_0 >= base
+  if not base + unknownd9638d36[_param1].field_0:
+      if block.timestamp - unknownd9638d36[_param1].field_256:
+          if ext_call.return_data[32]:
+              require ext_call.return_data[32]
+              require not 0 / ext_call.return_data[32]
+          require ext_call.return_data >=′ 0
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0xb65337df with:
+               gas gas_remaining wei
+              args _param1, unknown626cb3c5Address, -ext_call.return_data[32]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          unknownd9638d36[_param1].field_256 = block.timestamp
+          log 0x0: 32, 224, call.data1, _param2
+          return 0
+      if ext_call.return_data[32]:
+          require ext_call.return_data[32]
+          require 1000000000 * 10^18 * ext_call.return_data / ext_call.return_data == 1000000000 * 10^18
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 >=′ 0
+      require ext_call.return_data >=′ 0
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0xb65337df with:
+           gas gas_remaining wei
+          args _param1, unknown626cb3c5Address, (1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18) - ext_call.return_data[32]
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      unknownd9638d36[_param1].field_256 = block.timestamp
+      log 0x0: 32, 224, call.data1, _param2
+      return (1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18)
+  if not bool(block.timestamp - unknownd9638d36[_param1].field_256):
+      s = 1000000000 * 10^18
+      idx = block.timestamp - unknownd9638d36[_param1].field_256 / 2
+      t = base + unknownd9638d36[_param1].field_0
+      while idx:
+          require t * t / t == t
+          require (t * t) + 500000000 * 10^18 >= t * t
+          if not bool(idx):
+              s = s
+              idx = idx / 2
+              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+              continue 
+          require not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 or s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          idx = idx / 2
+          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          continue 
+  else:
+      s = base + unknownd9638d36[_param1].field_0
+      idx = block.timestamp - unknownd9638d36[_param1].field_256 / 2
+      t = base + unknownd9638d36[_param1].field_0
+      while idx:
+          require t * t / t == t
+          require (t * t) + 500000000 * 10^18 >= t * t
+          if not bool(idx):
+              s = s
+              idx = idx / 2
+              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+              continue 
+          require not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 or s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          idx = idx / 2
+          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+          continue 
+  if ext_call.return_data[32]:
+      require ext_call.return_data[32]
+      require s * ext_call.return_data / ext_call.return_data == s
+  require s * ext_call.return_data / 1000000000 * 10^18 >=′ 0
+  require ext_call.return_data >=′ 0
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xb65337df with:
+       gas gas_remaining wei
+      args _param1, unknown626cb3c5Address, (s * ext_call.return_data / 1000000000 * 10^18) - ext_call.return_data[32]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  unknownd9638d36[_param1].field_256 = block.timestamp
+  log 0x0: 32, 224, call.data1, _param2
+  return (s * ext_call.return_data / 1000000000 * 10^18)
+

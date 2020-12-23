@@ -1,0 +1,535 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xe4B22D484958E582098A98229A24e8A43801b674
+# 
+#  Let's make the world open source 
+# 
+
+def _fallback() payable: # default function
+  revert
+
+def unknown288596a6(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  static call _param1.tub() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).sai() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(_param1)
+  static call _param1.0xc11645bc with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).dai() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if ext_call.return_data < _param2:
+      require ext_code.size(addr(ext_call.return_data))
+      call addr(ext_call.return_data).approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_param1), _param2
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0xc41780ba with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+
+def unknown8c544246(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  static call _param1.tub() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).sai() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(_param1)
+  static call _param1.0xc11645bc with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).dai() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if ext_call.return_data < _param2:
+      require ext_code.size(addr(ext_call.return_data))
+      call addr(ext_call.return_data).approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_param1), _param2
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0xfbabdebd with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+
+def unknownd25d7cc0(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(_param1)
+  static call _param1.tub() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).pep() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).peek() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if ext_call.return_data[32]:
+      if ext_call.return_data[0]:
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).rap(bytes32 cup) with:
+               gas gas_remaining wei
+              args _param2
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if 10^18 * ext_call.return_data / 10^18 != ext_call.return_data[0]:
+              revert with 0, 'ds-math-mul-overflow'
+          if (10^18 * ext_call.return_data / 2) < 10^18 * ext_call.return_data[0]:
+              revert with 0, 'ds-math-add-overflow'
+          require ext_call.return_data[0]
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).transferFrom(address from, address to, uint256 value) with:
+               gas gas_remaining wei
+              args caller, addr(_param1), (10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).give(bytes32 cup, address guy) with:
+       gas gas_remaining wei
+      args _param2, _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0xe19b8ee3 with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  return ext_call.return_data[0]
+
+def unknownb3e2c80d(addr _param1, uint256 _param2, addr _param3, addr _param4, uint256 _param5) payable: 
+  require calldata.size - 4 >= 160
+  require ext_code.size(_param1)
+  static call _param1.tub() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).pep() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).peek() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if ext_call.return_data[32]:
+      if ext_call.return_data[0]:
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).rap(bytes32 cup) with:
+               gas gas_remaining wei
+              args _param2
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if 10^18 * ext_call.return_data / 10^18 != ext_call.return_data[0]:
+              revert with 0, 'ds-math-mul-overflow'
+          if (10^18 * ext_call.return_data / 2) < 10^18 * ext_call.return_data[0]:
+              revert with 0, 'ds-math-add-overflow'
+          require ext_call.return_data[0]
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(_param3)
+          static call _param3.getPayAmount(address pay_gem, address buy_gem, uint256 buy_amt) with:
+                  gas gas_remaining wei
+                 args addr(_param4), addr(ext_call.return_data), (10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if _param5 < ext_call.return_data[0]:
+              revert with 0, 'maxPayAmt-exceeded'
+          require ext_code.size(_param4)
+          call _param4.allowance(address owner, address spender) with:
+               gas gas_remaining wei
+              args addr(this.address), _param3
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(_param4)
+          if ext_call.return_data < ext_call.return_data[0]:
+              call _param4.approve(address spender, uint256 value) with:
+                   gas gas_remaining wei
+                  args addr(_param3), ext_call.return_data[0]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+          call _param4.transferFrom(address from, address to, uint256 value) with:
+               gas gas_remaining wei
+              args caller, addr(this.address), ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'transfer-failed'
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(_param3)
+          call _param3.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+               gas gas_remaining wei
+              args 0, 0, (10^18 * ext_call.return_data / 2) / ext_call.return_dataaddr(_param4), ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).transfer(address to, uint256 value) with:
+               gas gas_remaining wei
+              args addr(_param1), (10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).give(bytes32 cup, address guy) with:
+       gas gas_remaining wei
+      args _param2, _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0xe19b8ee3 with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  return ext_call.return_data[0]
+
+def unknown512da898(addr _param1, uint256 _param2, addr _param3, uint256 _param4, uint256 _param5) payable: 
+  require calldata.size - 4 >= 160
+  require ext_code.size(_param1)
+  static call _param1.tub() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).pep() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).peek() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if ext_call.return_data[32]:
+      if ext_call.return_data[0]:
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).rap(bytes32 cup) with:
+               gas gas_remaining wei
+              args _param2
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if 10^18 * ext_call.return_data / 10^18 != ext_call.return_data[0]:
+              revert with 0, 'ds-math-mul-overflow'
+          if (10^18 * ext_call.return_data / 2) < 10^18 * ext_call.return_data[0]:
+              revert with 0, 'ds-math-add-overflow'
+          require ext_call.return_data[0]
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).sai() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(_param3)
+          static call _param3.getPayAmount(address pay_gem, address buy_gem, uint256 buy_amt) with:
+                  gas gas_remaining wei
+                 args addr(ext_call.return_data), addr(ext_call.return_data), ((10^18 * ext_call.return_data / 2) / ext_call.return_data[0]) + 1
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if _param4 < ext_call.return_data[0]:
+              revert with 0, 'maxPayAmt-exceeded'
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).draw(bytes32 cup, uint256 wad) with:
+               gas gas_remaining wei
+              args _param2, ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).tag() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).ink(bytes32 cup) with:
+                  gas gas_remaining wei
+                 args _param2
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              require ext_code.size(addr(ext_call.return_data))
+              static call addr(ext_call.return_data).vox() with:
+                      gas gas_remaining wei
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              require ext_code.size(addr(ext_call.return_data))
+              call addr(ext_call.return_data).par() with:
+                   gas gas_remaining wei
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              require ext_code.size(addr(ext_call.return_data))
+              call addr(ext_call.return_data).tab(bytes32 cup) with:
+                   gas gas_remaining wei
+                  args _param2
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              require ext_call.return_data[0]
+              require ext_call.return_data[0]
+              if ext_call.return_data * ext_call.return_data / ext_call.return_data[0] != ext_call.return_data[0]:
+                  revert with 0, 'ds-math-mul-overflow'
+              if (ext_call.return_data * ext_call.return_data < ext_call.return_data * ext_call.return_data[0]:
+                  revert with 0, 'ds-math-add-overflow'
+              if (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 / 2 < 0:
+                  revert with 0, 'ds-math-add-overflow'
+              require (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18
+              if (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 / 2 / (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 <= _param5:
+                  revert with 0, 'minRatio-failed'
+          else:
+              require ext_call.return_data[0]
+              if ext_call.return_data * ext_call.return_data / ext_call.return_data[0] != ext_call.return_data[0]:
+                  revert with 0, 'ds-math-mul-overflow'
+              if (ext_call.return_data * ext_call.return_data < ext_call.return_data * ext_call.return_data[0]:
+                  revert with 0, 'ds-math-add-overflow'
+              require ext_code.size(addr(ext_call.return_data))
+              static call addr(ext_call.return_data).vox() with:
+                      gas gas_remaining wei
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              require ext_code.size(addr(ext_call.return_data))
+              call addr(ext_call.return_data).par() with:
+                   gas gas_remaining wei
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              require ext_code.size(addr(ext_call.return_data))
+              call addr(ext_call.return_data).tab(bytes32 cup) with:
+                   gas gas_remaining wei
+                  args _param2
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[0]:
+                  if 1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 / 1000000000 * 10^18 != (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18:
+                      revert with 0, 'ds-math-mul-overflow'
+                  require 1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 < 1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18
+                  revert with 0, 'ds-math-add-overflow'
+              require ext_call.return_data[0]
+              if ext_call.return_data * ext_call.return_data / ext_call.return_data[0] != ext_call.return_data[0]:
+                  revert with 0, 'ds-math-mul-overflow'
+              if (ext_call.return_data * ext_call.return_data < ext_call.return_data * ext_call.return_data[0]:
+                  revert with 0, 'ds-math-add-overflow'
+              if 1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 / 1000000000 * 10^18 != (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18:
+                  revert with 0, 'ds-math-mul-overflow'
+              if (1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18) + ((ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 / 2) < 1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18:
+                  revert with 0, 'ds-math-add-overflow'
+              require (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18
+              if (1000000000 * 10^18 * (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18) + ((ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 / 2) / (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 <= _param5:
+                  revert with 0, 'minRatio-failed'
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).sai() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).allowance(address owner, address spender) with:
+               gas gas_remaining wei
+              args addr(this.address), _param3
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          if ext_call.return_data < ext_call.return_data[0]:
+              static call addr(ext_call.return_data).sai() with:
+                      gas gas_remaining wei
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              require ext_code.size(addr(ext_call.return_data))
+              call addr(ext_call.return_data).approve(address spender, uint256 value) with:
+                   gas gas_remaining wei
+                  args addr(_param3), ext_call.return_data[0]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).sai() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(_param3)
+          call _param3.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+               gas gas_remaining wei
+              args 0, 0, ((10^18 * ext_call.return_data / 2) / ext_call.return_dataaddr(ext_call.return_data), ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).rap(bytes32 cup) with:
+               gas gas_remaining wei
+              args _param2
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if 10^18 * ext_call.return_data / 10^18 != ext_call.return_data[0]:
+              revert with 0, 'ds-math-mul-overflow'
+          if (10^18 * ext_call.return_data / 2) < 10^18 * ext_call.return_data[0]:
+              revert with 0, 'ds-math-add-overflow'
+          require ext_call.return_data[0]
+          require ext_code.size(addr(ext_call.return_data))
+          static call addr(ext_call.return_data).gov() with:
+                  gas gas_remaining wei
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_code.size(addr(ext_call.return_data))
+          call addr(ext_call.return_data).transfer(address to, uint256 value) with:
+               gas gas_remaining wei
+              args addr(_param1), (10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).give(bytes32 cup, address guy) with:
+       gas gas_remaining wei
+      args _param2, _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(_param1)
+  call _param1.0xe19b8ee3 with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  return ext_call.return_data[0]
+

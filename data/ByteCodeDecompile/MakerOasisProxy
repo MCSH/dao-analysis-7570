@@ -1,0 +1,502 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x793EbBe21607e4F04788F89c7a9b97320773Ec59
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  stor0 is uint32 at storage 0
+  stor0 is addr at storage 0
+
+def _fallback() payable: # default function
+  require addr(stor0) == caller
+
+def sellAllAmountPayEth(address _otc, address _wethToken, address _buyToken, uint256 _minBuyAmt) payable: 
+  require ext_code.size(_wethToken)
+  call _wethToken.deposit() with:
+     value call.value wei
+       gas gas_remaining wei
+  require ext_call.success
+  require ext_code.size(_wethToken)
+  call _wethToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < call.value:
+      require ext_code.size(_wethToken)
+      call _wethToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.sellAllAmount(address pay_gem, uint256 pay_amt, address buy_gem, uint256 min_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, call.value, addr(_buyToken), _minBuyAmt
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  return ext_call.return_data[0]
+
+def sellAllAmount(address _otc, address _payToken, uint256 _payAmt, address _buyToken, uint256 _minBuyAmt): # not payable
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _payAmt
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < _payAmt:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.sellAllAmount(address pay_gem, uint256 pay_amt, address buy_gem, uint256 min_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _payAmt, addr(_buyToken), _minBuyAmt
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  return ext_call.return_data[0]
+
+def sellAllAmountBuyEth(address _otc, address _payToken, uint256 _payAmt, address _wethToken, uint256 _minBuyAmt): # not payable
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _payAmt
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < _payAmt:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.sellAllAmount(address pay_gem, uint256 pay_amt, address buy_gem, uint256 min_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _payAmt, addr(_wethToken), _minBuyAmt
+  require ext_call.success
+  require ext_code.size(_wethToken)
+  call _wethToken.withdraw(uint256 amount) with:
+       gas gas_remaining wei
+      args ext_call.return_data[0]
+  require ext_call.success
+  call caller with:
+     value ext_call.return_datawei
+       gas gas_remaining wei
+  return ext_call.return_data[0]
+
+def createAndSellAllAmountPayEth(address _factory, address _otc, address _buyToken, uint256 _minBuyAmt) payable: 
+  require ext_code.size(_factory)
+  call _factory.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  require ext_call.success
+  require ext_code.size(addr(stor0))
+  call addr(stor0).deposit() with:
+     value call.value wei
+       gas gas_remaining wei
+  require ext_call.success
+  require ext_code.size(addr(stor0))
+  call addr(stor0).allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < call.value:
+      require ext_code.size(addr(stor0))
+      call addr(stor0).approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.sellAllAmount(address pay_gem, uint256 pay_amt, address buy_gem, uint256 min_fill_amount) with:
+       gas gas_remaining wei
+      args 0, uint32(stor0), call.value, addr(_buyToken), _minBuyAmt
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  return addr(ext_call.return_data), ext_call.return_data[0]
+
+def createAndSellAllAmount(address _factory, address _otc, address _payToken, uint256 _payAmt, address _buyToken, uint256 _minBuyAmt): # not payable
+  require ext_code.size(_factory)
+  call _factory.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  require ext_call.success
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _payAmt
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < _payAmt:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.sellAllAmount(address pay_gem, uint256 pay_amt, address buy_gem, uint256 min_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _payAmt, addr(_buyToken), _minBuyAmt
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.transfer(address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  return addr(ext_call.return_data), ext_call.return_data[0]
+
+def createAndSellAllAmountBuyEth(address _factory, address _otc, address _payToken, uint256 _payAmt, uint256 _minBuyAmt): # not payable
+  require ext_code.size(_factory)
+  call _factory.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  require ext_call.success
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), _payAmt
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < _payAmt:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.sellAllAmount(address pay_gem, uint256 pay_amt, address buy_gem, uint256 min_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _payAmt, addr(stor0), _minBuyAmt
+  require ext_call.success
+  require ext_code.size(addr(stor0))
+  call addr(stor0).withdraw(uint256 amount) with:
+       gas gas_remaining wei
+      args ext_call.return_data[0]
+  require ext_call.success
+  call caller with:
+     value ext_call.return_datawei
+       gas gas_remaining wei
+  return addr(ext_call.return_data), ext_call.return_data[0]
+
+def buyAllAmountBuyEth(address _otc, address _wethToken, uint256 _wethAmt, address _payToken, uint256 _maxPayAmt): # not payable
+  require ext_code.size(_otc)
+  call _otc.getPayAmount(address pay_gem, address buy_gem, uint256 buy_amt) with:
+       gas gas_remaining wei
+      args addr(_payToken), addr(_wethToken), _wethAmt
+  require ext_call.success
+  require ext_call.return_data <= _maxPayAmt
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < ext_call.return_data[0]:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _wethAmt, addr(_payToken), ext_call.return_data[0]
+  require ext_call.success
+  require ext_code.size(_wethToken)
+  call _wethToken.withdraw(uint256 amount) with:
+       gas gas_remaining wei
+      args _wethAmt
+  require ext_call.success
+  call caller with:
+     value _wethAmt wei
+       gas gas_remaining wei
+  return ext_call.return_data[0]
+
+def buyAllAmountPayEth(address _otc, address _buyToken, uint256 _buyAmt, address _wethToken) payable: 
+  require ext_code.size(_wethToken)
+  call _wethToken.deposit() with:
+     value call.value wei
+       gas gas_remaining wei
+  require ext_call.success
+  require ext_code.size(_wethToken)
+  call _wethToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < call.value:
+      require ext_code.size(_wethToken)
+      call _wethToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _buyAmt, addr(_wethToken), call.value
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.balanceOf(address owner) with:
+       gas gas_remaining wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  if _buyAmt <= ext_call.return_data[0]:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, _buyAmt
+  else:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  require call.value - ext_call.return_data <= call.value
+  require ext_code.size(_wethToken)
+  call _wethToken.withdraw(uint256 amount) with:
+       gas gas_remaining wei
+      args (call.value - ext_call.return_data[0])
+  require ext_call.success
+  call caller with:
+     value call.value - ext_call.return_datawei
+       gas gas_remaining wei
+  return ext_call.return_data[0]
+
+def createAndBuyAllAmountBuyEth(address _factory, address _otc, uint256 _wethAmt, address _payToken, uint256 _maxPayAmt): # not payable
+  require ext_code.size(_factory)
+  call _factory.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.getPayAmount(address pay_gem, address buy_gem, uint256 buy_amt) with:
+       gas gas_remaining wei
+      args addr(_payToken), addr(stor0), _wethAmt
+  require ext_call.success
+  require ext_call.return_data <= _maxPayAmt
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < ext_call.return_data[0]:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+       gas gas_remaining wei
+      args 0, uint32(stor0), _wethAmt, addr(_payToken), ext_call.return_data[0]
+  require ext_call.success
+  require ext_code.size(addr(stor0))
+  call addr(stor0).withdraw(uint256 amount) with:
+       gas gas_remaining wei
+      args _wethAmt
+  require ext_call.success
+  call caller with:
+     value _wethAmt wei
+       gas gas_remaining wei
+  return addr(ext_call.return_data), ext_call.return_data[0]
+
+def buyAllAmount(address _otc, address _buyToken, uint256 _buyAmt, address _payToken, uint256 _maxPayAmt): # not payable
+  require ext_code.size(_otc)
+  call _otc.getPayAmount(address pay_gem, address buy_gem, uint256 buy_amt) with:
+       gas gas_remaining wei
+      args addr(_payToken), addr(_buyToken), _buyAmt
+  require ext_call.success
+  require ext_call.return_data <= _maxPayAmt
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < ext_call.return_data[0]:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _buyAmt, addr(_payToken), ext_call.return_data[0]
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.balanceOf(address owner) with:
+       gas gas_remaining wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  if _buyAmt <= ext_call.return_data[0]:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, _buyAmt
+  else:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  return ext_call.return_data[0]
+
+def createAndBuyAllAmountPayEth(address _factory, address _otc, address _buyToken, uint256 _buyAmt) payable: 
+  require ext_code.size(_factory)
+  call _factory.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  require ext_call.success
+  require ext_code.size(addr(stor0))
+  call addr(stor0).deposit() with:
+     value call.value wei
+       gas gas_remaining wei
+  require ext_call.success
+  require ext_code.size(addr(stor0))
+  call addr(stor0).allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < call.value:
+      require ext_code.size(addr(stor0))
+      call addr(stor0).approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _buyAmt, addr(stor0), call.value
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.balanceOf(address owner) with:
+       gas gas_remaining wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  if _buyAmt <= ext_call.return_data[0]:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, _buyAmt
+  else:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  require call.value - ext_call.return_data <= call.value
+  require ext_code.size(addr(stor0))
+  call addr(stor0).withdraw(uint256 amount) with:
+       gas gas_remaining wei
+      args (call.value - ext_call.return_data[0])
+  require ext_call.success
+  call caller with:
+     value call.value - ext_call.return_datawei
+       gas gas_remaining wei
+  return addr(ext_call.return_data), ext_call.return_data[0]
+
+def createAndBuyAllAmount(address _factory, address _otc, address _buyToken, uint256 _buyAmt, address _payToken, uint256 _maxPayAmt): # not payable
+  require ext_code.size(_factory)
+  call _factory.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.getPayAmount(address pay_gem, address buy_gem, uint256 buy_amt) with:
+       gas gas_remaining wei
+      args addr(_payToken), addr(_buyToken), _buyAmt
+  require ext_call.success
+  require ext_call.return_data <= _maxPayAmt
+  require ext_code.size(_payToken)
+  call _payToken.transferFrom(address from, address to, uint256 value) with:
+       gas gas_remaining wei
+      args caller, addr(this.address), ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(_payToken)
+  call _payToken.allowance(address owner, address spender) with:
+       gas gas_remaining wei
+      args addr(this.address), _otc
+  require ext_call.success
+  if ext_call.return_data < ext_call.return_data[0]:
+      require ext_code.size(_payToken)
+      call _payToken.approve(address spender, uint256 value) with:
+           gas gas_remaining wei
+          args addr(_otc), -1
+      require ext_call.success
+  require ext_code.size(_otc)
+  call _otc.buyAllAmount(address buy_gem, uint256 buy_amt, address pay_gem, uint256 max_fill_amount) with:
+       gas gas_remaining wei
+      args 0, 0, _buyAmt, addr(_payToken), ext_call.return_data[0]
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  call _buyToken.balanceOf(address owner) with:
+       gas gas_remaining wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(_buyToken)
+  if _buyAmt <= ext_call.return_data[0]:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, _buyAmt
+  else:
+      call _buyToken.transfer(address to, uint256 value) with:
+           gas gas_remaining wei
+          args caller, ext_call.return_data[0]
+  require ext_call.success
+  require ext_call.return_data[0]
+  return addr(ext_call.return_data), ext_call.return_data[0]
+

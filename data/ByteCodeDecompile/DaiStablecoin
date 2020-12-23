@@ -1,0 +1,230 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x6B175474E89094C44Da98b954EedeAC495271d0F
+# 
+#  Let's make the world open source 
+# 
+
+const name = 'Dai Stablecoin'
+const unknown30adf81f = 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb
+const decimals = 18
+const version = '1'
+const symbol = 'DAI'
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  totalSupply is uint256 at storage 1
+  balanceOf is mapping of uint256 at storage 2
+  allowance is mapping of uint256 at storage 3
+  nonces is mapping of uint256 at storage 4
+  unknown3644e515 is uint256 at storage 5
+
+def totalSupply() payable: 
+  return totalSupply
+
+def unknown3644e515() payable: 
+  return unknown3644e515
+
+def balanceOf(address _owner) payable: 
+  require calldata.size - 4 >= 32
+  return balanceOf[_owner]
+
+def nonces(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return nonces[_param1]
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def allowance(address _owner, address _spender) payable: 
+  require calldata.size - 4 >= 64
+  return allowance[_owner][_spender]
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Dai/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Dai/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def approve(address _spender, uint256 _value) payable: 
+  require calldata.size - 4 >= 64
+  allowance[caller][addr(_spender)] = _value
+  log Approval(
+        address owner=_value,
+        address spender=caller,
+        uint256 value=_spender)
+  return 1
+
+def mint(address _to, uint256 _amount) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Dai/not-authorized'
+  require balanceOf[addr(_to)] + _amount >= balanceOf[addr(_to)]
+  balanceOf[addr(_to)] += _amount
+  require totalSupply + _amount >= totalSupply
+  totalSupply += _amount
+  log Transfer(
+        address from=_amount,
+        address to=0,
+        uint256 value=_to)
+
+def push(address _dst, uint256 _wad) payable: 
+  require calldata.size - 4 >= 64
+  if balanceOf[caller] < _wad:
+      revert with 0, 'Dai/insufficient-balance'
+  if caller != caller:
+      if allowance[caller][caller] != -1:
+          if allowance[caller][caller] < _wad:
+              revert with 0, 'Dai/insufficient-allowance'
+          require allowance[caller][caller] - _wad <= allowance[caller][caller]
+          allowance[caller][caller] -= _wad
+  require balanceOf[caller] - _wad <= balanceOf[caller]
+  balanceOf[caller] -= _wad
+  require balanceOf[addr(_dst)] + _wad >= balanceOf[addr(_dst)]
+  balanceOf[addr(_dst)] += _wad
+  log Transfer(
+        address from=_wad,
+        address to=caller,
+        uint256 value=_dst)
+
+def transfer(address _to, uint256 _value) payable: 
+  require calldata.size - 4 >= 64
+  if balanceOf[caller] < _value:
+      revert with 0, 'Dai/insufficient-balance'
+  if caller != caller:
+      if allowance[caller][caller] != -1:
+          if allowance[caller][caller] < _value:
+              revert with 0, 'Dai/insufficient-allowance'
+          require allowance[caller][caller] - _value <= allowance[caller][caller]
+          allowance[caller][caller] -= _value
+  require balanceOf[caller] - _value <= balanceOf[caller]
+  balanceOf[caller] -= _value
+  require balanceOf[addr(_to)] + _value >= balanceOf[addr(_to)]
+  balanceOf[addr(_to)] += _value
+  log Transfer(
+        address from=_value,
+        address to=caller,
+        uint256 value=_to)
+  return 1
+
+def burn(address _guy, uint256 _wad) payable: 
+  require calldata.size - 4 >= 64
+  if balanceOf[addr(_guy)] < _wad:
+      revert with 0, 'Dai/insufficient-balance'
+  if _guy != caller:
+      if allowance[addr(_guy)][caller] != -1:
+          if allowance[addr(_guy)][caller] < _wad:
+              revert with 0, 'Dai/insufficient-allowance'
+          require allowance[addr(_guy)][caller] - _wad <= allowance[addr(_guy)][caller]
+          allowance[addr(_guy)][caller] -= _wad
+  require balanceOf[addr(_guy)] - _wad <= balanceOf[addr(_guy)]
+  balanceOf[addr(_guy)] -= _wad
+  require totalSupply - _wad <= totalSupply
+  totalSupply -= _wad
+  log Transfer(
+        address from=_wad,
+        address to=_guy,
+        uint256 value=0)
+
+def pull(address _src, uint256 _wad) payable: 
+  require calldata.size - 4 >= 64
+  if balanceOf[addr(_src)] < _wad:
+      revert with 0, 'Dai/insufficient-balance'
+  if _src != caller:
+      if allowance[addr(_src)][caller] != -1:
+          if allowance[addr(_src)][caller] < _wad:
+              revert with 0, 'Dai/insufficient-allowance'
+          require allowance[addr(_src)][caller] - _wad <= allowance[addr(_src)][caller]
+          allowance[addr(_src)][caller] -= _wad
+  require balanceOf[addr(_src)] - _wad <= balanceOf[addr(_src)]
+  balanceOf[addr(_src)] -= _wad
+  require balanceOf[caller] + _wad >= balanceOf[caller]
+  balanceOf[caller] += _wad
+  log Transfer(
+        address from=_wad,
+        address to=_src,
+        uint256 value=caller)
+
+def move(address _src, address _dst, uint256 _wad) payable: 
+  require calldata.size - 4 >= 96
+  if balanceOf[addr(_src)] < _wad:
+      revert with 0, 'Dai/insufficient-balance'
+  if _src != caller:
+      if allowance[addr(_src)][caller] != -1:
+          if allowance[addr(_src)][caller] < _wad:
+              revert with 0, 'Dai/insufficient-allowance'
+          require allowance[addr(_src)][caller] - _wad <= allowance[addr(_src)][caller]
+          allowance[addr(_src)][caller] -= _wad
+  require balanceOf[addr(_src)] - _wad <= balanceOf[addr(_src)]
+  balanceOf[addr(_src)] -= _wad
+  require balanceOf[addr(_dst)] + _wad >= balanceOf[addr(_dst)]
+  balanceOf[addr(_dst)] += _wad
+  log Transfer(
+        address from=_wad,
+        address to=_src,
+        uint256 value=_dst)
+
+def transferFrom(address _from, address _to, uint256 _value) payable: 
+  require calldata.size - 4 >= 96
+  if balanceOf[addr(_from)] < _value:
+      revert with 0, 'Dai/insufficient-balance'
+  if _from != caller:
+      if allowance[addr(_from)][caller] != -1:
+          if allowance[addr(_from)][caller] < _value:
+              revert with 0, 'Dai/insufficient-allowance'
+          require allowance[addr(_from)][caller] - _value <= allowance[addr(_from)][caller]
+          allowance[addr(_from)][caller] -= _value
+  require balanceOf[addr(_from)] - _value <= balanceOf[addr(_from)]
+  balanceOf[addr(_from)] -= _value
+  require balanceOf[addr(_to)] + _value >= balanceOf[addr(_to)]
+  balanceOf[addr(_to)] += _value
+  log Transfer(
+        address from=_value,
+        address to=_from,
+        uint256 value=_to)
+  return 1
+
+def unknown8fcbaf0c(addr _param1, addr _param2, uint256 _param3, uint256 _param4, bool _param5, uint8 _param6, uint256 _param7, uint256 _param8) payable: 
+  require calldata.size - 4 >= 256
+  if not _param1:
+      revert with 0, 'Dai/invalid-address-0'
+  signer = erecover(sha3(0, unknown3644e515, sha3(0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb, addr(_param1), addr(_param2), _param3, _param4, _param5)), _param6 << 248, _param7, _param8) # precompiled
+  if not erecover.result:
+      revert with ext_call.return_data[0 len return_data.size]
+  if _param1 != addr(signer):
+      revert with 0, 'Dai/invalid-permit'
+  if _param4:
+      if block.timestamp > _param4:
+          revert with 0, 'Dai/permit-expired'
+  nonces[addr(_param1)]++
+  if _param3 != nonces[addr(_param1)]:
+      revert with 0, 'Dai/invalid-nonce'
+  if _param5:
+      allowance[addr(_param1)][addr(_param2)] = -1
+      log Approval(
+            address owner=-1,
+            address spender=_param1,
+            uint256 value=_param2)
+  else:
+      allowance[addr(_param1)][addr(_param2)] = 0
+      log Approval(
+            address owner=0,
+            address spender=_param1,
+            uint256 value=_param2)
+

@@ -1,0 +1,295 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x9AeD7A25F2d928225e6fb2388055c7363aD6727b
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  totalSupply is uint256 at storage 0
+  balanceOf is mapping of uint256 at storage 1
+  allowance is mapping of uint256 at storage 2
+  authorityAddress is addr at storage 3
+  stopped is uint8 at storage 4 offset 160
+  owner is addr at storage 4
+  symbol is uint256 at storage 5
+  decimals is uint256 at storage 6
+  name is uint256 at storage 7
+
+def name(): # not payable
+  return name
+
+def totalSupply(): # not payable
+  return totalSupply
+
+def decimals(): # not payable
+  return decimals
+
+def balanceOf(address _owner): # not payable
+  return balanceOf[addr(_owner)]
+
+def stopped(): # not payable
+  return bool(stopped)
+
+def owner(): # not payable
+  return owner
+
+def symbol(): # not payable
+  return symbol
+
+def authority(): # not payable
+  return authorityAddress
+
+def allowance(address _owner, address _spender): # not payable
+  return allowance[addr(_owner)][addr(_spender)]
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def approve(address _guy): # not payable
+  require not stopped
+  allowance[caller][addr(_guy)] = -1
+  log Approval(
+        address owner=-1,
+        address spender=caller,
+        uint256 value=_guy)
+  return 1
+
+def approve(address _spender, uint256 _value): # not payable
+  require not stopped
+  allowance[caller][addr(_spender)] = _value
+  log Approval(
+        address owner=_value,
+        address spender=caller,
+        uint256 value=_spender)
+  return 1
+
+def setName(bytes32 _name): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  name = _name_
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def stop(): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  stopped = 1
+
+def start(): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  stopped = 0
+
+def mint(uint256 _wad): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require not stopped
+  require balanceOf[caller] + _wad >= balanceOf[caller]
+  balanceOf[caller] += _wad
+  require totalSupply + _wad >= totalSupply
+  totalSupply += _wad
+  log Mint(
+        address to=_wad,
+        uint256 amount=caller)
+
+def push(address _dst, uint256 _wad): # not payable
+  require not stopped
+  if caller != caller:
+      if allowance[caller][caller] != -1:
+          require allowance[caller][caller] - _wad <= allowance[caller][caller]
+          allowance[caller][caller] -= _wad
+  require balanceOf[caller] - _wad <= balanceOf[caller]
+  balanceOf[caller] -= _wad
+  require balanceOf[_dst] + _wad >= balanceOf[_dst]
+  balanceOf[addr(_dst)] = balanceOf[_dst] + _wad
+  log Transfer(
+        address from=_wad,
+        address to=caller,
+        uint256 value=_dst)
+
+def transfer(address _to, uint256 _value): # not payable
+  require not stopped
+  if caller != caller:
+      if allowance[caller][caller] != -1:
+          require allowance[caller][caller] - _value <= allowance[caller][caller]
+          allowance[caller][caller] -= _value
+  require balanceOf[caller] - _value <= balanceOf[caller]
+  balanceOf[caller] -= _value
+  require balanceOf[_to] + _value >= balanceOf[_to]
+  balanceOf[addr(_to)] = balanceOf[_to] + _value
+  log Transfer(
+        address from=_value,
+        address to=caller,
+        uint256 value=_to)
+  return 1
+
+def mint(address _to, uint256 _amount): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require not stopped
+  require balanceOf[addr(_to)] + _amount >= balanceOf[addr(_to)]
+  balanceOf[addr(_to)] += _amount
+  require totalSupply + _amount >= totalSupply
+  totalSupply += _amount
+  log Mint(
+        address to=_amount,
+        uint256 amount=_to)
+
+def pull(address _src, uint256 _wad): # not payable
+  require not stopped
+  if _src != caller:
+      if allowance[addr(_src)][caller] != -1:
+          require allowance[addr(_src)][caller] - _wad <= allowance[addr(_src)][caller]
+          allowance[addr(_src)][caller] -= _wad
+  require balanceOf[addr(_src)] - _wad <= balanceOf[addr(_src)]
+  balanceOf[addr(_src)] -= _wad
+  require balanceOf[caller] + _wad >= balanceOf[caller]
+  balanceOf[caller] = balanceOf[caller] + _wad
+  log Transfer(
+        address from=_wad,
+        address to=_src,
+        uint256 value=caller)
+
+def move(address _src, address _dst, uint256 _wad): # not payable
+  require not stopped
+  if _src != caller:
+      if allowance[addr(_src)][caller] != -1:
+          require allowance[addr(_src)][caller] - _wad <= allowance[addr(_src)][caller]
+          allowance[addr(_src)][caller] -= _wad
+  require balanceOf[addr(_src)] - _wad <= balanceOf[addr(_src)]
+  balanceOf[addr(_src)] -= _wad
+  require balanceOf[_dst] + _wad >= balanceOf[_dst]
+  balanceOf[addr(_dst)] = balanceOf[_dst] + _wad
+  log Transfer(
+        address from=_wad,
+        address to=_src,
+        uint256 value=_dst)
+
+def burn(uint256 _value): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require not stopped
+  if caller != caller:
+      if allowance[caller][caller] != -1:
+          require allowance[caller][caller] - _value <= allowance[caller][caller]
+          allowance[caller][caller] -= _value
+  require balanceOf[caller] - _value <= balanceOf[caller]
+  balanceOf[caller] -= _value
+  require totalSupply - _value <= totalSupply
+  totalSupply -= _value
+  log Burn(
+        address burner=_value,
+        uint256 value=caller)
+
+def transferFrom(address _from, address _to, uint256 _value): # not payable
+  require not stopped
+  if _from != caller:
+      if allowance[addr(_from)][caller] != -1:
+          require allowance[addr(_from)][caller] - _value <= allowance[addr(_from)][caller]
+          allowance[addr(_from)][caller] -= _value
+  require balanceOf[addr(_from)] - _value <= balanceOf[addr(_from)]
+  balanceOf[addr(_from)] -= _value
+  require balanceOf[_to] + _value >= balanceOf[_to]
+  balanceOf[addr(_to)] = balanceOf[_to] + _value
+  log Transfer(
+        address from=_value,
+        address to=_from,
+        uint256 value=_to)
+  return 1
+
+def burn(address _guy, uint256 _wad): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require not stopped
+  if _guy != caller:
+      if allowance[addr(_guy)][caller] != -1:
+          require allowance[addr(_guy)][caller] - _wad <= allowance[addr(_guy)][caller]
+          allowance[addr(_guy)][caller] -= _wad
+  require balanceOf[addr(_guy)] - _wad <= balanceOf[addr(_guy)]
+  balanceOf[addr(_guy)] -= _wad
+  require totalSupply - _wad <= totalSupply
+  totalSupply -= _wad
+  log Burn(
+        address burner=_wad,
+        uint256 value=_guy)
+

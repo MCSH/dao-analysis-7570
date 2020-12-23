@@ -1,0 +1,463 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x9B0F70Df76165442ca6092939132bBAEA77f2d7A
+# 
+#  Let's make the world open source 
+# 
+
+const era = block.timestamp
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  stor2 is uint256 at storage 2
+  stor3 is uint256 at storage 3
+  stor3 is uint256 at storage 3 offset 1
+  fix is uint256 at storage 4
+  how is uint256 at storage 5
+  tau is uint256 at storage 6
+
+def how(): # not payable
+  return how
+
+def owner(): # not payable
+  return owner
+
+def fix(): # not payable
+  return fix
+
+def authority(): # not payable
+  return authorityAddress
+
+def tau(): # not payable
+  return tau
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def tell(uint256 _ray): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  fix = _ray
+
+def tune(uint256 _contractSendGas): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  how = _contractSendGas
+
+def mold(bytes32 _param, uint256 _val): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, _val
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  if _param == 'way':
+      uint256(stor3.field_0) = _val
+
+def prod(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if block.timestamp - tau:
+      tau = block.timestamp
+      if uint256(stor3.field_0) != 1000000000 * 10^18:
+          if bool(block.timestamp - tau):
+              s = uint256(stor3.field_0)
+              idx = block.timestamp - tau / 2
+              t = uint256(stor3.field_0)
+              while idx:
+                  if not t:
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      s = 0
+                      idx = idx / 2
+                      t = 0
+                      continue 
+                  require t
+                  require t * t / t == t
+                  require (t * t) + 500000000 * 10^18 >= t * t
+                  if not bool(idx):
+                      s = s
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                      s = 0
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  idx = idx / 2
+                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  continue 
+          else:
+              s = 1000000000 * 10^18
+              idx = block.timestamp - tau / 2
+              t = uint256(stor3.field_0)
+              while idx:
+                  if not t:
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      s = 0
+                      idx = idx / 2
+                      t = 0
+                      continue 
+                  require t
+                  require t * t / t == t
+                  require (t * t) + 500000000 * 10^18 >= t * t
+                  if not bool(idx):
+                      s = s
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                      s = 0
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  idx = idx / 2
+                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  continue 
+          if not s:
+              stor2 = 0
+          else:
+              require s
+              require stor2 * s / s == stor2
+              require (stor2 * s) + 500000000 * 10^18 >= stor2 * s
+              stor2 = (stor2 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+      if how:
+          if fix < stor2:
+              if uint256(stor3.field_0) >= 1000000000 * 10^18:
+                  if ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+              else:
+                  require uint255(stor3.field_1) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                  require uint256(stor3.field_0)
+                  if ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+          else:
+              if uint256(stor3.field_0) >= 1000000000 * 10^18:
+                  if ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+              else:
+                  require uint255(stor3.field_1) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                  require uint256(stor3.field_0)
+                  if ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+
+def par(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if block.timestamp - tau:
+      tau = block.timestamp
+      if uint256(stor3.field_0) != 1000000000 * 10^18:
+          if bool(block.timestamp - tau):
+              s = uint256(stor3.field_0)
+              idx = block.timestamp - tau / 2
+              t = uint256(stor3.field_0)
+              while idx:
+                  if not t:
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      s = 0
+                      idx = idx / 2
+                      t = 0
+                      continue 
+                  require t
+                  require t * t / t == t
+                  require (t * t) + 500000000 * 10^18 >= t * t
+                  if not bool(idx):
+                      s = s
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                      s = 0
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  idx = idx / 2
+                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  continue 
+          else:
+              s = 1000000000 * 10^18
+              idx = block.timestamp - tau / 2
+              t = uint256(stor3.field_0)
+              while idx:
+                  if not t:
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      s = 0
+                      idx = idx / 2
+                      t = 0
+                      continue 
+                  require t
+                  require t * t / t == t
+                  require (t * t) + 500000000 * 10^18 >= t * t
+                  if not bool(idx):
+                      s = s
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                      s = 0
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  idx = idx / 2
+                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  continue 
+          if not s:
+              stor2 = 0
+          else:
+              require s
+              require stor2 * s / s == stor2
+              require (stor2 * s) + 500000000 * 10^18 >= stor2 * s
+              stor2 = (stor2 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+      if how:
+          if fix < stor2:
+              if uint256(stor3.field_0) >= 1000000000 * 10^18:
+                  if ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+              else:
+                  require uint255(stor3.field_1) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                  require uint256(stor3.field_0)
+                  if ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+          else:
+              if uint256(stor3.field_0) >= 1000000000 * 10^18:
+                  if ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+              else:
+                  require uint255(stor3.field_1) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                  require uint256(stor3.field_0)
+                  if ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+  return stor2
+
+def way(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if block.timestamp - tau:
+      tau = block.timestamp
+      if uint256(stor3.field_0) != 1000000000 * 10^18:
+          if bool(block.timestamp - tau):
+              s = uint256(stor3.field_0)
+              idx = block.timestamp - tau / 2
+              t = uint256(stor3.field_0)
+              while idx:
+                  if not t:
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      s = 0
+                      idx = idx / 2
+                      t = 0
+                      continue 
+                  require t
+                  require t * t / t == t
+                  require (t * t) + 500000000 * 10^18 >= t * t
+                  if not bool(idx):
+                      s = s
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                      s = 0
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  idx = idx / 2
+                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  continue 
+          else:
+              s = 1000000000 * 10^18
+              idx = block.timestamp - tau / 2
+              t = uint256(stor3.field_0)
+              while idx:
+                  if not t:
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      s = 0
+                      idx = idx / 2
+                      t = 0
+                      continue 
+                  require t
+                  require t * t / t == t
+                  require (t * t) + 500000000 * 10^18 >= t * t
+                  if not bool(idx):
+                      s = s
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                      s = 0
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  idx = idx / 2
+                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                  continue 
+          if not s:
+              stor2 = 0
+          else:
+              require s
+              require stor2 * s / s == stor2
+              require (stor2 * s) + 500000000 * 10^18 >= stor2 * s
+              stor2 = (stor2 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+      if how:
+          if fix < stor2:
+              if uint256(stor3.field_0) >= 1000000000 * 10^18:
+                  if ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+              else:
+                  require uint255(stor3.field_1) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                  require uint256(stor3.field_0)
+                  if ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+          else:
+              if uint256(stor3.field_0) >= 1000000000 * 10^18:
+                  if ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 115792089237316195423570985008687907853269984665639564039457584007913129639936, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -115792089237316195423570985008687907853269984665639564039457584007913129639936, ('mul', -1, ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+              else:
+                  require uint255(stor3.field_1) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                  require uint256(stor3.field_0)
+                  if ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) >=′ 0:
+                      uint256(stor3.field_0) = ('signextend', 15, ('add', 1000000000000000000000000000, ('mul', -1, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3)))))), ('mul', -1, 'timestamp', ('stor', ('name', 'how', 5))), ('mul', ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                  else:
+                      require (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 >= 0xa70c3c40a64e6c51999090b65f67d9240000000000000
+                      require ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+                      uint256(stor3.field_0) = (('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18 / 2) + 0xa70c3c40a64e6c51999090b65f67d9240000000000000 / ('signextend', 15, ('add', -1000000000000000000000000000, ('div', ('add', 1000000000000000000000000000000000000000000000000000000, ('type', 255, ('field', 1, ('stor', ('name', 'stor3', 3))))), ('type', 256, ('field', 0, ('stor', ('name', 'stor3', 3))))), ('mul', 'timestamp', ('stor', ('name', 'how', 5))), ('mul', -1, ('stor', ('name', 'tau', 6)), ('stor', ('name', 'how', 5))))) + 1000000000 * 10^18
+  return uint256(stor3.field_0)
+

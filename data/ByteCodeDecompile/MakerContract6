@@ -1,0 +1,137 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xb5d0B4BA08a68819C8010Cc44D343F737511C82E
+# 
+#  Let's make the world open source 
+# 
+
+const ANY = -1
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  stor2 is mapping of uint8 at storage 2
+  stor25650552922148892519344032483236097322509251582074379366566173648062335731131 is mapping of uint8 at storage 0x38b5b2ceac7637132d27514ffcf440b705287635075af7b8bd5adcaa6a4cc5bb
+  stor32556593370438695430030356523483399124461889696563987552370384290271767317911 is mapping of uint8 at storage 0x47fa60fbc027ac3984ea309688a33182f4193c478b40ba8d294eb2cd3ddc4d97
+  storF423 is uint8 at storage 0xf423d1317b37667cd26005728bffa7c8b0499e133951fcf8e814d4fc5f4c98f6
+
+def owner(): # not payable
+  return owner
+
+def authority(): # not payable
+  return authorityAddress
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def forbid(bytes32 _src, bytes32 _dst, bytes32 _sig): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  stor2[_src][_dst][_sig] = 0
+  log LogForbid(
+        bytes32 src=_src,
+        bytes32 dst=_dst,
+        bytes32 sig=_sig)
+
+def permit(bytes32 _src, bytes32 _dst, bytes32 _sig): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  stor2[_src][_dst][_sig] = 1
+  log LogPermit(
+        bytes32 src=_src,
+        bytes32 dst=_dst,
+        bytes32 sig=_sig)
+
+def forbid(address _src, address _dst, bytes32 _sig): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  stor2[addr(_src)][addr(_dst)][_sig] = 0
+  log LogForbid(
+        bytes32 src=_src,
+        bytes32 dst=_dst,
+        bytes32 sig=_sig)
+
+def permit(address _src, address _dst, bytes32 _sig): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  stor2[addr(_src)][addr(_dst)][_sig] = 1
+  log LogPermit(
+        bytes32 src=_src,
+        bytes32 dst=_dst,
+        bytes32 sig=_sig)
+
+def canCall(address _src, address _dst, bytes4 _sig): # not payable
+  if stor2[addr(_src)][addr(_dst)][Mask(32, 224, _sig)]:
+      return bool(stor2[addr(_src)][addr(_dst)][Mask(32, 224, _sig)])
+  if stor2[addr(_src)][addr(_dst)][-1]:
+      return bool(stor2[addr(_src)][addr(_dst)][-1])
+  if stor2[addr(_src)][-1][Mask(32, 224, _sig)]:
+      return bool(stor2[addr(_src)][-1][Mask(32, 224, _sig)])
+  if stor2[addr(_src)][-1][-1]:
+      return bool(stor2[addr(_src)][-1][-1])
+  if stor38B5[addr(_dst)][Mask(32, 224, _sig)]:
+      return bool(stor38B5[addr(_dst)][Mask(32, 224, _sig)])
+  if stor38B5[addr(_dst)][-1]:
+      return bool(stor38B5[addr(_dst)][-1])
+  if stor47FA[Mask(32, 224, _sig)]:
+      return bool(stor47FA[Mask(32, 224, _sig)])
+  return bool(storF423)
+

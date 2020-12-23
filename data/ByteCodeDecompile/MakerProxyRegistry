@@ -1,0 +1,59 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  proxies is mapping of addr at storage 0
+  stor1 is addr at storage 1
+
+def proxies(address _param1): # not payable
+  return proxies[_param1]
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def build(): # not payable
+  if proxies[caller]:
+      require ext_code.size(proxies[caller])
+      call proxies[caller].owner() with:
+           gas gas_remaining wei
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require ext_call.return_data[12 len 20] != caller
+  require ext_code.size(stor1)
+  call stor1.build(address owner) with:
+       gas gas_remaining wei
+      args caller
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  proxies[caller] = addr(ext_call.return_data)
+  return addr(ext_call.return_data)
+
+def build(address _owner): # not payable
+  if proxies[addr(_owner)]:
+      require ext_code.size(proxies[addr(_owner)])
+      call proxies[addr(_owner)].owner() with:
+           gas gas_remaining wei
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require ext_call.return_data_owner
+  require ext_code.size(stor1)
+  call stor1.build(address owner) with:
+       gas gas_remaining wei
+      args _owner
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  proxies[addr(_owner)] = addr(ext_call.return_data)
+  return addr(ext_call.return_data)
+

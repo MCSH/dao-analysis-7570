@@ -1,0 +1,272 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B
+# 
+#  Let's make the world open source 
+# 
+#
+#  I failed with these: 
+#  - unknown76088703(?)
+#  - unknown870c616d(?)
+#  All the rest is below.
+#
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  unknown4538c4eb is mapping of uint256 at storage 1
+  unknownd9638d36 is mapping of struct at storage 2
+  unknown2424be5c is mapping of struct at storage 3
+  unknown214414d5 is mapping of uint256 at storage 4
+  dai is mapping of uint256 at storage 5
+  unknownf059212a is mapping of uint256 at storage 6
+  debt is uint256 at storage 7
+  unknown2d61a355 is uint256 at storage 8
+  unknownbabe8a3f is uint256 at storage 9
+  live is uint256 at storage 10
+
+def debt() payable: 
+  return debt
+
+def unknown214414d5(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  return unknown214414d5[_param1][_param2]
+
+def unknown2424be5c(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  return unknown2424be5c[_param1][_param2].field_0, unknown2424be5c[_param1][_param2].field_256
+
+def unknown2d61a355() payable: 
+  return unknown2d61a355
+
+def unknown4538c4eb(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  return unknown4538c4eb[_param1][_param2]
+
+def dai(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return dai[_param1]
+
+def live() payable: 
+  return live
+
+def unknownbabe8a3f() payable: 
+  return unknownbabe8a3f
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def unknownd9638d36(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownd9638d36[_param1].field_0, 
+         unknownd9638d36[_param1].field_256,
+         unknownd9638d36[_param1].field_512,
+         unknownd9638d36[_param1].field_768,
+         unknownd9638d36[_param1].field_1024
+
+def unknownf059212a(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownf059212a[_param1]
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def cage() payable: 
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  live = 0
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknowna3b22fc4(addr _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 32
+  unknown4538c4eb[caller][addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknowndc4d20fa(addr _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 32
+  unknown4538c4eb[caller][addr(_param1)] = 0
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if live != 1:
+      revert with 0, 'Vat/not-live'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if live != 1:
+      revert with 0, 'Vat/not-live'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknown29ae8114(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if live != 1:
+      revert with 0, 'Vat/not-live'
+  if _param1 != 'Line':
+      revert with 0, 'Vat/file-unrecognized-param'
+  unknownbabe8a3f = _param2
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknown3b663195(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if unknownd9638d36[_param1].field_256:
+      revert with 0, 'Vat/ilk-already-init'
+  unknownd9638d36[_param1].field_256 = 1000000000 * 10^18
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknownf37ac61c(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 32
+  require unknownf059212a[caller] - _param1 <= unknownf059212a[caller]
+  unknownf059212a[caller] -= _param1
+  require dai[caller] - _param1 <= dai[caller]
+  dai[caller] -= _param1
+  require unknown2d61a355 - _param1 <= unknown2d61a355
+  unknown2d61a355 -= _param1
+  require debt - _param1 <= debt
+  debt -= _param1
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknown1a0b287e(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if live != 1:
+      revert with 0, 'Vat/not-live'
+  if _param2 == 'spot':
+      unknownd9638d36[_param1].field_512 = _param3
+  else:
+      if _param2 == 'line':
+          unknownd9638d36[_param1].field_768 = _param3
+      else:
+          if _param2 != 'dust':
+              revert with 0, 'Vat/file-unrecognized-param'
+          unknownd9638d36[_param1].field_1024 = _param3
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def move(address _src, address _dst, uint256 _wad) payable: 
+  require calldata.size - 4 >= 96
+  if _src != caller and unknown4538c4eb[addr(_src)][caller] != 1:
+      revert with 0, 'Vat/not-allowed'
+  require dai[addr(_src)] - _wad <= dai[addr(_src)]
+  dai[addr(_src)] -= _wad
+  require dai[addr(_dst)] + _wad >= dai[addr(_dst)]
+  dai[addr(_dst)] += _wad
+  log 0x0: 32, 224, call.data
+
+def unknown7cdd3fde(uint256 _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if _param3 <′ 0:
+      require unknown214414d5[_param1][addr(_param2)] + _param3 <= unknown214414d5[_param1][addr(_param2)]
+  if _param3 >′ 0:
+      require unknown214414d5[_param1][addr(_param2)] + _param3 >= unknown214414d5[_param1][addr(_param2)]
+  unknown214414d5[_param1][addr(_param2)] += _param3
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknownf24e23eb(addr _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  require unknownf059212a[addr(_param1)] + _param3 >= unknownf059212a[addr(_param1)]
+  unknownf059212a[addr(_param1)] += _param3
+  require dai[addr(_param2)] + _param3 >= dai[addr(_param2)]
+  dai[addr(_param2)] += _param3
+  require unknown2d61a355 + _param3 >= unknown2d61a355
+  unknown2d61a355 += _param3
+  require debt + _param3 >= debt
+  debt += _param3
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknown6111be2e(uint256 _param1, addr _param2, addr _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  if _param2 != caller and unknown4538c4eb[addr(_param2)][caller] != 1:
+      revert with 0, 'Vat/not-allowed'
+  require unknown214414d5[_param1][addr(_param2)] - _param4 <= unknown214414d5[_param1][addr(_param2)]
+  unknown214414d5[_param1][addr(_param2)] -= _param4
+  require unknown214414d5[_param1][addr(_param3)] + _param4 >= unknown214414d5[_param1][addr(_param3)]
+  unknown214414d5[_param1][addr(_param3)] += _param4
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknownb65337df(uint256 _param1, addr _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if live != 1:
+      revert with 0, 'Vat/not-live'
+  if _param3 <′ 0:
+      require unknownd9638d36[_param1].field_256 + _param3 <= unknownd9638d36[_param1].field_256
+  if _param3 >′ 0:
+      require unknownd9638d36[_param1].field_256 + _param3 >= unknownd9638d36[_param1].field_256
+  unknownd9638d36[_param1].field_256 += _param3
+  require unknownd9638d36[_param1].field_0 >=′ 0
+  if _param3:
+      require _param3
+      require unknownd9638d36[_param1].field_0 * _param3 /′ _param3 == unknownd9638d36[_param1].field_0
+  if unknownd9638d36[_param1].field_0 * _param3 <′ 0:
+      require dai[addr(_param2)] + (unknownd9638d36[_param1].field_0 * _param3) <= dai[addr(_param2)]
+  if unknownd9638d36[_param1].field_0 * _param3 >′ 0:
+      require dai[addr(_param2)] + (unknownd9638d36[_param1].field_0 * _param3) >= dai[addr(_param2)]
+  dai[addr(_param2)] += unknownd9638d36[_param1].field_0 * _param3
+  if unknownd9638d36[_param1].field_0 * _param3 <′ 0:
+      require debt + (unknownd9638d36[_param1].field_0 * _param3) <= debt
+  if unknownd9638d36[_param1].field_0 * _param3 >′ 0:
+      require debt + (unknownd9638d36[_param1].field_0 * _param3) >= debt
+  debt += unknownd9638d36[_param1].field_0 * _param3
+  log 0x0: 32, 224, call.data1, _param2, _param3
+
+def unknown7bab3f40(uint256 _param1, addr _param2, addr _param3, addr _param4, uint256 _param5, uint256 _param6) payable: 
+  require calldata.size - 4 >= 192
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Vat/not-authorized'
+  if _param5 <′ 0:
+      require unknown2424be5c[_param1][addr(_param2)].field_0 + _param5 <= unknown2424be5c[_param1][addr(_param2)].field_0
+  if _param5 >′ 0:
+      require unknown2424be5c[_param1][addr(_param2)].field_0 + _param5 >= unknown2424be5c[_param1][addr(_param2)].field_0
+  unknown2424be5c[_param1][addr(_param2)].field_0 += _param5
+  if _param6 <′ 0:
+      require unknown2424be5c[_param1][addr(_param2)].field_256 + _param6 <= unknown2424be5c[_param1][addr(_param2)].field_256
+  if _param6 >′ 0:
+      require unknown2424be5c[_param1][addr(_param2)].field_256 + _param6 >= unknown2424be5c[_param1][addr(_param2)].field_256
+  unknown2424be5c[_param1][addr(_param2)].field_256 += _param6
+  if _param6 <′ 0:
+      require unknownd9638d36[_param1].field_0 + _param6 <= unknownd9638d36[_param1].field_0
+  if _param6 >′ 0:
+      require unknownd9638d36[_param1].field_0 + _param6 >= unknownd9638d36[_param1].field_0
+  unknownd9638d36[_param1].field_0 += _param6
+  require unknownd9638d36[_param1].field_256 >=′ 0
+  if _param6:
+      require _param6
+      require unknownd9638d36[_param1].field_256 * _param6 /′ _param6 == unknownd9638d36[_param1].field_256
+  if _param5 >′ 0:
+      require unknown214414d5[_param1][addr(_param3)] - _param5 <= unknown214414d5[_param1][addr(_param3)]
+  if _param5 <′ 0:
+      require unknown214414d5[_param1][addr(_param3)] - _param5 >= unknown214414d5[_param1][addr(_param3)]
+  unknown214414d5[_param1][addr(_param3)] -= _param5
+  if unknownd9638d36[_param1].field_256 * _param6 >′ 0:
+      require unknownf059212a[addr(_param4)] - (unknownd9638d36[_param1].field_256 * _param6) <= unknownf059212a[addr(_param4)]
+  if unknownd9638d36[_param1].field_256 * _param6 <′ 0:
+      require unknownf059212a[addr(_param4)] - (unknownd9638d36[_param1].field_256 * _param6) >= unknownf059212a[addr(_param4)]
+  unknownf059212a[addr(_param4)] += -1 * unknownd9638d36[_param1].field_256 * _param6
+  if unknownd9638d36[_param1].field_256 * _param6 >′ 0:
+      require unknown2d61a355 - (unknownd9638d36[_param1].field_256 * _param6) <= unknown2d61a355
+  if unknownd9638d36[_param1].field_256 * _param6 <′ 0:
+      require unknown2d61a355 - (unknownd9638d36[_param1].field_256 * _param6) >= unknown2d61a355
+  unknown2d61a355 += -1 * unknownd9638d36[_param1].field_256 * _param6
+  log 0x0: 32, 224, call.data1, _param2, _param3
+

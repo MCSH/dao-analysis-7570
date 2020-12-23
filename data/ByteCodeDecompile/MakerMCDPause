@@ -1,0 +1,203 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xbE286431454714F511008713973d3B053A2d38f3
+# 
+#  Let's make the world open source 
+# 
+#
+#  I failed with these: 
+#  - unknown168ccd67(?)
+#  All the rest is below.
+#
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  stor2 is mapping of uint8 at storage 2
+  proxyAddress is addr at storage 3
+  delay is uint256 at storage 4
+
+def delay() payable: 
+  return delay
+
+def owner() payable: 
+  return owner
+
+def unknownaa4f2653(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return bool(stor2[_param1])
+
+def authority() payable: 
+  return authorityAddress
+
+def proxy() payable: 
+  return proxyAddress
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def setOwner(address _new) payable: 
+  require calldata.size - 4 >= 32
+  if proxyAddress != caller:
+      revert with 0, 'ds-pause-undelayed-call'
+  owner = _new
+  log LogSetOwner(address owner=owner)
+
+def setAuthority(address _authority) payable: 
+  require calldata.size - 4 >= 32
+  if proxyAddress != caller:
+      revert with 0, 'ds-pause-undelayed-call'
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=authorityAddress)
+
+def unknowne177246e(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if proxyAddress != caller:
+      revert with 0, 'ds-pause-undelayed-call'
+  delay = _param1
+
+def unknown162c7de3(uint256 _param1, uint256 _param2, array _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  require _param3 <= 4294967296
+  require _param3 + 36 <= calldata.size
+  require _param3.length <= 4294967296 and _param3 + _param3.length + 36 <= calldata.size
+  mem[128 len _param3.length] = _param3[all]
+  mem[_param3.length + 128] = 0
+  mem[ceil32(_param3.length) + 128] = call.value
+  mem[ceil32(_param3.length) + 160] = 64
+  mem[ceil32(_param3.length) + 224 len calldata.size] = call.data[0 len calldata.size]
+  mem[ceil32(_param3.length) + calldata.size + 224] = 0
+  log call.func_hash: Mask(8 * -ceil32(_param3.length) + _param3.length + 32, 0, 0), mem[_param3.length + 160 len ceil32(_param3.length) + -_param3.length + 32], calldata.size, call.data1, _param2
+  if caller == this.address:
+      mem[ceil32(_param3.length) + 160] = addr(_param1)
+      mem[ceil32(_param3.length) + 192] = _param2
+      mem[ceil32(_param3.length) + 256] = _param4
+      mem[ceil32(_param3.length) + 224] = 128
+      mem[ceil32(_param3.length) + 288] = _param3.length
+      mem[ceil32(_param3.length) + 320 len ceil32(_param3.length)] = _param3[all], mem[_param3.length + 128 len ceil32(_param3.length) - _param3.length]
+      if not _param3.length % 32:
+          mem[ceil32(_param3.length) + 128] = _param3.length + 160
+      else:
+          mem[floor32(_param3.length) + ceil32(_param3.length) + 320] = mem[floor32(_param3.length) + ceil32(_param3.length) + -(_param3.length % 32) + 352 len _param3.length % 32]
+          mem[ceil32(_param3.length) + 128] = floor32(_param3.length) + 192
+      stor2[mem[ceil32(_param3.length) + 160 len Mask(8 * -ceil32(_param3.length) + _param3.length + 32, 0, 0), mem[_param3.length + 160 len -_param3.length + ceil32(_param3.length)]]] = 0
+  else:
+      if caller == owner:
+          mem[ceil32(_param3.length) + 160] = addr(_param1)
+          mem[ceil32(_param3.length) + 192] = _param2
+          mem[ceil32(_param3.length) + 256] = _param4
+          mem[ceil32(_param3.length) + 224] = 128
+          mem[ceil32(_param3.length) + 288] = _param3.length
+          mem[ceil32(_param3.length) + 320 len ceil32(_param3.length)] = _param3[all], mem[_param3.length + 128 len ceil32(_param3.length) - _param3.length]
+          if not _param3.length % 32:
+              mem[ceil32(_param3.length) + 128] = _param3.length + 160
+          else:
+              mem[floor32(_param3.length) + ceil32(_param3.length) + 320] = mem[floor32(_param3.length) + ceil32(_param3.length) + -(_param3.length % 32) + 352 len _param3.length % 32]
+              mem[ceil32(_param3.length) + 128] = floor32(_param3.length) + 192
+          stor2[mem[ceil32(_param3.length) + 160 len Mask(8 * -ceil32(_param3.length) + _param3.length + 32, 0, 0), mem[_param3.length + 160 len -_param3.length + ceil32(_param3.length)]]] = 0
+      else:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, addr(this.address), call.func_hash
+          mem[ceil32(_param3.length) + 128] = ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+          mem[ceil32(_param3.length) + 160] = addr(_param1)
+          mem[ceil32(_param3.length) + 192] = _param2
+          mem[ceil32(_param3.length) + 256] = _param4
+          mem[ceil32(_param3.length) + 224] = 128
+          mem[ceil32(_param3.length) + 288] = _param3.length
+          mem[ceil32(_param3.length) + 320 len ceil32(_param3.length)] = _param3[all], mem[_param3.length + 128 len ceil32(_param3.length) - _param3.length]
+          if not _param3.length % 32:
+              stor2[mem[ceil32(_param3.length) + 160 len 0, Mask(224, 0, _param3.length + 160)]] = 0
+          else:
+              mem[floor32(_param3.length) + ceil32(_param3.length) + 320] = mem[floor32(_param3.length) + ceil32(_param3.length) + -(_param3.length % 32) + 352 len _param3.length % 32]
+              stor2[mem[ceil32(_param3.length) + 160 len 0, Mask(224, 0, floor32(_param3.length) + 192)]] = 0
+
+def unknown46d2fbbb(uint256 _param1, uint256 _param2, array _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  require _param3 <= 4294967296
+  require _param3 + 36 <= calldata.size
+  require _param3.length <= 4294967296 and _param3 + _param3.length + 36 <= calldata.size
+  mem[128 len _param3.length] = _param3[all]
+  mem[_param3.length + 128] = 0
+  mem[ceil32(_param3.length) + 128] = call.value
+  mem[ceil32(_param3.length) + 160] = 64
+  mem[ceil32(_param3.length) + 224 len calldata.size] = call.data[0 len calldata.size]
+  mem[ceil32(_param3.length) + calldata.size + 224] = 0
+  log call.func_hash: Mask(8 * -ceil32(_param3.length) + _param3.length + 32, 0, 0), mem[_param3.length + 160 len ceil32(_param3.length) + -_param3.length + 32], calldata.size, call.data1, _param2
+  if caller == this.address:
+      if block.timestamp + delay < block.timestamp:
+          revert with 0, 'ds-pause-addition-overflow'
+      if _param4 < block.timestamp + delay:
+          revert with 0, 'ds-pause-delay-not-respected'
+      mem[ceil32(_param3.length) + 160] = addr(_param1)
+      mem[ceil32(_param3.length) + 192] = _param2
+      mem[ceil32(_param3.length) + 256] = _param4
+      mem[ceil32(_param3.length) + 224] = 128
+      mem[ceil32(_param3.length) + 288] = _param3.length
+      mem[ceil32(_param3.length) + 320 len ceil32(_param3.length)] = _param3[all], mem[_param3.length + 128 len ceil32(_param3.length) - _param3.length]
+      if not _param3.length % 32:
+          mem[ceil32(_param3.length) + 128] = _param3.length + 160
+      else:
+          mem[floor32(_param3.length) + ceil32(_param3.length) + 320] = mem[floor32(_param3.length) + ceil32(_param3.length) + -(_param3.length % 32) + 352 len _param3.length % 32]
+          mem[ceil32(_param3.length) + 128] = floor32(_param3.length) + 192
+      stor2[mem[ceil32(_param3.length) + 160 len Mask(8 * -ceil32(_param3.length) + _param3.length + 32, 0, 0), mem[_param3.length + 160 len -_param3.length + ceil32(_param3.length)]]] = 1
+  else:
+      if caller == owner:
+          if block.timestamp + delay < block.timestamp:
+              revert with 0, 'ds-pause-addition-overflow'
+          if _param4 < block.timestamp + delay:
+              revert with 0, 'ds-pause-delay-not-respected'
+          mem[ceil32(_param3.length) + 160] = addr(_param1)
+          mem[ceil32(_param3.length) + 192] = _param2
+          mem[ceil32(_param3.length) + 256] = _param4
+          mem[ceil32(_param3.length) + 224] = 128
+          mem[ceil32(_param3.length) + 288] = _param3.length
+          mem[ceil32(_param3.length) + 320 len ceil32(_param3.length)] = _param3[all], mem[_param3.length + 128 len ceil32(_param3.length) - _param3.length]
+          if not _param3.length % 32:
+              mem[ceil32(_param3.length) + 128] = _param3.length + 160
+          else:
+              mem[floor32(_param3.length) + ceil32(_param3.length) + 320] = mem[floor32(_param3.length) + ceil32(_param3.length) + -(_param3.length % 32) + 352 len _param3.length % 32]
+              mem[ceil32(_param3.length) + 128] = floor32(_param3.length) + 192
+          stor2[mem[ceil32(_param3.length) + 160 len Mask(8 * -ceil32(_param3.length) + _param3.length + 32, 0, 0), mem[_param3.length + 160 len -_param3.length + ceil32(_param3.length)]]] = 1
+      else:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, addr(this.address), call.func_hash
+          mem[ceil32(_param3.length) + 128] = ext_call.return_data[0]
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+          if block.timestamp + delay < block.timestamp:
+              revert with 0, 'ds-pause-addition-overflow'
+          if _param4 < block.timestamp + delay:
+              revert with 0, 'ds-pause-delay-not-respected'
+          mem[ceil32(_param3.length) + 160] = addr(_param1)
+          mem[ceil32(_param3.length) + 192] = _param2
+          mem[ceil32(_param3.length) + 256] = _param4
+          mem[ceil32(_param3.length) + 224] = 128
+          mem[ceil32(_param3.length) + 288] = _param3.length
+          mem[ceil32(_param3.length) + 320 len ceil32(_param3.length)] = _param3[all], mem[_param3.length + 128 len ceil32(_param3.length) - _param3.length]
+          if not _param3.length % 32:
+              stor2[mem[ceil32(_param3.length) + 160 len 0, Mask(224, 0, _param3.length + 160)]] = 1
+          else:
+              mem[floor32(_param3.length) + ceil32(_param3.length) + 320] = mem[floor32(_param3.length) + ceil32(_param3.length) + -(_param3.length % 32) + 352 len _param3.length % 32]
+              stor2[mem[ceil32(_param3.length) + 160 len 0, Mask(224, 0, floor32(_param3.length) + 192)]] = 1
+

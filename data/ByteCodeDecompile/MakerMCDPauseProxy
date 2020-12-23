@@ -1,0 +1,52 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  owner is addr at storage 0
+
+def owner() payable: 
+  return owner
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def unknownbe6002c2(addr _param1, array _param2) payable: 
+  require calldata.size - 4 >= 64
+  require _param2 <= 4294967296
+  require _param2 + 36 <= calldata.size
+  require _param2.length <= 4294967296 and _param2 + _param2.length + 36 <= calldata.size
+  mem[128 len _param2.length] = _param2[all]
+  mem[_param2.length + 128] = 0
+  if owner != caller:
+      revert with 0, 'ds-pause-proxy-unauthorized'
+  mem[ceil32(_param2.length) + 128 len floor32(_param2.length)] = call.data[_param2 + 36 len floor32(_param2.length)]
+  mem[ceil32(_param2.length) + floor32(_param2.length) + -(_param2.length % 32) + 160 len _param2.length % 32] = mem[-(_param2.length % 32) + floor32(_param2.length) + 160 len _param2.length % 32]
+  delegate _param1 with:
+     funct (Mask(32, -(8 * ceil32(_param2.length) + -_param2.length + 4) + 256, 0) >> -(8 * ceil32(_param2.length) + -_param2.length + 4) + 256)
+       gas gas_remaining wei
+      args mem[ceil32(_param2.length) + 132 len _param2.length - 4]
+  if not delegate.return_code:
+      revert with 0, 'ds-pause-delegatecall-error'
+  if return_data.size:
+      return Array(len=return_data.size, data=ext_call.return_data)
+  mem[ceil32(_param2.length) + 128] = 32
+  mem[ceil32(_param2.length) + 160] = _param2.length
+  mem[ceil32(_param2.length) + 192 len ceil32(_param2.length)] = _param2[all], mem[_param2.length + 128 len ceil32(_param2.length) - _param2.length]
+  if not _param2.length % 32:
+      return Mask(8 * -ceil32(_param2.length) + _param2.length + 32, 0, 0), 
+             mem[_param2.length + 160 len ceil32(_param2.length) + -_param2.length + 32],
+             Mask(8 * _param2.length, -(8 * _param2.length) + 256, _param2[all], mem[_param2.length + 128 len ceil32(_param2.length) - _param2.length]) << (8 * _param2.length) - 256
+  mem[floor32(_param2.length) + ceil32(_param2.length) + 192] = mem[floor32(_param2.length) + ceil32(_param2.length) + -(_param2.length % 32) + 224 len _param2.length % 32]
+  return Mask(8 * -ceil32(_param2.length) + _param2.length + 32, 0, 0), 
+         mem[_param2.length + 160 len ceil32(_param2.length) + -_param2.length + 32],
+         Mask(8 * ceil32(_param2.length), -(8 * ceil32(_param2.length)) + 256, _param2[all], mem[_param2.length + 128 len ceil32(_param2.length) - _param2.length]) << (8 * ceil32(_param2.length)) - 256,
+         mem[(2 * ceil32(_param2.length)) + 192 len floor32(_param2.length) + -ceil32(_param2.length) + 32]
+

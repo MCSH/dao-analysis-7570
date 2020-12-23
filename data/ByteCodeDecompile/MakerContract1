@@ -1,0 +1,2707 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x448a5065aeBB8E423F0896E6c5D525C040f59af3
+# 
+#  Let's make the world open source 
+# 
+#
+#  I failed with these: 
+#  - bite(bytes32 _cup)
+#  - draw(bytes32 _cup, uint256 _wad)
+#  - rap(bytes32 _cup)
+#  - wipe(bytes32 _cup, uint256 _wad)
+#  - free(bytes32 _cup, uint256 _wad)
+#  - shut(bytes32 _cup)
+#  - safe(bytes32 _cup)
+#  All the rest is below.
+#
+
+const era = block.timestamp
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  saiAddress is addr at storage 2
+  sinAddress is addr at storage 3
+  skrAddress is addr at storage 4
+  gemAddress is addr at storage 5
+  govAddress is addr at storage 6
+  voxAddress is addr at storage 7
+  pipAddress is addr at storage 8
+  pepAddress is addr at storage 9
+  tapAddress is addr at storage 10
+  pitAddress is addr at storage 11
+  axe is uint256 at storage 12
+  cap is uint256 at storage 13
+  mat is uint256 at storage 14
+  tax is uint256 at storage 15
+  fee is uint256 at storage 16
+  gap is uint256 at storage 17
+  off is uint8 at storage 18
+  out is uint8 at storage 18 offset 8
+  fit is uint256 at storage 19
+  rho is uint256 at storage 20
+  stor21 is uint256 at storage 21
+  stor22 is uint256 at storage 22
+  rum is uint256 at storage 23
+  cupi is uint256 at storage 24
+  ink is mapping of struct at storage 25
+
+def sin(): # not payable
+  return sinAddress
+
+def skr(): # not payable
+  return skrAddress
+
+def gov(): # not payable
+  return govAddress
+
+def ink(bytes32 _cup): # not payable
+  return ink[_cup].field_256
+
+def rho(): # not payable
+  return rho
+
+def cap(): # not payable
+  return cap
+
+def cupi(): # not payable
+  return cupi
+
+def axe(): # not payable
+  return axe
+
+def off(): # not payable
+  return bool(off)
+
+def vox(): # not payable
+  return voxAddress
+
+def gap(): # not payable
+  return gap
+
+def gem(): # not payable
+  return gemAddress
+
+def rum(): # not payable
+  return rum
+
+def owner(): # not payable
+  return owner
+
+def sai(): # not payable
+  return saiAddress
+
+def tax(): # not payable
+  return tax
+
+def mat(): # not payable
+  return mat
+
+def pep(): # not payable
+  return pepAddress
+
+def out(): # not payable
+  return bool(out)
+
+def authority(): # not payable
+  return authorityAddress
+
+def fit(): # not payable
+  return fit
+
+def pip(): # not payable
+  return pipAddress
+
+def fee(): # not payable
+  return fee
+
+def lad(bytes32 _cup): # not payable
+  return ink[_cup].field_0
+
+def pit(): # not payable
+  return pitAddress
+
+def tap(): # not payable
+  return tapAddress
+
+def cups(bytes32 _param1): # not payable
+  return ink[_param1].field_0, ink[_param1].field_256, ink[_param1].field_512, ink[_param1].field_768
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def air(): # not payable
+  require ext_code.size(skrAddress)
+  call skrAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  return ext_call.return_data[0]
+
+def pie(): # not payable
+  require ext_code.size(gemAddress)
+  call gemAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  return ext_call.return_data[0]
+
+def turn(address _tap): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require not tapAddress
+  require _tap_
+  tapAddress = _tap_
+
+def give(bytes32 _cup, address _guy): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require ink[_cup].field_0 == caller
+  require _guy
+  ink[_cup].field_0 = _guy
+
+def open(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  require not off
+  require cupi + 1 >= cupi
+  cupi++
+  ink[stor24 + 1].field_0 = caller
+  log LogNewCup(
+        address lad=(cupi + 1),
+        bytes32 cup=caller)
+  return (cupi + 1)
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def flow(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require off
+  out = 1
+
+def setPip(address _pip): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  pipAddress = _pip_
+
+def setVox(address _vox): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  voxAddress = _vox_
+
+def setPep(address _pep): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  pepAddress = _pep_
+
+def lock(bytes32 _cup, uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require not off
+  require ink[_cup].field_256 + _wad >= ink[_cup].field_256
+  ink[_cup].field_256 += _wad
+  require ext_code.size(skrAddress)
+  call skrAddress.pull(address src, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _wad
+  require ext_call.success
+  if ink[_cup].field_256:
+      require ink[_cup].field_256 > 5 * 10^15
+
+def per(): # not payable
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      return 1000000000 * 10^18
+  require ext_code.size(gemAddress)
+  call gemAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  return ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0])
+
+def cage(uint256 _fit, uint256 _jam): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require not off
+  require _fit_
+  off = 1
+  axe = 1000000000 * 10^18
+  gap = 10^18
+  fit = _fit_
+  require ext_code.size(gemAddress)
+  call gemAddress.transfer(address to, uint256 value) with:
+       gas gas_remaining - 710 wei
+      args tapAddress, _jam
+  require ext_call.success
+  require ext_call.return_data[0]
+
+def tag(): # not payable
+  if off:
+      return fit
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      require ext_code.size(pipAddress)
+      call pipAddress.read() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      if not ext_call.return_data[0]:
+          return 0
+      require ext_call.return_data[0]
+      require 1000000000 * 10^18 * ext_call.return_data / ext_call.return_data == 1000000000 * 10^18
+      require (1000000000 * 10^18 * ext_call.return_data >= 1000000000 * 10^18 * ext_call.return_data[0]
+      return ((1000000000 * 10^18 * ext_call.return_data / 10^18)
+  require ext_code.size(gemAddress)
+  call gemAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  require ext_code.size(pipAddress)
+  call pipAddress.read() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      return 0
+  require ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * ext_call.return_data / ext_call.return_data == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+  require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * ext_call.return_data >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * ext_call.return_data[0]
+  return (((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * ext_call.return_data / 10^18)
+
+def ask(uint256 _wad): # not payable
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      if not gap:
+          return 0
+      require gap
+      require 1000000000 * 10^18 * gap / gap == 1000000000 * 10^18
+      require (1000000000 * 10^18 * gap) + 5 * 10^17 >= 1000000000 * 10^18 * gap
+      if not (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18:
+          return 0
+      require (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+      require _wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18 / (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18 == _wad
+      require (_wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+      return ((_wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18)
+  require ext_code.size(gemAddress)
+  call gemAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  if not gap:
+      return 0
+  require gap
+  require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+  require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+  if not ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18:
+      return 0
+  require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+  require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+  require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+  return ((_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18)
+
+def bid(uint256 _assetId): # not payable
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      require -gap + 2 * 10^18 <= 2 * 10^18
+      if not -gap + 2 * 10^18:
+          return 0
+      require -gap + 2 * 10^18
+      require (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401645400000000000 / -gap + 2 * 10^18 == 1000000000 * 10^18
+      if not (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18:
+          return 0
+      require (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18
+      require _assetId * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18 / (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18 == _assetId
+      require (_assetId * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18) + 500000000 * 10^18 >= _assetId * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18
+      return ((_assetId * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18)
+  require ext_code.size(gemAddress)
+  call gemAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  require -gap + 2 * 10^18 <= 2 * 10^18
+  if not -gap + 2 * 10^18:
+      return 0
+  require -gap + 2 * 10^18
+  require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_datagap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / -gap + 2 * 10^18 == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+  if not (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18:
+      return 0
+  require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+  require _assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 / (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 == _assetId
+  require (_assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 >= _assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+  return ((_assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18)
+
+def exit(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if off:
+      require out
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      require -gap + 2 * 10^18 <= 2 * 10^18
+      if not -gap + 2 * 10^18:
+          require ext_code.size(gemAddress)
+          call gemAddress.transfer(address to, uint256 value) with:
+               gas gas_remaining - 710 wei
+              args caller, 0
+      else:
+          require -gap + 2 * 10^18
+          require (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401645400000000000 / -gap + 2 * 10^18 == 1000000000 * 10^18
+          if not (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18:
+              require ext_code.size(gemAddress)
+              call gemAddress.transfer(address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, 0
+          else:
+              require (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18
+              require _wad * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18 / (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18 == _wad
+              require (_wad * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18) + 500000000 * 10^18 >= _wad * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18
+              require ext_code.size(gemAddress)
+              call gemAddress.transfer(address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, (_wad * (-1000000000 * 10^18 * gap) + 0x59aedfc10d7279c5eed1401d359b59d3b20000 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  else:
+      require ext_code.size(gemAddress)
+      call gemAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      require ext_code.size(skrAddress)
+      call skrAddress.totalSupply() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      require -gap + 2 * 10^18 <= 2 * 10^18
+      if not -gap + 2 * 10^18:
+          require ext_code.size(gemAddress)
+          call gemAddress.transfer(address to, uint256 value) with:
+               gas gas_remaining - 710 wei
+              args caller, 0
+      else:
+          require -gap + 2 * 10^18
+          require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_datagap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / -gap + 2 * 10^18 == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          if not (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18:
+              require ext_code.size(gemAddress)
+              call gemAddress.transfer(address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, 0
+          else:
+              require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+              require _wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 / (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 == _wad
+              require (_wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 >= _wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+              require ext_code.size(gemAddress)
+              call gemAddress.transfer(address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, (_wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(skrAddress)
+  call skrAddress.burn(address guy, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _wad
+  require ext_call.success
+
+def join(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require not off
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      require gap
+      require gap
+      require 1000000000 * 10^18 * gap / gap == 1000000000 * 10^18
+      require (1000000000 * 10^18 * gap) + 5 * 10^17 >= 1000000000 * 10^18 * gap
+      require (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+      require (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+      require _wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18 / (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18 == _wad
+      require (_wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+      require (_wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18 > 0
+  else:
+      require ext_code.size(gemAddress)
+      call gemAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      require ext_code.size(skrAddress)
+      call skrAddress.totalSupply() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      require gap
+      require gap
+      require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+      require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18 > 0
+  require ext_code.size(skrAddress)
+  call skrAddress.totalSupply() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not ext_call.return_data[0]:
+      if not gap:
+          require ext_code.size(gemAddress)
+          call gemAddress.transferFrom(address from, address to, uint256 value) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), 0
+      else:
+          require gap
+          require 1000000000 * 10^18 * gap / gap == 1000000000 * 10^18
+          require (1000000000 * 10^18 * gap) + 5 * 10^17 >= 1000000000 * 10^18 * gap
+          if not (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18:
+              require ext_code.size(gemAddress)
+              call gemAddress.transferFrom(address from, address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, addr(this.address), 0
+          else:
+              require (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+              require _wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18 / (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18 == _wad
+              require (_wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18
+              require ext_code.size(gemAddress)
+              call gemAddress.transferFrom(address from, address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, addr(this.address), (_wad * (1000000000 * 10^18 * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  else:
+      require ext_code.size(gemAddress)
+      call gemAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      require ext_code.size(skrAddress)
+      call skrAddress.totalSupply() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      if not gap:
+          require ext_code.size(gemAddress)
+          call gemAddress.transferFrom(address from, address to, uint256 value) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), 0
+      else:
+          require gap
+          require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+          if not ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18:
+              require ext_code.size(gemAddress)
+              call gemAddress.transferFrom(address from, address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, addr(this.address), 0
+          else:
+              require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+              require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+              require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+              require ext_code.size(gemAddress)
+              call gemAddress.transferFrom(address from, address to, uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args caller, addr(this.address), (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  require ext_call.success
+  require ext_call.return_data[0]
+  require ext_code.size(skrAddress)
+  call skrAddress.mint(address to, uint256 amount) with:
+       gas gas_remaining - 710 wei
+      args caller, _wad
+  require ext_call.success
+
+def drip(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if not off:
+      if block.timestamp - rho != 0:
+          rho = block.timestamp
+          if 1000000000 * 10^18 == tax:
+              if fee != 1000000000 * 10^18:
+                  if bool(block.timestamp - rho):
+                      s = fee
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      s = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not s:
+                      stor22 = 0
+                  else:
+                      require s
+                      require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                      require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                      if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          else:
+              if bool(block.timestamp - rho):
+                  s = tax
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              else:
+                  s = 1000000000 * 10^18
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              if not s:
+                  stor21 = 0
+                  require -stor21 <= 0
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require -1 * stor21 * rum / rum == -stor21
+                      require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  require s
+                  require stor21 * s / s == stor21
+                  require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                  stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              require ext_call.success
+              if 1000000000 * 10^18 == fee:
+                  if s != 1000000000 * 10^18:
+                      if not s:
+                          stor22 = 0
+                      else:
+                          require s
+                          require stor22 * s / s == stor22
+                          require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                          stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  if bool(block.timestamp - rho):
+                      t = fee
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      t = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not t:
+                      stor22 = 0
+                  else:
+                      require t
+                      require s * t / t == s
+                      require (s * t) + 500000000 * 10^18 >= s * t
+                      if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+
+def rhi(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if not off:
+      if block.timestamp - rho != 0:
+          rho = block.timestamp
+          if 1000000000 * 10^18 == tax:
+              if fee != 1000000000 * 10^18:
+                  if bool(block.timestamp - rho):
+                      s = fee
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      s = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not s:
+                      stor22 = 0
+                  else:
+                      require s
+                      require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                      require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                      if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          else:
+              if bool(block.timestamp - rho):
+                  s = tax
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              else:
+                  s = 1000000000 * 10^18
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              if not s:
+                  stor21 = 0
+                  require -stor21 <= 0
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require -1 * stor21 * rum / rum == -stor21
+                      require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  require s
+                  require stor21 * s / s == stor21
+                  require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                  stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              require ext_call.success
+              if 1000000000 * 10^18 == fee:
+                  if s != 1000000000 * 10^18:
+                      if not s:
+                          stor22 = 0
+                      else:
+                          require s
+                          require stor22 * s / s == stor22
+                          require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                          stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  if bool(block.timestamp - rho):
+                      t = fee
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      t = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not t:
+                      stor22 = 0
+                  else:
+                      require t
+                      require s * t / t == s
+                      require (s * t) + 500000000 * 10^18 >= s * t
+                      if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  return stor22
+
+def chi(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if not off:
+      if block.timestamp - rho != 0:
+          rho = block.timestamp
+          if 1000000000 * 10^18 == tax:
+              if fee != 1000000000 * 10^18:
+                  if bool(block.timestamp - rho):
+                      s = fee
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      s = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not s:
+                      stor22 = 0
+                  else:
+                      require s
+                      require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                      require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                      if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          else:
+              if bool(block.timestamp - rho):
+                  s = tax
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              else:
+                  s = 1000000000 * 10^18
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              if not s:
+                  stor21 = 0
+                  require -stor21 <= 0
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require -1 * stor21 * rum / rum == -stor21
+                      require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  require s
+                  require stor21 * s / s == stor21
+                  require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                  stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              require ext_call.success
+              if 1000000000 * 10^18 == fee:
+                  if s != 1000000000 * 10^18:
+                      if not s:
+                          stor22 = 0
+                      else:
+                          require s
+                          require stor22 * s / s == stor22
+                          require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                          stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  if bool(block.timestamp - rho):
+                      t = fee
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      t = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not t:
+                      stor22 = 0
+                  else:
+                      require t
+                      require s * t / t == s
+                      require (s * t) + 500000000 * 10^18 >= s * t
+                      if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  return stor21
+
+def din(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if not off:
+      if block.timestamp - rho != 0:
+          rho = block.timestamp
+          if 1000000000 * 10^18 == tax:
+              if fee != 1000000000 * 10^18:
+                  if bool(block.timestamp - rho):
+                      s = fee
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      s = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not s:
+                      stor22 = 0
+                  else:
+                      require s
+                      require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                      require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                      if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          else:
+              if bool(block.timestamp - rho):
+                  s = tax
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              else:
+                  s = 1000000000 * 10^18
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              if not s:
+                  stor21 = 0
+                  require -stor21 <= 0
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require -1 * stor21 * rum / rum == -stor21
+                      require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  require s
+                  require stor21 * s / s == stor21
+                  require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                  stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              require ext_call.success
+              if 1000000000 * 10^18 == fee:
+                  if s != 1000000000 * 10^18:
+                      if not s:
+                          stor22 = 0
+                      else:
+                          require s
+                          require stor22 * s / s == stor22
+                          require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                          stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  if bool(block.timestamp - rho):
+                      t = fee
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      t = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not t:
+                      stor22 = 0
+                  else:
+                      require t
+                      require s * t / t == s
+                      require (s * t) + 500000000 * 10^18 >= s * t
+                      if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  if not stor21:
+      return 0
+  require stor21
+  require rum * stor21 / stor21 == rum
+  require (rum * stor21) + 500000000 * 10^18 >= rum * stor21
+  return ((rum * stor21) + 500000000 * 10^18 / 1000000000 * 10^18)
+
+def tab(bytes32 _cup): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if not off:
+      if block.timestamp - rho != 0:
+          rho = block.timestamp
+          if 1000000000 * 10^18 == tax:
+              if fee != 1000000000 * 10^18:
+                  if bool(block.timestamp - rho):
+                      s = fee
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      s = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      t = fee
+                      while idx:
+                          if not t:
+                              if not bool(idx):
+                                  s = s
+                                  idx = idx / 2
+                                  t = 0
+                                  continue 
+                              s = 0
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          require t
+                          require t * t / t == t
+                          require (t * t) + 500000000 * 10^18 >= t * t
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              s = 0
+                              idx = idx / 2
+                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not s:
+                      stor22 = 0
+                  else:
+                      require s
+                      require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                      require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                      if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+          else:
+              if bool(block.timestamp - rho):
+                  s = tax
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              else:
+                  s = 1000000000 * 10^18
+                  idx = block.timestamp - rho / 2
+                  t = tax
+                  while idx:
+                      if not t:
+                          if not bool(idx):
+                              s = s
+                              idx = idx / 2
+                              t = 0
+                              continue 
+                          s = 0
+                          idx = idx / 2
+                          t = 0
+                          continue 
+                      require t
+                      require t * t / t == t
+                      require (t * t) + 500000000 * 10^18 >= t * t
+                      if not bool(idx):
+                          s = s
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                          s = 0
+                          idx = idx / 2
+                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      idx = idx / 2
+                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                      continue 
+              if not s:
+                  stor21 = 0
+                  require -stor21 <= 0
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require -1 * stor21 * rum / rum == -stor21
+                      require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  require s
+                  require stor21 * s / s == stor21
+                  require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                  stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                  if not rum:
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, 0
+                  else:
+                      require rum
+                      require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                      require ext_code.size(saiAddress)
+                      call saiAddress.mint(address to, uint256 amount) with:
+                           gas gas_remaining - 710 wei
+                          args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+              require ext_call.success
+              if 1000000000 * 10^18 == fee:
+                  if s != 1000000000 * 10^18:
+                      if not s:
+                          stor22 = 0
+                      else:
+                          require s
+                          require stor22 * s / s == stor22
+                          require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                          stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+              else:
+                  if bool(block.timestamp - rho):
+                      t = fee
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  else:
+                      t = 1000000000 * 10^18
+                      idx = block.timestamp - rho / 2
+                      u = fee
+                      while idx:
+                          if not u:
+                              if not bool(idx):
+                                  t = t
+                                  idx = idx / 2
+                                  u = 0
+                                  continue 
+                              t = 0
+                              idx = idx / 2
+                              u = 0
+                              continue 
+                          require u
+                          require u * u / u == u
+                          require (u * u) + 500000000 * 10^18 >= u * u
+                          if not bool(idx):
+                              t = t
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              t = 0
+                              idx = idx / 2
+                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                              continue 
+                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          idx = idx / 2
+                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                          continue 
+                  if not t:
+                      stor22 = 0
+                  else:
+                      require t
+                      require s * t / t == s
+                      require (s * t) + 500000000 * 10^18 >= s * t
+                      if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                          if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                              stor22 = 0
+                          else:
+                              require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                              require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                              stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  if not stor21:
+      return 0
+  require stor21
+  require ink[_cup].field_512 * stor21 / stor21 == ink[_cup].field_512
+  require (ink[_cup].field_512 * stor21) + 500000000 * 10^18 >= ink[_cup].field_512 * stor21
+  return ((ink[_cup].field_512 * stor21) + 500000000 * 10^18 / 1000000000 * 10^18)
+
+def mold(bytes32 _param, uint256 _val): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, _val
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  if _param == 'cap':
+      cap = _val
+  else:
+      if _param == 'mat':
+          require _val >= 1000000000 * 10^18
+          mat = _val
+      else:
+          if _param == 'tax':
+              require _val >= 1000000000 * 10^18
+              log call.func_hash: call.value, Array(len=calldata.size, data=call.data, _val
+              if not off:
+                  if block.timestamp - rho != 0:
+                      rho = block.timestamp
+                      if 1000000000 * 10^18 == tax:
+                          if fee != 1000000000 * 10^18:
+                              if bool(block.timestamp - rho):
+                                  s = fee
+                                  idx = block.timestamp - rho / 2
+                                  t = fee
+                                  while idx:
+                                      if not t:
+                                          if not bool(idx):
+                                              s = s
+                                              idx = idx / 2
+                                              t = 0
+                                              continue 
+                                          s = 0
+                                          idx = idx / 2
+                                          t = 0
+                                          continue 
+                                      require t
+                                      require t * t / t == t
+                                      require (t * t) + 500000000 * 10^18 >= t * t
+                                      if not bool(idx):
+                                          s = s
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          s = 0
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                              else:
+                                  s = 1000000000 * 10^18
+                                  idx = block.timestamp - rho / 2
+                                  t = fee
+                                  while idx:
+                                      if not t:
+                                          if not bool(idx):
+                                              s = s
+                                              idx = idx / 2
+                                              t = 0
+                                              continue 
+                                          s = 0
+                                          idx = idx / 2
+                                          t = 0
+                                          continue 
+                                      require t
+                                      require t * t / t == t
+                                      require (t * t) + 500000000 * 10^18 >= t * t
+                                      if not bool(idx):
+                                          s = s
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          s = 0
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                              if not s:
+                                  stor22 = 0
+                              else:
+                                  require s
+                                  require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                                  require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                                  if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                                      if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          stor22 = 0
+                                      else:
+                                          require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                                          require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                      else:
+                          if bool(block.timestamp - rho):
+                              s = tax
+                              idx = block.timestamp - rho / 2
+                              t = tax
+                              while idx:
+                                  if not t:
+                                      if not bool(idx):
+                                          s = s
+                                          idx = idx / 2
+                                          t = 0
+                                          continue 
+                                      s = 0
+                                      idx = idx / 2
+                                      t = 0
+                                      continue 
+                                  require t
+                                  require t * t / t == t
+                                  require (t * t) + 500000000 * 10^18 >= t * t
+                                  if not bool(idx):
+                                      s = s
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                      s = 0
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  idx = idx / 2
+                                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  continue 
+                          else:
+                              s = 1000000000 * 10^18
+                              idx = block.timestamp - rho / 2
+                              t = tax
+                              while idx:
+                                  if not t:
+                                      if not bool(idx):
+                                          s = s
+                                          idx = idx / 2
+                                          t = 0
+                                          continue 
+                                      s = 0
+                                      idx = idx / 2
+                                      t = 0
+                                      continue 
+                                  require t
+                                  require t * t / t == t
+                                  require (t * t) + 500000000 * 10^18 >= t * t
+                                  if not bool(idx):
+                                      s = s
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                                  if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                      s = 0
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                                  require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                  require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  idx = idx / 2
+                                  t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  continue 
+                          if not s:
+                              stor21 = 0
+                              require -stor21 <= 0
+                              if not rum:
+                                  require ext_code.size(saiAddress)
+                                  call saiAddress.mint(address to, uint256 amount) with:
+                                       gas gas_remaining - 710 wei
+                                      args tapAddress, 0
+                              else:
+                                  require rum
+                                  require -1 * stor21 * rum / rum == -stor21
+                                  require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                                  require ext_code.size(saiAddress)
+                                  call saiAddress.mint(address to, uint256 amount) with:
+                                       gas gas_remaining - 710 wei
+                                      args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+                          else:
+                              require s
+                              require stor21 * s / s == stor21
+                              require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                              stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              if not rum:
+                                  require ext_code.size(saiAddress)
+                                  call saiAddress.mint(address to, uint256 amount) with:
+                                       gas gas_remaining - 710 wei
+                                      args tapAddress, 0
+                              else:
+                                  require rum
+                                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                                  require ext_code.size(saiAddress)
+                                  call saiAddress.mint(address to, uint256 amount) with:
+                                       gas gas_remaining - 710 wei
+                                      args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+                          require ext_call.success
+                          if 1000000000 * 10^18 == fee:
+                              if s != 1000000000 * 10^18:
+                                  if not s:
+                                      stor22 = 0
+                                  else:
+                                      require s
+                                      require stor22 * s / s == stor22
+                                      require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                                      stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                          else:
+                              if bool(block.timestamp - rho):
+                                  t = fee
+                                  idx = block.timestamp - rho / 2
+                                  u = fee
+                                  while idx:
+                                      if not u:
+                                          if not bool(idx):
+                                              t = t
+                                              idx = idx / 2
+                                              u = 0
+                                              continue 
+                                          t = 0
+                                          idx = idx / 2
+                                          u = 0
+                                          continue 
+                                      require u
+                                      require u * u / u == u
+                                      require (u * u) + 500000000 * 10^18 >= u * u
+                                      if not bool(idx):
+                                          t = t
+                                          idx = idx / 2
+                                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          t = 0
+                                          idx = idx / 2
+                                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                                      require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      idx = idx / 2
+                                      u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                              else:
+                                  t = 1000000000 * 10^18
+                                  idx = block.timestamp - rho / 2
+                                  u = fee
+                                  while idx:
+                                      if not u:
+                                          if not bool(idx):
+                                              t = t
+                                              idx = idx / 2
+                                              u = 0
+                                              continue 
+                                          t = 0
+                                          idx = idx / 2
+                                          u = 0
+                                          continue 
+                                      require u
+                                      require u * u / u == u
+                                      require (u * u) + 500000000 * 10^18 >= u * u
+                                      if not bool(idx):
+                                          t = t
+                                          idx = idx / 2
+                                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          t = 0
+                                          idx = idx / 2
+                                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                                      require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      idx = idx / 2
+                                      u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                              if not t:
+                                  stor22 = 0
+                              else:
+                                  require t
+                                  require s * t / t == s
+                                  require (s * t) + 500000000 * 10^18 >= s * t
+                                  if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                                      if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          stor22 = 0
+                                      else:
+                                          require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                                          require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+              tax = _val
+          else:
+              if _param != 'fee':
+                  if _param == 'axe':
+                      require _val >= 1000000000 * 10^18
+                      axe = _val
+                  else:
+                      if _param == 'gap':
+                          require _val >= 10^18
+                          gap = _val
+              else:
+                  require _val >= 1000000000 * 10^18
+                  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, _val
+                  if not off:
+                      if block.timestamp - rho != 0:
+                          rho = block.timestamp
+                          if 1000000000 * 10^18 == tax:
+                              if fee != 1000000000 * 10^18:
+                                  if bool(block.timestamp - rho):
+                                      s = fee
+                                      idx = block.timestamp - rho / 2
+                                      t = fee
+                                      while idx:
+                                          if not t:
+                                              if not bool(idx):
+                                                  s = s
+                                                  idx = idx / 2
+                                                  t = 0
+                                                  continue 
+                                              s = 0
+                                              idx = idx / 2
+                                              t = 0
+                                              continue 
+                                          require t
+                                          require t * t / t == t
+                                          require (t * t) + 500000000 * 10^18 >= t * t
+                                          if not bool(idx):
+                                              s = s
+                                              idx = idx / 2
+                                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                              s = 0
+                                              idx = idx / 2
+                                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                  else:
+                                      s = 1000000000 * 10^18
+                                      idx = block.timestamp - rho / 2
+                                      t = fee
+                                      while idx:
+                                          if not t:
+                                              if not bool(idx):
+                                                  s = s
+                                                  idx = idx / 2
+                                                  t = 0
+                                                  continue 
+                                              s = 0
+                                              idx = idx / 2
+                                              t = 0
+                                              continue 
+                                          require t
+                                          require t * t / t == t
+                                          require (t * t) + 500000000 * 10^18 >= t * t
+                                          if not bool(idx):
+                                              s = s
+                                              idx = idx / 2
+                                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                              s = 0
+                                              idx = idx / 2
+                                              t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                          require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                  if not s:
+                                      stor22 = 0
+                                  else:
+                                      require s
+                                      require 1000000000 * 10^18 * s / s == 1000000000 * 10^18
+                                      require (1000000000 * 10^18 * s) + 500000000 * 10^18 >= 1000000000 * 10^18 * s
+                                      if (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                                          if not (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                              stor22 = 0
+                                          else:
+                                              require (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              require stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 / (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                                              require (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              stor22 = (stor22 * (1000000000 * 10^18 * s) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                          else:
+                              if bool(block.timestamp - rho):
+                                  s = tax
+                                  idx = block.timestamp - rho / 2
+                                  t = tax
+                                  while idx:
+                                      if not t:
+                                          if not bool(idx):
+                                              s = s
+                                              idx = idx / 2
+                                              t = 0
+                                              continue 
+                                          s = 0
+                                          idx = idx / 2
+                                          t = 0
+                                          continue 
+                                      require t
+                                      require t * t / t == t
+                                      require (t * t) + 500000000 * 10^18 >= t * t
+                                      if not bool(idx):
+                                          s = s
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          s = 0
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                              else:
+                                  s = 1000000000 * 10^18
+                                  idx = block.timestamp - rho / 2
+                                  t = tax
+                                  while idx:
+                                      if not t:
+                                          if not bool(idx):
+                                              s = s
+                                              idx = idx / 2
+                                              t = 0
+                                              continue 
+                                          s = 0
+                                          idx = idx / 2
+                                          t = 0
+                                          continue 
+                                      require t
+                                      require t * t / t == t
+                                      require (t * t) + 500000000 * 10^18 >= t * t
+                                      if not bool(idx):
+                                          s = s
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      if not (t * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                          s = 0
+                                          idx = idx / 2
+                                          t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                      require (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      require s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (t * t) + 500000000 * 10^18 / 1000000000 * 10^18 == s
+                                      require (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      s = (s * (t * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      idx = idx / 2
+                                      t = (t * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                      continue 
+                              if not s:
+                                  stor21 = 0
+                                  require -stor21 <= 0
+                                  if not rum:
+                                      require ext_code.size(saiAddress)
+                                      call saiAddress.mint(address to, uint256 amount) with:
+                                           gas gas_remaining - 710 wei
+                                          args tapAddress, 0
+                                  else:
+                                      require rum
+                                      require -1 * stor21 * rum / rum == -stor21
+                                      require (-1 * stor21 * rum) + 500000000 * 10^18 >= -1 * stor21 * rum
+                                      require ext_code.size(saiAddress)
+                                      call saiAddress.mint(address to, uint256 amount) with:
+                                           gas gas_remaining - 710 wei
+                                          args tapAddress, (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+                              else:
+                                  require s
+                                  require stor21 * s / s == stor21
+                                  require (stor21 * s) + 500000000 * 10^18 >= stor21 * s
+                                  stor21 = (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21 <= (stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                                  if not rum:
+                                      require ext_code.size(saiAddress)
+                                      call saiAddress.mint(address to, uint256 amount) with:
+                                           gas gas_remaining - 710 wei
+                                          args tapAddress, 0
+                                  else:
+                                      require rum
+                                      require ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) - (stor21 * rum) / rum == ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18) - stor21
+                                      require ext_code.size(saiAddress)
+                                      call saiAddress.mint(address to, uint256 amount) with:
+                                           gas gas_remaining - 710 wei
+                                          args tapAddress, ((stor21 * s) + 500000000 * 10^18 / 1000000000 * 10^18 * rum) + (-1 * stor21 * rum) + 500000000 * 10^18 / 1000000000 * 10^18
+                              require ext_call.success
+                              if 1000000000 * 10^18 == fee:
+                                  if s != 1000000000 * 10^18:
+                                      if not s:
+                                          stor22 = 0
+                                      else:
+                                          require s
+                                          require stor22 * s / s == stor22
+                                          require (stor22 * s) + 500000000 * 10^18 >= stor22 * s
+                                          stor22 = (stor22 * s) + 500000000 * 10^18 / 1000000000 * 10^18
+                              else:
+                                  if bool(block.timestamp - rho):
+                                      t = fee
+                                      idx = block.timestamp - rho / 2
+                                      u = fee
+                                      while idx:
+                                          if not u:
+                                              if not bool(idx):
+                                                  t = t
+                                                  idx = idx / 2
+                                                  u = 0
+                                                  continue 
+                                              t = 0
+                                              idx = idx / 2
+                                              u = 0
+                                              continue 
+                                          require u
+                                          require u * u / u == u
+                                          require (u * u) + 500000000 * 10^18 >= u * u
+                                          if not bool(idx):
+                                              t = t
+                                              idx = idx / 2
+                                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                              t = 0
+                                              idx = idx / 2
+                                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          idx = idx / 2
+                                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                  else:
+                                      t = 1000000000 * 10^18
+                                      idx = block.timestamp - rho / 2
+                                      u = fee
+                                      while idx:
+                                          if not u:
+                                              if not bool(idx):
+                                                  t = t
+                                                  idx = idx / 2
+                                                  u = 0
+                                                  continue 
+                                              t = 0
+                                              idx = idx / 2
+                                              u = 0
+                                              continue 
+                                          require u
+                                          require u * u / u == u
+                                          require (u * u) + 500000000 * 10^18 >= u * u
+                                          if not bool(idx):
+                                              t = t
+                                              idx = idx / 2
+                                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          if not (u * u) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                              t = 0
+                                              idx = idx / 2
+                                              u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              continue 
+                                          require (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          require t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 / (u * u) + 500000000 * 10^18 / 1000000000 * 10^18 == t
+                                          require (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          t = (t * (u * u) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          idx = idx / 2
+                                          u = (u * u) + 500000000 * 10^18 / 1000000000 * 10^18
+                                          continue 
+                                  if not t:
+                                      stor22 = 0
+                                  else:
+                                      require t
+                                      require s * t / t == s
+                                      require (s * t) + 500000000 * 10^18 >= s * t
+                                      if (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 != 1000000000 * 10^18:
+                                          if not (s * t) + 500000000 * 10^18 / 1000000000 * 10^18:
+                                              stor22 = 0
+                                          else:
+                                              require (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              require stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 / (s * t) + 500000000 * 10^18 / 1000000000 * 10^18 == stor22
+                                              require (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 >= stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18
+                                              stor22 = (stor22 * (s * t) + 500000000 * 10^18 / 1000000000 * 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+                  fee = _val
+

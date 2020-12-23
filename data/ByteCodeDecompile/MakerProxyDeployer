@@ -1,0 +1,130 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x2B9B8b83C09e1d2BD3DacE1C3dB2fEc8ff54a8AC
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  cacheAddress is addr at storage 2
+
+def cache(): # not payable
+  return cacheAddress
+
+def owner(): # not payable
+  return owner
+
+def authority(): # not payable
+  return authorityAddress
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  stop
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining wei
+              args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining wei
+              args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def setCache(address _cacheAddr): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining wei
+              args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_call.return_data[0]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require _cacheAddr
+  cacheAddress = _cacheAddr
+  return 1
+
+def execute(address _target, bytes _data) payable: 
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining wei
+              args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_call.return_data[0]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require _target
+  delegate _target with:
+       gas gas_remaining - 5000 wei
+      args _data[all]
+  require not delegate.return_code != 1
+  return delegate.return_data[0]
+
+def execute(bytes _code, bytes _data) payable: 
+  require ext_code.size(cacheAddress)
+  call cacheAddress.0x8bf4515c with:
+       gas gas_remaining wei
+      args Array(len=_code.length, data=_code[all])
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if not addr(ext_call.return_data):
+      require ext_code.size(cacheAddress)
+      call cacheAddress.0x7ed0c3b2 with:
+           gas gas_remaining wei
+          args Array(len=_code.length, data=_code[all])
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining wei
+              args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          require ext_call.return_data[0]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require addr(ext_call.return_data)
+  delegate ext_call.return_data[0] with:
+       gas gas_remaining - 5000 wei
+      args _data[all]
+  require not delegate.return_code != 1
+  return addr(ext_call.return_data), delegate.return_data[0]
+

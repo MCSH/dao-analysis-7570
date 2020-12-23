@@ -1,0 +1,81 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x39755357759cE0d7f32dC8dC45414CCa409AE24e
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  registryAddress is addr at storage 0
+  owner is addr at storage 1
+
+def registry(): # not payable
+  return registryAddress
+
+def owner(): # not payable
+  return owner
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  stop
+
+def unknown2520e7ff(addr _param1): # not payable
+  require calldata.size - 4 >= 32
+  if _param1 != owner:
+      if _param1 != this.address:
+          return 0
+  return 1
+
+def setOwner(address _new): # not payable
+  require calldata.size - 4 >= 32
+  if owner != caller:
+      if this.address != caller:
+          revert with 0, 'permission-denied'
+  require ext_code.size(registryAddress)
+  call registryAddress.record(address from, address to) with:
+       gas gas_remaining wei
+      args owner, _new
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def unknownf3541901(uint256 _param1, array _param2, uint256 _param3, uint256 _param4) payable: 
+  require calldata.size - 4 >= 128
+  require _param2 <= 4294967296
+  require _param2 + 36 <= calldata.size
+  require _param2.length <= 4294967296 and _param2 + _param2.length + 36 <= calldata.size
+  mem[ceil32(_param2.length) + 128] = _param2
+  mem[ceil32(_param2.length) + 160] = call.value
+  log LogNote(
+        bytes4 sig=Mask(8 * -ceil32(_param2.length) + _param2.length + 32, 0, 0),
+        address guy=mem[_param2.length + 160 len ceil32(_param2.length) + -_param2.length + 32],
+        bytes32 foo=Array(len=calldata.size, data=call.data
+        bytes32 bar=call.func_hash,
+        uint256 wad=caller,
+        bytes fax=_param1)
+  if owner != caller:
+      if this.address != caller:
+          revert with 0, 'permission-denied'
+  if not addr(_param1):
+      revert with 0, 'logic-proxy-address-required'
+  require ext_code.size(registryAddress)
+  static call registryAddress.0x11390441 with:
+          gas gas_remaining wei
+         args addr(_param1)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if not ext_call.return_data[0]:
+      revert with 0, 'logic-not-authorised'
+  log 0xbd37415a: 0, uint128(_param1) << 96, _param3, _param4
+  delegate addr(_param1) with:
+       gas gas_remaining - 5000 wei
+      args _param2[all]
+  if not delegate.return_code == 1:
+      revert with ext_call.return_data[0 len return_data.size]
+  return Array(len=return_data.size, data=ext_call.return_data)
+

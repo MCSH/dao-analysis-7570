@@ -1,0 +1,306 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xF2C5369cFFb8Ea6284452b0326e326DbFdCb867C
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  tubAddress is addr at storage 2
+  tapAddress is addr at storage 3
+  voxAddress is addr at storage 4
+
+def tub(): # not payable
+  return tubAddress
+
+def vox(): # not payable
+  return voxAddress
+
+def owner(): # not payable
+  return owner
+
+def authority(): # not payable
+  return authorityAddress
+
+def tap(): # not payable
+  return tapAddress
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def setPip(address _pip): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.setPip(address pip_) with:
+       gas gas_remaining - 710 wei
+      args _pip_
+  require ext_call.success
+
+def setVox(address _vox): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.setVox(address vox_) with:
+       gas gas_remaining - 710 wei
+      args _vox_
+  require ext_call.success
+
+def setPep(address _pep): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.setPep(address pep_) with:
+       gas gas_remaining - 710 wei
+      args _pep_
+  require ext_call.success
+
+def setHow(uint256 _ray): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(voxAddress)
+  call voxAddress.tune(uint256 contractSendGas) with:
+       gas gas_remaining - 710 wei
+      args _ray
+  require ext_call.success
+
+def setCap(uint256 _cap): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'cap', _cap
+  require ext_call.success
+
+def setTubGap(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'gap', _wad
+  require ext_call.success
+
+def setWay(uint256 _ray): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require _ray < 1000001100 * 10^18
+  require _ray > 999998800 * 10^18
+  require ext_code.size(voxAddress)
+  call voxAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'way', _ray
+  require ext_call.success
+
+def setTapGap(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tapAddress)
+  call tapAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'gap', _wad
+  require ext_call.success
+  require ext_code.size(tapAddress)
+  call tapAddress.gap() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_call.return_data <= 105 * 10^16
+  require ext_call.return_data >= 95 * 10^16
+
+def setTax(uint256 _ray): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'tax', _ray
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.tax() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 <= ext_call.return_data[0]
+  require ext_call.return_data < 1000001100 * 10^18
+
+def setFee(uint256 _feeRate): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'fee', _feeRate
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.fee() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 <= ext_call.return_data[0]
+  require ext_call.return_data < 1000001100 * 10^18
+
+def setMat(uint256 _ray): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'mat', _ray
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.axe() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.mat() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_call.return_data >= 1000000000 * 10^18
+  require ext_call.return_data <= ext_call.return_data[0]
+
+def setAxe(uint256 _ray): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(tubAddress)
+  call tubAddress.mold(bytes32 param, uint256 val) with:
+       gas gas_remaining - 710 wei
+      args 'axe', _ray
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.axe() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.mat() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_call.return_data >= 1000000000 * 10^18
+  require ext_call.return_data <= ext_call.return_data[0]
+

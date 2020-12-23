@@ -1,0 +1,603 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x78F2c2AF65126834c51822F56Be0d7469D7A523E
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  unknownd9638d36 is mapping of struct at storage 1
+  live is uint256 at storage 2
+  unknown36569e77Address is addr at storage 3
+  stor4 is uint32 at storage 4
+  unknown626cb3c5Address is addr at storage 4
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def unknown626cb3c5() payable: 
+  return addr(unknown626cb3c5Address)
+
+def live() payable: 
+  return live
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def unknownd9638d36(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownd9638d36[_param1].field_0, unknownd9638d36[_param1].field_256, unknownd9638d36[_param1].field_512
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def cage() payable: 
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Cat/not-authorized'
+  live = 0
+  log 0x0: 32, 224, call.data1, _param2
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Cat/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Cat/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownd4e8be83(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Cat/not-authorized'
+  if _param1 != 'vow':
+      revert with 0, 'Cat/file-unrecognized-param'
+  addr(unknown626cb3c5Address) = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown1a0b287e(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Cat/not-authorized'
+  if _param2 == 'chop':
+      unknownd9638d36[_param1].field_256 = _param3
+  else:
+      if _param2 != 'lump':
+          revert with 0, 'Cat/file-unrecognized-param'
+      unknownd9638d36[_param1].field_512 = _param3
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownebecb39d(uint256 _param1, uint256 _param2, addr _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Cat/not-authorized'
+  if _param2 != 'flip':
+      revert with 0, 'Cat/file-unrecognized-param'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xdc4d20fa with:
+       gas gas_remaining wei
+      args unknownd9638d36[_param1].field_0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  unknownd9638d36[_param1].field_0 = _param3
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xa3b22fc4 with:
+       gas gas_remaining wei
+      args _param3
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown45cf2230(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  require ext_code.size(unknown36569e77Address)
+  static call unknown36569e77Address.0xd9638d36 with:
+          gas gas_remaining wei
+         args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 96
+  require ext_code.size(unknown36569e77Address)
+  static call unknown36569e77Address.0x2424be5c with:
+          gas gas_remaining wei
+         args _param1, _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if live != 1:
+      revert with 0, 'Cat/not-live'
+  if ext_call.return_data <= 0:
+      revert with 0, 'Cat/not-unsafe'
+  if not ext_call.return_data[32]:
+      if not ext_call.return_data[64]:
+          revert with 0, 'Cat/not-unsafe'
+      require ext_call.return_data[64]
+      require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[0]
+      if ext_call.return_data * ext_call.return_data >= 0:
+          revert with 0, 'Cat/not-unsafe'
+  else:
+      require ext_call.return_data[32]
+      require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+      if not ext_call.return_data[64]:
+          if 0 >= ext_call.return_data * ext_call.return_data[32]:
+              revert with 0, 'Cat/not-unsafe'
+      else:
+          require ext_call.return_data[64]
+          require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[0]
+          if ext_call.return_data * ext_call.return_data >= ext_call.return_data * ext_call.return_data[32]:
+              revert with 0, 'Cat/not-unsafe'
+  if ext_call.return_data <= unknownd9638d36[_param1].field_512:
+      if not ext_call.return_data[32]:
+          require ext_call.return_data[0]
+          if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'Cat/overflow'
+          if ext_call.return_data <= 0 / ext_call.return_data[0]:
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -ext_call.return_data[0], -ext_call.return_data[32]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, ext_call.return_data[0], 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+          else:
+              if 0 / ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -ext_call.return_data / ext_call.return_data[0]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require 0 / ext_call.return_data * ext_call.return_data / ext_call.return_data == 0 / ext_call.return_data[0]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (0 / ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+              else:
+                  require ext_call.return_data[32]
+                  require 0 / ext_call.return_data * ext_call.return_data / ext_call.return_data == 0 / ext_call.return_data[0]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require 0 / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == 0 / ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0 / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, ext_call.return_data[0], 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require 0 / ext_call.return_data * ext_call.return_data / ext_call.return_data == 0 / ext_call.return_data[0]
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+      else:
+          require ext_call.return_data[32]
+          require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[0]
+          require ext_call.return_data[0]
+          if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'Cat/overflow'
+          if ext_call.return_data <= ext_call.return_data * ext_call.return_data / ext_call.return_data[0]:
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -ext_call.return_data[0], -ext_call.return_data[32]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, ext_call.return_data[0], 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+          else:
+              if ext_call.return_data * ext_call.return_data / ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -ext_call.return_data * ext_call.return_data / ext_call.return_data[0]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data * ext_call.return_data / ext_call.return_data[0]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data * ext_call.return_data / ext_call.return_data[0]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, ext_call.return_data[0], 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, ext_call.return_data[0], 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data * ext_call.return_data / ext_call.return_data[0]
+                  log 0xa716da86: ext_call.return_data1].field_0, ext_call.return_data1, _param2
+  else:
+      if not ext_call.return_data[32]:
+          require ext_call.return_data[0]
+          if unknownd9638d36[_param1].field_512 > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'Cat/overflow'
+          if ext_call.return_data <= 0 / ext_call.return_data[0]:
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -unknownd9638d36[_param1].field_512, -ext_call.return_data[32]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, unknownd9638d36[_param1].field_512, 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+          else:
+              if 0 / ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -unknownd9638d36[_param1].field_512, -0 / ext_call.return_data[0]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require 0 / ext_call.return_data * ext_call.return_data / ext_call.return_data == 0 / ext_call.return_data[0]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (0 / ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+              else:
+                  require ext_call.return_data[32]
+                  require 0 / ext_call.return_data * ext_call.return_data / ext_call.return_data == 0 / ext_call.return_data[0]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require 0 / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == 0 / ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0 / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, unknownd9638d36[_param1].field_512, 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require 0 / ext_call.return_data * ext_call.return_data / ext_call.return_data == 0 / ext_call.return_data[0]
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+      else:
+          require ext_call.return_data[32]
+          require unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data == unknownd9638d36[_param1].field_512
+          require ext_call.return_data[0]
+          if unknownd9638d36[_param1].field_512 > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'Cat/overflow'
+          if ext_call.return_data <= unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data[0]:
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -unknownd9638d36[_param1].field_512, -ext_call.return_data[32]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, unknownd9638d36[_param1].field_512, 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+          else:
+              if unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'Cat/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(unknown626cb3c5Address), -unknownd9638d36[_param1].field_512, -unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data[0]
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args 0
+              else:
+                  require ext_call.return_data[32]
+                  require unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data / ext_call.return_data == unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data[0]
+                  require ext_code.size(addr(unknown626cb3c5Address))
+                  call addr(unknown626cb3c5Address).0x697efb78 with:
+                       gas gas_remaining wei
+                      args (unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data[32])
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              if not ext_call.return_data[32]:
+                  if unknownd9638d36[_param1].field_256:
+                      require unknownd9638d36[_param1].field_256
+                      require not 0 / unknownd9638d36[_param1].field_256
+                  require ext_code.size(unknownd9638d36[_param1].field_0)
+                  call unknownd9638d36[_param1].field_0.0x351de600 with:
+                       gas gas_remaining wei
+                      args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+              else:
+                  require ext_call.return_data[32]
+                  require unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data / ext_call.return_data == unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data[0]
+                  if not unknownd9638d36[_param1].field_256:
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), 0, unknownd9638d36[_param1].field_512, 0
+                  else:
+                      require unknownd9638d36[_param1].field_256
+                      require unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / unknownd9638d36[_param1].field_256 == unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data[32]
+                      require ext_code.size(unknownd9638d36[_param1].field_0)
+                      call unknownd9638d36[_param1].field_0.0x351de600 with:
+                           gas gas_remaining wei
+                          args 0, ext_call.return_datauint32(stor4), unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data * unknownd9638d36[_param1].field_256 / 1000000000 * 10^18, unknownd9638d36[_param1].field_512, 0
+              if not ext_call.success:
+                  revert with ext_call.return_data[0 len return_data.size]
+              require return_data.size >= 32
+              if not ext_call.return_data[32]:
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_0, ext_call.return_data1, _param2
+              else:
+                  require ext_call.return_data[32]
+                  require unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data * ext_call.return_data / ext_call.return_data == unknownd9638d36[_param1].field_512 * ext_call.return_data / ext_call.return_data[0]
+                  log 0xa716da86: unknownd9638d36[_param1].field_512, ext_call.return_data1].field_512 * ext_call.return_data1].field_0, ext_call.return_data1, _param2
+  return ext_call.return_data[0]
+

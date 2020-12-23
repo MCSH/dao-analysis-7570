@@ -1,0 +1,22 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x69076e44a9C70a67D5b79d95795Aba299083c275
+# 
+#  Let's make the world open source 
+# 
+
+def _fallback() payable: # default function
+  revert
+
+def burn(address _payTo): # not payable
+  require ext_code.size(_payTo)
+  call _payTo.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(_payTo)
+  call _payTo.burn(uint256 value) with:
+       gas gas_remaining - 710 wei
+      args ext_call.return_data[0]
+  require ext_call.success
+

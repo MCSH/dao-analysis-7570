@@ -1,0 +1,107 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x54003DBf6ae6CBa6DDaE571CcdC34d834b44Ab1e
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  stor1 is uint8 at storage 1 offset 160
+  stor1 is uint128 at storage 1 offset 160
+  owner is addr at storage 1
+  read is uint256 at storage 2
+
+def read() payable: 
+  if not uint8(stor1.field_160):
+      revert with 0, 'haz-not'
+  return read
+
+def owner() payable: 
+  return owner
+
+def authority() payable: 
+  return authorityAddress
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def peek() payable: 
+  return read, bool(uint8(stor1.field_160))
+
+def setOwner(address _new) payable: 
+  require calldata.size - 4 >= 32
+  if this.address != caller:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  owner = _new
+  log LogSetOwner(address owner=owner)
+
+def void() payable: 
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if this.address != caller:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  Mask(96, 0, stor1.field_160) = 0
+
+def setAuthority(address _authority) payable: 
+  require calldata.size - 4 >= 32
+  if this.address != caller:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=authorityAddress)
+
+def poke(bytes32 _wut) payable: 
+  require calldata.size - 4 >= 32
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, addr(this.address), call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  read = _wut
+  Mask(96, 0, stor1.field_160) = 1
+

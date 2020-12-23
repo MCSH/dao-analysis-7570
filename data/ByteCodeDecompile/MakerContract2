@@ -1,0 +1,590 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xBda109309f9FafA6Dd6A9CB9f1Df4085B27Ee8eF
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  saiAddress is addr at storage 2
+  sinAddress is addr at storage 3
+  skrAddress is addr at storage 4
+  voxAddress is addr at storage 5
+  tubAddress is addr at storage 6
+  gap is uint256 at storage 7
+  off is uint8 at storage 8
+  fix is uint256 at storage 9
+
+def sin(): # not payable
+  return sinAddress
+
+def skr(): # not payable
+  return skrAddress
+
+def tub(): # not payable
+  return tubAddress
+
+def off(): # not payable
+  return bool(off)
+
+def vox(): # not payable
+  return voxAddress
+
+def gap(): # not payable
+  return gap
+
+def owner(): # not payable
+  return owner
+
+def sai(): # not payable
+  return saiAddress
+
+def fix(): # not payable
+  return fix
+
+def authority(): # not payable
+  return authorityAddress
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def woe(): # not payable
+  require ext_code.size(sinAddress)
+  call sinAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  return ext_call.return_data[0]
+
+def joy(): # not payable
+  require ext_code.size(saiAddress)
+  call saiAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  return ext_call.return_data[0]
+
+def fog(): # not payable
+  require ext_code.size(skrAddress)
+  call skrAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  return ext_call.return_data[0]
+
+def vent(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  require off
+  require ext_code.size(skrAddress)
+  call skrAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  require ext_code.size(skrAddress)
+  call skrAddress.burn(uint256 value) with:
+       gas gas_remaining - 710 wei
+      args ext_call.return_data[0]
+  require ext_call.success
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def cage(uint256 _fix): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require not off
+  off = 1
+  fix = _fix_
+
+def mold(bytes32 _param, uint256 _val): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, _val
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  if _param == 'gap':
+      gap = _val
+
+def s2s(): # not payable
+  require ext_code.size(tubAddress)
+  call tubAddress.tag() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_code.size(voxAddress)
+  call voxAddress.par() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  return ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0])
+
+def cash(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require off
+  require ext_code.size(saiAddress)
+  call saiAddress.burn(address guy, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _wad
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.gem() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not fix:
+      require ext_code.size(addr(ext_call.return_data))
+      call addr(ext_call.return_data).transfer(address to, uint256 value) with:
+           gas gas_remaining - 710 wei
+          args caller, 0
+  else:
+      require fix
+      require _wad * fix / fix == _wad
+      require (_wad * fix) + 500000000 * 10^18 >= _wad * fix
+      require ext_code.size(addr(ext_call.return_data))
+      call addr(ext_call.return_data).transfer(address to, uint256 value) with:
+           gas gas_remaining - 710 wei
+          args caller, (_wad * fix) + 500000000 * 10^18 / 1000000000 * 10^18
+  require ext_call.success
+  require ext_call.return_data[0]
+
+def heal(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  require ext_code.size(saiAddress)
+  call saiAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  if ext_call.return_data[0]:
+      require ext_code.size(sinAddress)
+      call sinAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      if ext_call.return_data[0]:
+          require ext_code.size(saiAddress)
+          call saiAddress.balanceOf(address owner) with:
+               gas gas_remaining - 710 wei
+              args this.address
+          require ext_call.success
+          require ext_code.size(sinAddress)
+          call sinAddress.balanceOf(address owner) with:
+               gas gas_remaining - 710 wei
+              args this.address
+          require ext_call.success
+          require ext_code.size(saiAddress)
+          call saiAddress.burn(uint256 value) with:
+               gas gas_remaining - 710 wei
+              args ext_call.return_data[0]
+          require ext_call.success
+          require ext_code.size(sinAddress)
+          call sinAddress.burn(uint256 value) with:
+               gas gas_remaining - 710 wei
+              args ext_call.return_data[0]
+          require ext_call.success
+
+def mock(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require off
+  require ext_code.size(saiAddress)
+  call saiAddress.mint(address to, uint256 amount) with:
+       gas gas_remaining - 710 wei
+      args caller, _wad
+  require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.gem() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  if not fix:
+      require ext_code.size(addr(ext_call.return_data))
+      call addr(ext_call.return_data).transferFrom(address from, address to, uint256 value) with:
+           gas gas_remaining - 710 wei
+          args caller, addr(this.address), 0
+  else:
+      require fix
+      require _wad * fix / fix == _wad
+      require (_wad * fix) + 500000000 * 10^18 >= _wad * fix
+      require ext_code.size(addr(ext_call.return_data))
+      call addr(ext_call.return_data).transferFrom(address from, address to, uint256 value) with:
+           gas gas_remaining - 710 wei
+          args caller, addr(this.address), (_wad * fix) + 500000000 * 10^18 / 1000000000 * 10^18
+  require ext_call.success
+  require ext_call.return_data[0]
+
+def ask(uint256 _wad): # not payable
+  require ext_code.size(tubAddress)
+  call tubAddress.tag() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_code.size(voxAddress)
+  call voxAddress.par() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  if not gap:
+      return 0
+  require gap
+  require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+  require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+  if not ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18:
+      return 0
+  require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+  require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+  require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+  return ((_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18)
+
+def bid(uint256 _assetId): # not payable
+  require ext_code.size(tubAddress)
+  call tubAddress.tag() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_code.size(voxAddress)
+  call voxAddress.par() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  require -gap + 2 * 10^18 <= 2 * 10^18
+  if not -gap + 2 * 10^18:
+      return 0
+  require -gap + 2 * 10^18
+  require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_datagap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / -gap + 2 * 10^18 == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+  if not (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18:
+      return 0
+  require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+  require _assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 / (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 == _assetId
+  require (_assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 >= _assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+  return ((_assetId * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18)
+
+def boom(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require not off
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require ext_code.size(saiAddress)
+  call saiAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  if ext_call.return_data[0]:
+      require ext_code.size(sinAddress)
+      call sinAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      if ext_call.return_data[0]:
+          require ext_code.size(saiAddress)
+          call saiAddress.balanceOf(address owner) with:
+               gas gas_remaining - 710 wei
+              args this.address
+          require ext_call.success
+          require ext_code.size(sinAddress)
+          call sinAddress.balanceOf(address owner) with:
+               gas gas_remaining - 710 wei
+              args this.address
+          require ext_call.success
+          require ext_code.size(saiAddress)
+          call saiAddress.burn(uint256 value) with:
+               gas gas_remaining - 710 wei
+              args ext_call.return_data[0]
+          require ext_call.success
+          require ext_code.size(sinAddress)
+          call sinAddress.burn(uint256 value) with:
+               gas gas_remaining - 710 wei
+              args ext_call.return_data[0]
+          require ext_call.success
+  require ext_code.size(tubAddress)
+  call tubAddress.tag() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require ext_code.size(voxAddress)
+  call voxAddress.par() with:
+       gas gas_remaining - 710 wei
+  require ext_call.success
+  require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+  require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+  require ext_call.return_data[0]
+  require -gap + 2 * 10^18 <= 2 * 10^18
+  if not -gap + 2 * 10^18:
+      require ext_code.size(saiAddress)
+      call saiAddress.push(address dst, uint256 wad) with:
+           gas gas_remaining - 710 wei
+          args caller, 0
+  else:
+      require -gap + 2 * 10^18
+      require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_datagap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / -gap + 2 * 10^18 == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+      if not (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18:
+          require ext_code.size(saiAddress)
+          call saiAddress.push(address dst, uint256 wad) with:
+               gas gas_remaining - 710 wei
+              args caller, 0
+      else:
+          require (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+          require _wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 / (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18 == _wad
+          require (_wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 >= _wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18
+          require ext_code.size(saiAddress)
+          call saiAddress.push(address dst, uint256 wad) with:
+               gas gas_remaining - 710 wei
+              args caller, (_wad * (2 * 10^18 * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap * (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+  require ext_call.success
+  require ext_code.size(skrAddress)
+  call skrAddress.burn(address guy, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _wad
+  require ext_call.success
+
+def bust(uint256 _wad): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require not off
+  require ext_code.size(skrAddress)
+  call skrAddress.balanceOf(address owner) with:
+       gas gas_remaining - 710 wei
+      args this.address
+  require ext_call.success
+  if _wad <= ext_call.return_data[0]:
+      require ext_code.size(tubAddress)
+      call tubAddress.tag() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require ext_code.size(voxAddress)
+      call voxAddress.par() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      require gap
+      require gap
+      require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+      require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18 > 0
+      require ext_code.size(skrAddress)
+      call skrAddress.push(address dst, uint256 wad) with:
+           gas gas_remaining - 710 wei
+          args caller, _wad
+      require ext_call.success
+      require ext_code.size(tubAddress)
+      call tubAddress.tag() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require ext_code.size(voxAddress)
+      call voxAddress.par() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      if not gap:
+          require ext_code.size(saiAddress)
+          call saiAddress.pull(address src, uint256 wad) with:
+               gas gas_remaining - 710 wei
+              args caller, 0
+      else:
+          require gap
+          require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+          if not ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18:
+              require ext_code.size(saiAddress)
+              call saiAddress.pull(address src, uint256 wad) with:
+                   gas gas_remaining - 710 wei
+                  args caller, 0
+          else:
+              require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+              require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+              require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+              require ext_code.size(saiAddress)
+              call saiAddress.pull(address src, uint256 wad) with:
+                   gas gas_remaining - 710 wei
+                  args caller, (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+      require ext_call.success
+      log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+      require ext_code.size(saiAddress)
+      call saiAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      if ext_call.return_data[0]:
+          require ext_code.size(sinAddress)
+          call sinAddress.balanceOf(address owner) with:
+               gas gas_remaining - 710 wei
+              args this.address
+          require ext_call.success
+          if ext_call.return_data[0]:
+              require ext_code.size(saiAddress)
+              call saiAddress.balanceOf(address owner) with:
+                   gas gas_remaining - 710 wei
+                  args this.address
+              require ext_call.success
+              require ext_code.size(sinAddress)
+              call sinAddress.balanceOf(address owner) with:
+                   gas gas_remaining - 710 wei
+                  args this.address
+              require ext_call.success
+              require ext_code.size(saiAddress)
+              call saiAddress.burn(uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args ext_call.return_data[0]
+              require ext_call.success
+              require ext_code.size(sinAddress)
+              call sinAddress.burn(uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args ext_call.return_data[0]
+              require ext_call.success
+  else:
+      require ext_code.size(skrAddress)
+      call skrAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      require _wad - ext_call.return_data <= _wad
+      require ext_code.size(skrAddress)
+      call skrAddress.mint(uint256 wad) with:
+           gas gas_remaining - 710 wei
+          args (_wad - ext_call.return_data[0])
+      require ext_call.success
+      require ext_code.size(tubAddress)
+      call tubAddress.tag() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require ext_code.size(voxAddress)
+      call voxAddress.par() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      require gap
+      require gap
+      require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+      require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+      require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18 > 0
+      require ext_code.size(skrAddress)
+      call skrAddress.push(address dst, uint256 wad) with:
+           gas gas_remaining - 710 wei
+          args caller, _wad
+      require ext_call.success
+      require ext_code.size(tubAddress)
+      call tubAddress.tag() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require ext_code.size(voxAddress)
+      call voxAddress.par() with:
+           gas gas_remaining - 710 wei
+      require ext_call.success
+      require 1000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == ext_call.return_data[0]
+      require (1000000000 * 10^18 * ext_call.return_data / 2) >= 1000000000 * 10^18 * ext_call.return_data[0]
+      require ext_call.return_data[0]
+      if not gap:
+          require ext_code.size(saiAddress)
+          call saiAddress.pull(address src, uint256 wad) with:
+               gas gas_remaining - 710 wei
+              args caller, 0
+      else:
+          require gap
+          require (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap / gap == (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data[0]
+          require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 >= (1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap
+          if not ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18:
+              require ext_code.size(saiAddress)
+              call saiAddress.pull(address src, uint256 wad) with:
+                   gas gas_remaining - 710 wei
+                  args caller, 0
+          else:
+              require ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+              require _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 / ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18 == _wad
+              require (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 >= _wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18
+              require ext_code.size(saiAddress)
+              call saiAddress.pull(address src, uint256 wad) with:
+                   gas gas_remaining - 710 wei
+                  args caller, (_wad * ((1000000000 * 10^18 * ext_call.return_data / 2) / ext_call.return_data * gap) + 5 * 10^17 / 10^18) + 500000000 * 10^18 / 1000000000 * 10^18
+      require ext_call.success
+      log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+      require ext_code.size(saiAddress)
+      call saiAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      if ext_call.return_data[0]:
+          require ext_code.size(sinAddress)
+          call sinAddress.balanceOf(address owner) with:
+               gas gas_remaining - 710 wei
+              args this.address
+          require ext_call.success
+          if ext_call.return_data[0]:
+              require ext_code.size(saiAddress)
+              call saiAddress.balanceOf(address owner) with:
+                   gas gas_remaining - 710 wei
+                  args this.address
+              require ext_call.success
+              require ext_code.size(sinAddress)
+              call sinAddress.balanceOf(address owner) with:
+                   gas gas_remaining - 710 wei
+                  args this.address
+              require ext_call.success
+              require ext_code.size(saiAddress)
+              call saiAddress.burn(uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args ext_call.return_data[0]
+              require ext_call.success
+              require ext_code.size(sinAddress)
+              call sinAddress.burn(uint256 value) with:
+                   gas gas_remaining - 710 wei
+                  args ext_call.return_data[0]
+              require ext_call.success
+      require ext_code.size(saiAddress)
+      call saiAddress.balanceOf(address owner) with:
+           gas gas_remaining - 710 wei
+          args this.address
+      require ext_call.success
+      require not ext_call.return_data[0]
+

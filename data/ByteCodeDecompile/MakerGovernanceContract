@@ -1,0 +1,672 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x9eF05f7F6deB616fd37aC3c959a2dDD25A54E4F5
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  userRoles is mapping of uint256 at storage 3
+  capabilityRoles is mapping of uint256 at storage 4
+  stor5 is mapping of uint8 at storage 5
+  slates is array of addr at storage 6
+  votes is mapping of uint256 at storage 7
+  approvals is mapping of uint256 at storage 8
+  deposits is mapping of uint256 at storage 9
+  GOVAddress is addr at storage 10
+  IOUAddress is addr at storage 11
+  hatAddress is addr at storage 12
+  MAX_YAYS is uint256 at storage 13
+
+def IOU() payable: 
+  return IOUAddress
+
+def getUserRoles(address _who) payable: 
+  require calldata.size - 4 >= 32
+  return userRoles[addr(_who)]
+
+def GOV() payable: 
+  return GOVAddress
+
+def getCapabilityRoles(address _code, bytes4 _sig) payable: 
+  require calldata.size - 4 >= 64
+  return capabilityRoles[addr(_code)][Mask(32, 224, _sig)]
+
+def isCapabilityPublic(address _code, bytes4 _sig) payable: 
+  require calldata.size - 4 >= 64
+  return bool(stor5[addr(_code)][Mask(32, 224, _sig)])
+
+def MAX_YAYS() payable: 
+  return MAX_YAYS
+
+def approvals(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return approvals[_param1]
+
+def owner() payable: 
+  return owner
+
+def authority() payable: 
+  return authorityAddress
+
+def slates(bytes32 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  require _param2 < uint256(slates[_param1])
+  return addr(slates[_param1][_param2])
+
+def votes(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return votes[_param1]
+
+def deposits(address _param1) payable: 
+  require calldata.size - 4 >= 32
+  return deposits[_param1]
+
+def hat() payable: 
+  return hatAddress
+
+#
+#  Regular functions
+#
+
+def setOwner(address _new) payable: 
+  revert
+
+def setAuthority(address _authority) payable: 
+  revert
+
+def _fallback() payable: # default function
+  revert
+
+def setRootUser(address _who, bool _enabled) payable: 
+  revert
+
+def isUserRoot(address _who) payable: 
+  require calldata.size - 4 >= 32
+  return (_who == hatAddress)
+
+def hasUserRole(address _who, uint8 _role) payable: 
+  require calldata.size - 4 >= 64
+  return bool(2^_role and userRoles[addr(_who)])
+
+def lift(address _whom) payable: 
+  require calldata.size - 4 >= 32
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, cd
+  require approvals[_whom] > approvals[stor12]
+  hatAddress = _whom
+
+def canCall(address _src, address _dst, bytes4 _sig) payable: 
+  require calldata.size - 4 >= 96
+  if _src != hatAddress:
+      if not stor5[addr(_dst)][Mask(32, 224, _sig)]:
+          return bool(capabilityRoles[addr(_dst)][Mask(32, 224, _sig)] and userRoles[addr(_src)])
+  return 1
+
+def setPublicCapability(address _code, bytes4 _sig, bool _enabled) payable: 
+  require calldata.size - 4 >= 96
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  stor5[addr(_code)][Mask(32, 224, _sig)] = uint8(_enabled)
+
+def setUserRole(address _who, uint8 _role, bool _enabled) payable: 
+  require calldata.size - 4 >= 96
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not _enabled:
+      userRoles[addr(_who)] = userRoles[addr(_who)] and -1 xor 2^_role
+  else:
+      userRoles[addr(_who)] = 2^_role or userRoles[addr(_who)]
+
+def setRoleCapability(uint8 _role, address _code, bytes4 _sig, bool _enabled) payable: 
+  require calldata.size - 4 >= 128
+  if caller != this.address:
+      if owner != caller:
+          if not authorityAddress:
+              revert with 0, 'ds-auth-unauthorized'
+          require ext_code.size(authorityAddress)
+          static call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+                  gas gas_remaining wei
+                 args caller, this.address, call.func_hash
+          if not ext_call.success:
+              revert with ext_call.return_data[0 len return_data.size]
+          require return_data.size >= 32
+          if not ext_call.return_data[0]:
+              revert with 0, 'ds-auth-unauthorized'
+  if not _enabled:
+      capabilityRoles[addr(_code)][Mask(32, 224, _sig)] = capabilityRoles[addr(_code)][Mask(32, 224, _sig)] and -1 xor 2^_role
+  else:
+      capabilityRoles[addr(_code)][Mask(32, 224, _sig)] = 2^_role or capabilityRoles[addr(_code)][Mask(32, 224, _sig)]
+
+def free(uint256 _value) payable: 
+  require calldata.size - 4 >= 32
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if deposits[caller] - _value > deposits[caller]:
+      revert with 0, 'ds-math-sub-underflow'
+  deposits[caller] -= _value
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      if approvals[addr(stor6[stor7[caller]][idx])] - _value > approvals[addr(stor6[stor7[caller]][idx])]:
+          revert with 0, 'ds-math-sub-underflow'
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] -= _value
+      idx = idx + 1
+      continue 
+  require ext_code.size(IOUAddress)
+  call IOUAddress.burn(address guy, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, _value
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(GOVAddress)
+  call GOVAddress.push(address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, _value
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+
+def lock(uint256 _expiration) payable: 
+  require calldata.size - 4 >= 32
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require ext_code.size(GOVAddress)
+  call GOVAddress.pull(address src, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, _expiration
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(IOUAddress)
+  call IOUAddress.mint(address to, uint256 amount) with:
+       gas gas_remaining wei
+      args caller, _expiration
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  if deposits[caller] + _expiration < deposits[caller]:
+      revert with 0, 'ds-math-add-overflow'
+  deposits[caller] += _expiration
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      if approvals[addr(stor6[stor7[caller]][idx])] + _expiration < approvals[addr(stor6[stor7[caller]][idx])]:
+          revert with 0, 'ds-math-add-overflow'
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] += _expiration
+      idx = idx + 1
+      continue 
+
+def vote(bytes32 _slate) payable: 
+  require calldata.size - 4 >= 32
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if not uint256(slates[_slate]):
+      if _slate != 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470:
+          revert with 0, 'ds-chief-invalid-slate'
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] > approvals[addr(stor6[stor7[caller]][idx])]:
+          revert with 0, 'ds-math-sub-underflow'
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+      idx = idx + 1
+      continue 
+  votes[caller] = _slate
+  idx = 0
+  while idx < uint256(slates[_slate]):
+      if approvals[addr(stor6[_slate][idx])] + deposits[caller] < approvals[addr(stor6[_slate][idx])]:
+          revert with 0, 'ds-math-add-overflow'
+      require idx < uint256(slates[_slate])
+      mem[0] = addr(slates[_slate][idx])
+      mem[32] = 8
+      approvals[addr(stor6[_slate][idx])] += deposits[caller]
+      idx = idx + 1
+      continue 
+
+def etch(address[] _yays) payable: 
+  require calldata.size - 4 >= 32
+  require _yays <= 4294967296
+  require _yays + 36 <= calldata.size
+  require _yays.length <= 4294967296 and _yays + (32 * _yays.length) + 36 <= calldata.size
+  mem[128 len 32 * _yays.length] = call.data[_yays + 36 len 32 * _yays.length]
+  mem[(32 * _yays.length) + 128] = call.value
+  mem[(32 * _yays.length) + 160] = 64
+  mem[(32 * _yays.length) + 192] = calldata.size
+  mem[(32 * _yays.length) + 224 len calldata.size] = call.data[0 len calldata.size]
+  mem[calldata.size + (32 * _yays.length) + 224] = 0
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require _yays.length <= MAX_YAYS
+  if not _yays.length:
+      mem[(32 * _yays.length) + 160 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      mem[(32 * _yays.length) + 128] = 96 * _yays.length
+      uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+  else:
+      if _yays.length != 1:
+          idx = 0
+          while idx < _yays.length - 1:
+              require idx + 1 < _yays.length
+              require idx < _yays.length
+              require mem[(32 * idx) + 140 len 20] < mem[(32 * idx + 1) + 140 len 20]
+              idx = idx + 1
+              continue 
+      mem[(32 * _yays.length) + 160 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      mem[(32 * _yays.length) + 128] = 96 * _yays.length
+      uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+  log Etch(bytes32 slate=sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length]))
+  mem[(64 * _yays.length) + 160] = sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length])
+  return memory
+    from (64 * _yays.length) + 160
+     len (127 * _yays.length) + 32
+
+def vote(address[] _yays) payable: 
+  require calldata.size - 4 >= 32
+  require _yays <= 4294967296
+  require _yays + 36 <= calldata.size
+  require _yays.length <= 4294967296 and _yays + (32 * _yays.length) + 36 <= calldata.size
+  mem[128 len 32 * _yays.length] = call.data[_yays + 36 len 32 * _yays.length]
+  mem[(32 * _yays.length) + 128] = call.value
+  mem[(32 * _yays.length) + 160] = 64
+  mem[(32 * _yays.length) + 192] = calldata.size
+  mem[(32 * _yays.length) + 224 len calldata.size] = call.data[0 len calldata.size]
+  mem[calldata.size + (32 * _yays.length) + 224] = 0
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require _yays.length <= MAX_YAYS
+  if not _yays.length:
+      mem[(32 * _yays.length) + 160 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      mem[(32 * _yays.length) + 128] = 96 * _yays.length
+      _309 = sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length])
+      uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      log Etch(bytes32 slate=sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length]))
+      mem[(64 * _yays.length) + 160] = call.value
+      mem[(64 * _yays.length) + 192] = 64
+      mem[(64 * _yays.length) + 224] = calldata.size
+      mem[(64 * _yays.length) + 256 len calldata.size] = call.data[0 len calldata.size]
+      mem[calldata.size + (64 * _yays.length) + 256] = 0
+      log call.func_hash: mem[(64 * _yays.length) + 160 len (127 * _yays.length) + ceil32(calldata.size) + 96], caller, _yays, cd
+      if uint256(slates[_309]):
+          idx = 0
+          while idx < uint256(slates[stor7[caller]]):
+              if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]:
+                  require idx < uint256(slates[stor7[caller]])
+                  mem[0] = addr(slates[stor7[caller]][idx])
+                  mem[32] = 8
+                  approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+                  idx = idx + 1
+                  continue 
+              mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+              mem[(64 * _yays.length) + 164] = 32
+              mem[(64 * _yays.length) + 196] = 21
+              mem[(64 * _yays.length) + 228] = 'ds-math-sub-underflow'
+              revert with memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 100
+          votes[caller] = _309
+          idx = 0
+          while idx < uint256(slates[_309]):
+              if approvals[addr(stor6[_309][idx])] + deposits[caller] >= approvals[addr(stor6[_309][idx])]:
+                  require idx < uint256(slates[_309])
+                  mem[0] = addr(slates[_309][idx])
+                  mem[32] = 8
+                  approvals[addr(stor6[_309][idx])] += deposits[caller]
+                  idx = idx + 1
+                  continue 
+              mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+              mem[(64 * _yays.length) + 164] = 32
+              mem[(64 * _yays.length) + 196] = 20
+              mem[(64 * _yays.length) + 228] = 'ds-math-add-overflow'
+              revert with memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 100
+          mem[(64 * _yays.length) + 160] = _309
+          return memory
+            from (64 * _yays.length) + 160
+             len (127 * _yays.length) + 32
+      if _309 == 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470:
+          idx = 0
+          while idx < uint256(slates[stor7[caller]]):
+              if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]:
+                  require idx < uint256(slates[stor7[caller]])
+                  mem[0] = addr(slates[stor7[caller]][idx])
+                  mem[32] = 8
+                  approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+                  idx = idx + 1
+                  continue 
+              mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+              mem[(64 * _yays.length) + 164] = 32
+              mem[(64 * _yays.length) + 196] = 21
+              mem[(64 * _yays.length) + 228] = 'ds-math-sub-underflow'
+              revert with memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 100
+          votes[caller] = _309
+          idx = 0
+          while idx < uint256(slates[_309]):
+              if approvals[addr(stor6[_309][idx])] + deposits[caller] >= approvals[addr(stor6[_309][idx])]:
+                  require idx < uint256(slates[_309])
+                  mem[0] = addr(slates[_309][idx])
+                  mem[32] = 8
+                  approvals[addr(stor6[_309][idx])] += deposits[caller]
+                  idx = idx + 1
+                  continue 
+              mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+              mem[(64 * _yays.length) + 164] = 32
+              mem[(64 * _yays.length) + 196] = 20
+              mem[(64 * _yays.length) + 228] = 'ds-math-add-overflow'
+              revert with memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 100
+          mem[(64 * _yays.length) + 160] = _309
+          return memory
+            from (64 * _yays.length) + 160
+             len (127 * _yays.length) + 32
+  else:
+      if 1 == _yays.length:
+          mem[(32 * _yays.length) + 160 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+          mem[(32 * _yays.length) + 128] = 96 * _yays.length
+          _316 = sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length])
+          uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) = _yays.length
+          if not _yays.length:
+              idx = 0
+              while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+                  addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+                  idx = idx + 1
+                  continue 
+          else:
+              s = 0
+              idx = 128
+              while (32 * _yays.length) + 128 > idx:
+                  addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+                  s = s + 1
+                  idx = idx + 32
+                  continue 
+              idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+              while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+                  addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+                  idx = idx + 1
+                  continue 
+          log Etch(bytes32 slate=sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length]))
+          mem[(64 * _yays.length) + 160] = call.value
+          mem[(64 * _yays.length) + 192] = 64
+          mem[(64 * _yays.length) + 224] = calldata.size
+          mem[(64 * _yays.length) + 256 len calldata.size] = call.data[0 len calldata.size]
+          mem[calldata.size + (64 * _yays.length) + 256] = 0
+          log call.func_hash: mem[(64 * _yays.length) + 160 len (127 * _yays.length) + ceil32(calldata.size) + 96], caller, _yays, cd
+          if uint256(slates[_316]):
+              idx = 0
+              while idx < uint256(slates[stor7[caller]]):
+                  if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]:
+                      require idx < uint256(slates[stor7[caller]])
+                      mem[0] = addr(slates[stor7[caller]][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 21
+                  mem[(64 * _yays.length) + 228] = 'ds-math-sub-underflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              votes[caller] = _316
+              idx = 0
+              while idx < uint256(slates[_316]):
+                  if approvals[addr(stor6[_316][idx])] + deposits[caller] >= approvals[addr(stor6[_316][idx])]:
+                      require idx < uint256(slates[_316])
+                      mem[0] = addr(slates[_316][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[_316][idx])] += deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 20
+                  mem[(64 * _yays.length) + 228] = 'ds-math-add-overflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              mem[(64 * _yays.length) + 160] = _316
+              return memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 32
+          if _316 == 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470:
+              idx = 0
+              while idx < uint256(slates[stor7[caller]]):
+                  if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]:
+                      require idx < uint256(slates[stor7[caller]])
+                      mem[0] = addr(slates[stor7[caller]][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 21
+                  mem[(64 * _yays.length) + 228] = 'ds-math-sub-underflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              votes[caller] = _316
+              idx = 0
+              while idx < uint256(slates[_316]):
+                  if approvals[addr(stor6[_316][idx])] + deposits[caller] >= approvals[addr(stor6[_316][idx])]:
+                      require idx < uint256(slates[_316])
+                      mem[0] = addr(slates[_316][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[_316][idx])] += deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 20
+                  mem[(64 * _yays.length) + 228] = 'ds-math-add-overflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              mem[(64 * _yays.length) + 160] = _316
+              return memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 32
+      else:
+          idx = 0
+          while idx < _yays.length - 1:
+              require idx + 1 < _yays.length
+              require idx < _yays.length
+              require mem[(32 * idx) + 140 len 20] < mem[(32 * idx + 1) + 140 len 20]
+              idx = idx + 1
+              continue 
+          mem[(32 * _yays.length) + 160 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+          mem[(32 * _yays.length) + 128] = 96 * _yays.length
+          _604 = sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length])
+          uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) = _yays.length
+          if not _yays.length:
+              idx = 0
+              while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+                  addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+                  idx = idx + 1
+                  continue 
+          else:
+              s = 0
+              idx = 128
+              while (32 * _yays.length) + 128 > idx:
+                  addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+                  s = s + 1
+                  idx = idx + 32
+                  continue 
+              idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+              while uint256(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]]) > idx:
+                  addr(slates[mem[(32 * _yays.length) + 160 len 96 * _yays.length]][idx]) = 0
+                  idx = idx + 1
+                  continue 
+          log Etch(bytes32 slate=sha3(mem[(32 * _yays.length) + 160 len 96 * _yays.length]))
+          mem[(64 * _yays.length) + 160] = call.value
+          mem[(64 * _yays.length) + 192] = 64
+          mem[(64 * _yays.length) + 224] = calldata.size
+          mem[(64 * _yays.length) + 256 len calldata.size] = call.data[0 len calldata.size]
+          mem[calldata.size + (64 * _yays.length) + 256] = 0
+          log call.func_hash: mem[(64 * _yays.length) + 160 len (127 * _yays.length) + ceil32(calldata.size) + 96], caller, _yays, cd
+          if uint256(slates[_604]):
+              idx = 0
+              while idx < uint256(slates[stor7[caller]]):
+                  if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]:
+                      require idx < uint256(slates[stor7[caller]])
+                      mem[0] = addr(slates[stor7[caller]][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 21
+                  mem[(64 * _yays.length) + 228] = 'ds-math-sub-underflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              votes[caller] = _604
+              idx = 0
+              while idx < uint256(slates[_604]):
+                  if approvals[addr(stor6[_604][idx])] + deposits[caller] >= approvals[addr(stor6[_604][idx])]:
+                      require idx < uint256(slates[_604])
+                      mem[0] = addr(slates[_604][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[_604][idx])] += deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 20
+                  mem[(64 * _yays.length) + 228] = 'ds-math-add-overflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              mem[(64 * _yays.length) + 160] = _604
+              return memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 32
+          if _604 == 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470:
+              idx = 0
+              while idx < uint256(slates[stor7[caller]]):
+                  if approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]:
+                      require idx < uint256(slates[stor7[caller]])
+                      mem[0] = addr(slates[stor7[caller]][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 21
+                  mem[(64 * _yays.length) + 228] = 'ds-math-sub-underflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              votes[caller] = _604
+              idx = 0
+              while idx < uint256(slates[_604]):
+                  if approvals[addr(stor6[_604][idx])] + deposits[caller] >= approvals[addr(stor6[_604][idx])]:
+                      require idx < uint256(slates[_604])
+                      mem[0] = addr(slates[_604][idx])
+                      mem[32] = 8
+                      approvals[addr(stor6[_604][idx])] += deposits[caller]
+                      idx = idx + 1
+                      continue 
+                  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+                  mem[(64 * _yays.length) + 164] = 32
+                  mem[(64 * _yays.length) + 196] = 20
+                  mem[(64 * _yays.length) + 228] = 'ds-math-add-overflow'
+                  revert with memory
+                    from (64 * _yays.length) + 160
+                     len (127 * _yays.length) + 100
+              mem[(64 * _yays.length) + 160] = _604
+              return memory
+                from (64 * _yays.length) + 160
+                 len (127 * _yays.length) + 32
+  mem[(64 * _yays.length) + 160] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+  mem[(64 * _yays.length) + 164] = 32
+  mem[(64 * _yays.length) + 196] = 22
+  mem[(64 * _yays.length) + 228] = 'ds-chief-invalid-slate'
+  revert with memory
+    from (64 * _yays.length) + 160
+     len (127 * _yays.length) + 100
+

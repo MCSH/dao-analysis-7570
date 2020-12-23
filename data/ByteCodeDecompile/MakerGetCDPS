@@ -1,0 +1,158 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x36a724Bd100c39f0Ea4D3A20F7097eE01A8Ff573
+# 
+#  Let's make the world open source 
+# 
+
+def _fallback() payable: # default function
+  revert
+
+def unknown38f7acb4(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  mem[100] = _param2
+  require ext_code.size(_param1)
+  static call _param1.count(address param1) with:
+          gas gas_remaining wei
+         args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if not ext_call.return_data[0]:
+      mem[(32 * ext_call.return_data] = ext_call.return_data[0]
+      mem[(64 * ext_call.return_data] = ext_call.return_data[0]
+  else:
+      mem[128 len 32 * ext_call.return_data] = code.data * ext_call.return_data[0]]
+      mem[(32 * ext_call.return_data] = ext_call.return_data[0]
+      mem[(32 * ext_call.return_data len 32 * ext_call.return_data] = code.data * ext_call.return_data[0]]
+      mem[(64 * ext_call.return_data] = ext_call.return_data[0]
+      mem[(64 * ext_call.return_data len 32 * ext_call.return_data] = code.data * ext_call.return_data[0]]
+  require ext_code.size(_param1)
+  static call _param1.0x9a816f7d with:
+          gas gas_remaining wei
+         args addr(_param2), mem[(98 * ext_call.return_data len 192 * ext_call.return_data]
+  mem[(98 * ext_call.return_data] = ext_call.return_data[0]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  idx = mem[(98 * ext_call.return_data]
+  s = 0
+  while idx > 0:
+      require s < ext_call.return_data[0]
+      mem[(32 * s) + 128] = idx
+      require ext_code.size(_param1)
+      static call _param1.0x2726b073 with:
+              gas gas_remaining wei
+             args idx
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require s < mem[(32 * ext_call.return_data]
+      mem[(32 * s) + (32 * ext_call.return_data] = addr(ext_call.return_data)
+      require ext_code.size(_param1)
+      static call _param1.0x2c2cb9fd with:
+              gas gas_remaining wei
+             args idx
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require s < mem[(64 * ext_call.return_data]
+      mem[(32 * s) + (64 * ext_call.return_data] = ext_call.return_data[0]
+      require ext_code.size(_param1)
+      static call _param1.list(uint256 param1) with:
+              gas gas_remaining wei
+             args idx
+      mem[(98 * ext_call.return_data len 64] = ext_call.return_data[0 len 64]
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 64
+      idx = ext_call.return_data[0]
+      s = s + 1
+      continue 
+  mem[(98 * ext_call.return_data] = 96
+  mem[(98 * ext_call.return_data] = ext_call.return_data[0]
+  mem[(98 * ext_call.return_data len floor32(ext_call.return_data] = mem[128 len floor32(ext_call.return_data]
+  mem[(98 * ext_call.return_data] = (32 * ext_call.return_data[0]) + 128
+  mem[(131 * ext_call.return_data] = mem[(32 * ext_call.return_data]
+  mem[(131 * ext_call.return_data len floor32(mem[(32 * ext_call.return_data])] = mem[(32 * ext_call.return_data len floor32(mem[(32 * ext_call.return_data])]
+  mem[(98 * ext_call.return_data] = (32 * mem[(32 * ext_call.return_data]) + (32 * ext_call.return_data[0]) + 160
+  mem[(32 * mem[(32 * ext_call.return_data]) + (131 * ext_call.return_data] = mem[(64 * ext_call.return_data]
+  mem[(32 * mem[(32 * ext_call.return_data]) + (131 * ext_call.return_data len floor32(mem[(64 * ext_call.return_data])] = mem[(64 * ext_call.return_data len floor32(mem[(64 * ext_call.return_data])]
+  return memory
+    from (98 * ext_call.return_data[0]) + 192
+     len (32 * mem[(64 * ext_call.return_data]) + (32 * mem[(32 * ext_call.return_data]) + (32 * ext_call.return_data[0]) + 192
+
+def unknown1ce03f38(addr _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  mem[100] = _param2
+  require ext_code.size(_param1)
+  static call _param1.count(address param1) with:
+          gas gas_remaining wei
+         args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if not ext_call.return_data[0]:
+      mem[(32 * ext_call.return_data] = ext_call.return_data[0]
+      mem[(64 * ext_call.return_data] = ext_call.return_data[0]
+  else:
+      mem[128 len 32 * ext_call.return_data] = code.data * ext_call.return_data[0]]
+      mem[(32 * ext_call.return_data] = ext_call.return_data[0]
+      mem[(32 * ext_call.return_data len 32 * ext_call.return_data] = code.data * ext_call.return_data[0]]
+      mem[(64 * ext_call.return_data] = ext_call.return_data[0]
+      mem[(64 * ext_call.return_data len 32 * ext_call.return_data] = code.data * ext_call.return_data[0]]
+  require ext_code.size(_param1)
+  static call _param1.0xfc73d771 with:
+          gas gas_remaining wei
+         args addr(_param2), mem[(98 * ext_call.return_data len 192 * ext_call.return_data]
+  mem[(98 * ext_call.return_data] = ext_call.return_data[0]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  idx = mem[(98 * ext_call.return_data]
+  s = 0
+  while idx > 0:
+      require s < ext_call.return_data[0]
+      mem[(32 * s) + 128] = idx
+      require ext_code.size(_param1)
+      static call _param1.0x2726b073 with:
+              gas gas_remaining wei
+             args idx
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require s < mem[(32 * ext_call.return_data]
+      mem[(32 * s) + (32 * ext_call.return_data] = addr(ext_call.return_data)
+      require ext_code.size(_param1)
+      static call _param1.0x2c2cb9fd with:
+              gas gas_remaining wei
+             args idx
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 32
+      require s < mem[(64 * ext_call.return_data]
+      mem[(32 * s) + (64 * ext_call.return_data] = ext_call.return_data[0]
+      require ext_code.size(_param1)
+      static call _param1.list(uint256 param1) with:
+              gas gas_remaining wei
+             args idx
+      mem[(98 * ext_call.return_data len 64] = ext_call.return_data[0 len 64]
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      require return_data.size >= 64
+      idx = ext_call.return_data[32]
+      s = s + 1
+      continue 
+  mem[(98 * ext_call.return_data] = 96
+  mem[(98 * ext_call.return_data] = ext_call.return_data[0]
+  mem[(98 * ext_call.return_data len floor32(ext_call.return_data] = mem[128 len floor32(ext_call.return_data]
+  mem[(98 * ext_call.return_data] = (32 * ext_call.return_data[0]) + 128
+  mem[(131 * ext_call.return_data] = mem[(32 * ext_call.return_data]
+  mem[(131 * ext_call.return_data len floor32(mem[(32 * ext_call.return_data])] = mem[(32 * ext_call.return_data len floor32(mem[(32 * ext_call.return_data])]
+  mem[(98 * ext_call.return_data] = (32 * mem[(32 * ext_call.return_data]) + (32 * ext_call.return_data[0]) + 160
+  mem[(32 * mem[(32 * ext_call.return_data]) + (131 * ext_call.return_data] = mem[(64 * ext_call.return_data]
+  mem[(32 * mem[(32 * ext_call.return_data]) + (131 * ext_call.return_data len floor32(mem[(64 * ext_call.return_data])] = mem[(64 * ext_call.return_data len floor32(mem[(64 * ext_call.return_data])]
+  return memory
+    from (98 * ext_call.return_data[0]) + 192
+     len (32 * mem[(64 * ext_call.return_data]) + (32 * mem[(32 * ext_call.return_data]) + (32 * ext_call.return_data[0]) + 192
+

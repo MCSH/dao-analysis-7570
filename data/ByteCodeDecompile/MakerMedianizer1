@@ -1,0 +1,197 @@
+0x99041F808D598B782D5a3e498681C2452A31da08
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x99041F808D598B782D5a3e498681C2452A31da08
+# 
+#  Let's make the world open source 
+# 
+#
+#  I failed with these: 
+#  - poke(bytes32 _wut)
+#  - poke()
+#  - compute()
+#  All the rest is below.
+#
+
+def storage:
+  authorityAddress is addr at storage 0
+  stor1 is uint8 at storage 1 offset 160
+  owner is addr at storage 1
+  read is uint256 at storage 2
+  values is mapping of addr at storage 3
+  indexes is mapping of uint128 at storage 4
+  min is uint128 at storage 5 offset 96
+  stor5 is uint128 at storage 5 offset 8
+  next is uint128 at storage 5
+  stor5 is uint8 at storage 5
+
+def indexes(address _param1): # not payable
+  return Mask(96, 160, indexes[_param1])
+
+def next(): # not payable
+  return Mask(96, 160, next)
+
+def read(): # not payable
+  require stor1
+  return read
+
+def values(bytes12 _param1): # not payable
+  return values[Mask(96, 160, _param1)]
+
+def owner(): # not payable
+  return owner
+
+def authority(): # not payable
+  return authorityAddress
+
+def min(): # not payable
+  return min
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def peek(): # not payable
+  return read, bool(stor1)
+
+def setOwner(address _new): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  owner = _new
+  log LogSetOwner(address owner=_new)
+
+def setAuthority(address _authority): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  authorityAddress = _authority_
+  log LogSetAuthority(address authority=_authority_)
+
+def void(): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data1, _param2
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  stor1 = 0
+
+def setMin(uint96 _min): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.datain_, cd
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require Mask(96, 0, _min_)
+  min = Mask(96, 0, _min_)
+
+def unset(bytes12 _pos): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(this.address)
+  call this.address.set(bytes12 pos, address wat) with:
+       gas gas_remaining - 710 wei
+      args Mask(96, 160, _pos), 0
+  require ext_call.success
+
+def setNext(bytes12 _next): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require Mask(96, 160, _next_)
+  next = Mask(96, 160, _next_) >> 160
+
+def unset(address _wat): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(this.address)
+  call this.address.set(bytes12 pos, address wat) with:
+       gas gas_remaining - 710 wei
+      args Mask(96, 160, indexes[addr(_wat)]), 0
+  require ext_call.success
+
+def set(address _wat): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require ext_code.size(this.address)
+  call this.address.set(bytes12 pos, address wat) with:
+       gas gas_remaining - 710 wei
+      args Mask(96, 160, next), _wat
+  require ext_call.success
+  uint8(stor5.field_0) = 1
+  Mask(88, 0, stor5.field_8) = 0
+
+def set(bytes12 _pos, address _wat): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  require Mask(96, 160, _pos)
+  if not _wat:
+      indexes[stor3[Mask(96, 160, _pos)]] = 0
+  else:
+      require not Mask(96, 160, indexes[addr(_wat)])
+      indexes[stor3[Mask(96, 160, _pos)]] = 0
+      if _wat:
+          indexes[addr(_wat)] = Mask(96, 160, _pos) >> 160
+  values[Mask(96, 160, _pos)] = _wat
+

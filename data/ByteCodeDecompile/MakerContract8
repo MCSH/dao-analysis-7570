@@ -1,0 +1,353 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x8E2a84D6adE1E7ffFEe039A35EF5F19F13057152
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  authorityAddress is addr at storage 0
+  owner is addr at storage 1
+  userRoles is mapping of uint256 at storage 3
+  capabilityRoles is mapping of uint256 at storage 4
+  stor5 is mapping of uint8 at storage 5
+  slates is array of addr at storage 6
+  votes is mapping of uint256 at storage 7
+  approvals is mapping of uint256 at storage 8
+  deposits is mapping of uint256 at storage 9
+  GOVAddress is addr at storage 10
+  IOUAddress is addr at storage 11
+  hatAddress is addr at storage 12
+  MAX_YAYS is uint256 at storage 13
+
+def IOU(): # not payable
+  return IOUAddress
+
+def getUserRoles(address _who): # not payable
+  return userRoles[addr(_who)]
+
+def GOV(): # not payable
+  return GOVAddress
+
+def getCapabilityRoles(address _code, bytes4 _sig): # not payable
+  return capabilityRoles[addr(_code)][Mask(32, 224, _sig)]
+
+def isCapabilityPublic(address _code, bytes4 _sig): # not payable
+  return bool(stor5[addr(_code)][Mask(32, 224, _sig)])
+
+def MAX_YAYS(): # not payable
+  return MAX_YAYS
+
+def approvals(address _param1): # not payable
+  return approvals[_param1]
+
+def owner(): # not payable
+  return owner
+
+def authority(): # not payable
+  return authorityAddress
+
+def slates(bytes32 _param1, uint256 _param2): # not payable
+  require _param2 < uint256(slates[_param1])
+  return addr(slates[_param1][_param2])
+
+def votes(address _param1): # not payable
+  return votes[_param1]
+
+def deposits(address _param1): # not payable
+  return deposits[_param1]
+
+def hat(): # not payable
+  return hatAddress
+
+#
+#  Regular functions
+#
+
+def setOwner(address _new): # not payable
+  revert
+
+def _fallback() payable: # default function
+  revert
+
+def setAuthority(address _authority): # not payable
+  revert
+
+def setRootUser(address _who, bool _enabled): # not payable
+  revert
+
+def isUserRoot(address _who): # not payable
+  return (_who == hatAddress)
+
+def hasUserRole(address _who, uint8 _role): # not payable
+  return bool(userRoles[addr(_who)] and 2^_role)
+
+def lift(address _whom): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data, cd
+  require approvals[_whom] > approvals[stor12]
+  hatAddress = _whom
+
+def canCall(address _src, address _dst, bytes4 _sig): # not payable
+  if _src != hatAddress:
+      if not stor5[addr(_dst)][Mask(32, 224, _sig)]:
+          return bool(capabilityRoles[addr(_dst)][Mask(32, 224, _sig)] and userRoles[addr(_src)])
+  return 1
+
+def setPublicCapability(address _code, bytes4 _sig, bool _enabled): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  stor5[addr(_code)][Mask(32, 224, _sig)] = uint8(_enabled)
+
+def setUserRole(address _who, uint8 _role, bool _enabled): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  if not _enabled:
+      userRoles[addr(_who)] = userRoles[addr(_who)] and -1 xor 2^_role
+  else:
+      userRoles[addr(_who)] = 2^_role or userRoles[addr(_who)]
+
+def setRoleCapability(uint8 _role, address _code, bytes4 _sig, bool _enabled): # not payable
+  if this.address != caller:
+      if owner != caller:
+          require authorityAddress
+          require ext_code.size(authorityAddress)
+          call authorityAddress.canCall(address src, address dst, bytes4 sig) with:
+               gas gas_remaining - 710 wei
+              args caller, addr(this.address), call.func_hash
+          require ext_call.success
+          require ext_call.return_data[0]
+  if not _enabled:
+      capabilityRoles[addr(_code)][Mask(32, 224, _sig)] = capabilityRoles[addr(_code)][Mask(32, 224, _sig)] and -1 xor 2^_role
+  else:
+      capabilityRoles[addr(_code)][Mask(32, 224, _sig)] = 2^_role or capabilityRoles[addr(_code)][Mask(32, 224, _sig)]
+
+def free(uint256 _value): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require deposits[caller] - _value <= deposits[caller]
+  deposits[caller] -= _value
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      require approvals[addr(stor6[stor7[caller]][idx])] - _value <= approvals[addr(stor6[stor7[caller]][idx])]
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] -= _value
+      idx = idx + 1
+      continue 
+  require ext_code.size(IOUAddress)
+  call IOUAddress.burn(address guy, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _value
+  require ext_call.success
+  require ext_code.size(GOVAddress)
+  call GOVAddress.push(address dst, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _value
+  require ext_call.success
+
+def lock(uint256 _expiration): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require ext_code.size(GOVAddress)
+  call GOVAddress.pull(address src, uint256 wad) with:
+       gas gas_remaining - 710 wei
+      args caller, _expiration
+  require ext_call.success
+  require ext_code.size(IOUAddress)
+  call IOUAddress.mint(address to, uint256 amount) with:
+       gas gas_remaining - 710 wei
+      args caller, _expiration
+  require ext_call.success
+  require deposits[caller] + _expiration >= deposits[caller]
+  deposits[caller] += _expiration
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      require approvals[addr(stor6[stor7[caller]][idx])] + _expiration >= approvals[addr(stor6[stor7[caller]][idx])]
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] += _expiration
+      idx = idx + 1
+      continue 
+
+def vote(bytes32 _slate): # not payable
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      require approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+      idx = idx + 1
+      continue 
+  votes[caller] = _slate
+  idx = 0
+  while idx < uint256(slates[_slate]):
+      require approvals[addr(stor6[_slate][idx])] + deposits[caller] >= approvals[addr(stor6[_slate][idx])]
+      require idx < uint256(slates[_slate])
+      mem[0] = addr(slates[_slate][idx])
+      mem[32] = 8
+      approvals[addr(stor6[_slate][idx])] += deposits[caller]
+      idx = idx + 1
+      continue 
+
+def etch(address[] _yays): # not payable
+  mem[128 len 32 * _yays.length] = call.data[_yays + 36 len 32 * _yays.length]
+  mem[(32 * _yays.length) + 128] = call.value
+  mem[(32 * _yays.length) + 160] = 64
+  mem[(32 * _yays.length) + 192] = calldata.size
+  mem[(32 * _yays.length) + 224 len calldata.size] = call.data[0 len calldata.size]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require _yays.length <= MAX_YAYS
+  if not _yays.length:
+      mem[(32 * _yays.length) + 128 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+  else:
+      if _yays.length != 1:
+          idx = 0
+          while idx < _yays.length - 1:
+              require idx + 1 < _yays.length
+              require idx < _yays.length
+              require mem[(32 * idx) + 140 len 20] < mem[(32 * idx + 1) + 140 len 20]
+              idx = idx + 1
+              continue 
+      mem[(32 * _yays.length) + 128 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+  log Etch(bytes32 slate=sha3(mem[(32 * _yays.length) + 128 len 96 * _yays.length]))
+  return sha3(mem[(32 * _yays.length) + 128 len 96 * _yays.length])
+
+def vote(address[] _yays): # not payable
+  mem[128 len 32 * _yays.length] = call.data[_yays + 36 len 32 * _yays.length]
+  mem[(32 * _yays.length) + 128] = call.value
+  mem[(32 * _yays.length) + 160] = 64
+  mem[(32 * _yays.length) + 192] = calldata.size
+  mem[(32 * _yays.length) + 224 len calldata.size] = call.data[0 len calldata.size]
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  require _yays.length <= MAX_YAYS
+  if not _yays.length:
+      mem[(32 * _yays.length) + 128 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+  else:
+      if _yays.length != 1:
+          idx = 0
+          while idx < _yays.length - 1:
+              require idx + 1 < _yays.length
+              require idx < _yays.length
+              require mem[(32 * idx) + 140 len 20] < mem[(32 * idx + 1) + 140 len 20]
+              idx = idx + 1
+              continue 
+      mem[(32 * _yays.length) + 128 len floor32(_yays.length)] = call.data[_yays + 36 len floor32(_yays.length)]
+      uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) = _yays.length
+      if not _yays.length:
+          idx = 0
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+      else:
+          s = 0
+          idx = 128
+          while (32 * _yays.length) + 128 > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][s]) = mem[idx + 12 len 20]
+              s = s + 1
+              idx = idx + 32
+              continue 
+          idx = Mask(251, 0, (32 * _yays.length) + 31) >> 5
+          while uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]) > idx:
+              addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx]) = 0
+              idx = idx + 1
+              continue 
+  log Etch(bytes32 slate=sha3(mem[(32 * _yays.length) + 128 len 96 * _yays.length]))
+  log call.func_hash: call.value, Array(len=calldata.size, data=call.data
+  idx = 0
+  while idx < uint256(slates[stor7[caller]]):
+      require approvals[addr(stor6[stor7[caller]][idx])] - deposits[caller] <= approvals[addr(stor6[stor7[caller]][idx])]
+      require idx < uint256(slates[stor7[caller]])
+      mem[0] = addr(slates[stor7[caller]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[stor7[caller]][idx])] -= deposits[caller]
+      idx = idx + 1
+      continue 
+  votes[caller] = sha3(mem[(32 * _yays.length) + 128 len 96 * _yays.length])
+  idx = 0
+  while idx < uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]]):
+      require approvals[addr(stor6[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx])] + deposits[caller] >= approvals[addr(stor6[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx])]
+      require idx < uint256(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]])
+      mem[0] = addr(slates[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx])
+      mem[32] = 8
+      approvals[addr(stor6[mem[(32 * _yays.length) + 128 len 96 * _yays.length]][idx])] += deposits[caller]
+      idx = idx + 1
+      continue 
+  return sha3(mem[(32 * _yays.length) + 128 len 96 * _yays.length])
+

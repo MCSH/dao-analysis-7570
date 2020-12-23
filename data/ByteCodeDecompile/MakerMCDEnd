@@ -1,0 +1,496 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0xaB14d3CE3F733CACB76eC2AbE7d2fcb00c99F3d5
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  unknown36569e77Address is addr at storage 1
+  catAddress is addr at storage 2
+  unknown626cb3c5Address is addr at storage 3
+  potAddress is addr at storage 4
+  unknown6f265b93Address is addr at storage 5
+  live is uint256 at storage 6
+  when is uint256 at storage 7
+  wait is uint256 at storage 8
+  debt is uint256 at storage 9
+  unknownee6447b5 is mapping of uint256 at storage 10
+  unknowne6ee62aa is mapping of uint256 at storage 11
+  unknowne1340a3d is mapping of uint256 at storage 12
+  unknown63fad85e is mapping of uint256 at storage 13
+  unknown9255f809 is mapping of uint256 at storage 14
+  unknownc939ebfc is mapping of uint256 at storage 15
+
+def debt() payable: 
+  return debt
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def pot() payable: 
+  return potAddress
+
+def unknown626cb3c5() payable: 
+  return unknown626cb3c5Address
+
+def unknown63fad85e(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknown63fad85e[_param1]
+
+def wait() payable: 
+  return wait
+
+def unknown6f265b93() payable: 
+  return unknown6f265b93Address
+
+def unknown9255f809(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknown9255f809[_param1]
+
+def live() payable: 
+  return live
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def unknownc939ebfc(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  return unknownc939ebfc[_param1][_param2]
+
+def unknowne1340a3d(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknowne1340a3d[_param1]
+
+def when() payable: 
+  return when
+
+def cat() payable: 
+  return catAddress
+
+def unknowne6ee62aa(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknowne6ee62aa[_param1]
+
+def unknownee6447b5(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownee6447b5[_param1]
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'End/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'End/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown29ae8114(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'End/not-authorized'
+  if live != 1:
+      revert with 0, 'End/not-live'
+  if _param1 != 'wait':
+      revert with 0, 'End/file-unrecognized-param'
+  wait = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown6ea42555(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if not debt:
+      revert with 0, 'End/debt-zero'
+  require 1000000000 * 10^18 * _param1 / 1000000000 * 10^18 == _param1
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.move(address src, address dst, uint256 wad) with:
+       gas gas_remaining wei
+      args caller, unknown626cb3c5Address, 1000000000 * 10^18 * _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require unknown9255f809[caller] + _param1 >= unknown9255f809[caller]
+  unknown9255f809[caller] += _param1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownd4e8be83(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'End/not-authorized'
+  if live != 1:
+      revert with 0, 'End/not-live'
+  if _param1 == 'vat':
+      unknown36569e77Address = _param2
+  else:
+      if _param1 == 'cat':
+          catAddress = _param2
+      else:
+          if _param1 == 'vow':
+              unknown626cb3c5Address = _param2
+          else:
+              if _param1 == 'pot':
+                  potAddress = _param2
+              else:
+                  if _param1 != 'spot':
+                      revert with 0, 'End/file-unrecognized-param'
+                  unknown6f265b93Address = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def thaw() payable: 
+  if live:
+      revert with 0, 'End/still-live'
+  if debt:
+      revert with 0, 'End/debt-not-zero'
+  require ext_code.size(unknown36569e77Address)
+  static call unknown36569e77Address.dai(address param1) with:
+          gas gas_remaining wei
+         args unknown626cb3c5Address
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  if ext_call.return_data[0]:
+      revert with 0, 'End/surplus-not-zero'
+  require when + wait >= when
+  if block.timestamp < when + wait:
+      revert with 0, 'End/wait-not-finished'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.debt() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  debt = ext_call.return_data[0]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownc83062c6(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if live:
+      revert with 0, 'End/still-live'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x2424be5c with:
+       gas gas_remaining wei
+      args _param1, caller
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if ext_call.return_data[32]:
+      revert with 0, 'End/art-not-zero'
+  if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+      revert with 0, 'End/overflow'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x7bab3f40 with:
+       gas gas_remaining wei
+      args 0, ext_call.return_datauint32(caller), caller, unknown626cb3c5Address, -ext_call.return_data[0], 0
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def cage() payable: 
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'End/not-authorized'
+  if live != 1:
+      revert with 0, 'End/not-live'
+  live = 0
+  when = block.timestamp
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.cage() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(catAddress)
+  call catAddress.cage() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknown626cb3c5Address)
+  call unknown626cb3c5Address.cage() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknown6f265b93Address)
+  call unknown6f265b93Address.cage() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(potAddress)
+  call potAddress.cage() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownfe8507c6(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if not unknown63fad85e[_param1]:
+      revert with 0, 'End/fix-ilk-not-defined'
+  if not unknown63fad85e[_param1]:
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0x6111be2e with:
+           gas gas_remaining wei
+          args 0, uint32(_param1), addr(this.address), caller, 0
+  else:
+      require unknown63fad85e[_param1]
+      require _param2 * unknown63fad85e[_param1] / unknown63fad85e[_param1] == _param2
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0x6111be2e with:
+           gas gas_remaining wei
+          args 0, uint32(_param1), addr(this.address), caller, _param2 * unknown63fad85e[_param1] / 1000000000 * 10^18
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require unknownc939ebfc[_param1][caller] + _param2 >= unknownc939ebfc[_param1][caller]
+  unknownc939ebfc[_param1][caller] += _param2
+  if unknownc939ebfc[_param1][caller] > unknown9255f809[caller]:
+      revert with 0, 'End/insufficient-bag-balance'
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknowne2702fdc(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if live:
+      revert with 0, 'End/still-live'
+  if unknownee6447b5[_param1]:
+      revert with 0, 'End/tag-ilk-already-defined'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xd9638d36 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 160
+  unknowne1340a3d[_param1] = ext_call.return_data[0]
+  require ext_code.size(unknown6f265b93Address)
+  static call unknown6f265b93Address.0xd9638d36 with:
+          gas gas_remaining wei
+         args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  require ext_code.size(unknown6f265b93Address)
+  static call unknown6f265b93Address.par() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).read() with:
+          gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 32
+  require 10^18 * ext_call.return_data / 10^18 == ext_call.return_data[0]
+  require ext_call.return_data[0]
+  unknownee6447b5[_param1] = 10^18 * ext_call.return_data / ext_call.return_data[0]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown503ecf06(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if not unknownee6447b5[_param1]:
+      revert with 0, 'End/tag-ilk-not-defined'
+  require ext_code.size(catAddress)
+  call catAddress.0xd9638d36 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 96
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xd9638d36 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 160
+  require ext_code.size(addr(ext_call.return_data))
+  static call addr(ext_call.return_data).bids(uint256 param1) with:
+          gas gas_remaining wei
+         args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 256
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xf24e23eb with:
+       gas gas_remaining wei
+      args unknown626cb3c5Address, unknown626cb3c5Address, ext_call.return_data[224]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xf24e23eb with:
+       gas gas_remaining wei
+      args unknown626cb3c5Address, addr(this.address), ext_call.return_data[0]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xa3b22fc4 with:
+       gas gas_remaining wei
+      args addr(ext_call.return_data)
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_code.size(addr(ext_call.return_data))
+  call addr(ext_call.return_data).0x26e027f1 with:
+       gas gas_remaining wei
+      args _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require ext_call.return_data[32]
+  require unknowne1340a3d[_param1] + (ext_call.return_data / ext_call.return_data >= unknowne1340a3d[_param1]
+  unknowne1340a3d[_param1] += ext_call.return_data / ext_call.return_data[32]
+  if ext_call.return_data <′ 0:
+      revert with 0, 'End/overflow'
+  if ext_call.return_data / ext_call.return_data <′ 0:
+      revert with 0, 'End/overflow'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x7bab3f40 with:
+       gas gas_remaining wei
+      args 0, uint32(_param1), addr(ext_call.return_data), addr(this.address), unknown626cb3c5Address, ext_call.return_data / ext_call.return_data[32]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown4a10eaa6(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if not debt:
+      revert with 0, 'End/debt-zero'
+  if unknown63fad85e[_param1]:
+      revert with 0, 'End/fix-ilk-already-defined'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xd9638d36 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 160
+  if not ext_call.return_data[32]:
+      if unknownee6447b5[_param1]:
+          require unknownee6447b5[_param1]
+          require not 0 / unknownee6447b5[_param1]
+      require -unknowne6ee62aa[_param1] <= 0
+      require -1000000000 * 10^18 * unknowne6ee62aa[_param1] / 1000000000 * 10^18 == -unknowne6ee62aa[_param1]
+      require -1000000000000000000000000000000000000 * 10^18 * unknowne6ee62aa[_param1] / 1000000000 * 10^18 == -1000000000 * 10^18 * unknowne6ee62aa[_param1]
+      require debt
+      unknown63fad85e[_param1] = -1000000000000000000000000000000000000 * 10^18 * unknowne6ee62aa[_param1] / debt
+  else:
+      require ext_call.return_data[32]
+      require unknowne1340a3d[_param1] * ext_call.return_data / ext_call.return_data == unknowne1340a3d[_param1]
+      if not unknownee6447b5[_param1]:
+          require -unknowne6ee62aa[_param1] <= 0
+          require -1000000000 * 10^18 * unknowne6ee62aa[_param1] / 1000000000 * 10^18 == -unknowne6ee62aa[_param1]
+          require -1000000000000000000000000000000000000 * 10^18 * unknowne6ee62aa[_param1] / 1000000000 * 10^18 == -1000000000 * 10^18 * unknowne6ee62aa[_param1]
+          require debt
+          unknown63fad85e[_param1] = -1000000000000000000000000000000000000 * 10^18 * unknowne6ee62aa[_param1] / debt
+      else:
+          require unknownee6447b5[_param1]
+          require unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / unknownee6447b5[_param1] == unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18
+          require (unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - unknowne6ee62aa[_param1] <= unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18
+          require (1000000000 * 10^18 * unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - (1000000000 * 10^18 * unknowne6ee62aa[_param1]) / 1000000000 * 10^18 == (unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - unknowne6ee62aa[_param1]
+          require (0xa70c3c40a64e6c51999090b65f67d9240000000000000 * unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - (0xa70c3c40a64e6c51999090b65f67d9240000000000000 * unknowne6ee62aa[_param1]) / 1000000000 * 10^18 == (1000000000 * 10^18 * unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - (1000000000 * 10^18 * unknowne6ee62aa[_param1])
+          require debt
+          unknown63fad85e[_param1] = (0xa70c3c40a64e6c51999090b65f67d9240000000000000 * unknowne1340a3d[_param1] * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - (0xa70c3c40a64e6c51999090b65f67d9240000000000000 * unknowne6ee62aa[_param1]) / debt
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown89ea45d3(uint256 _param1, addr _param2) payable: 
+  require calldata.size - 4 >= 64
+  if not unknownee6447b5[_param1]:
+      revert with 0, 'End/tag-ilk-not-defined'
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0xd9638d36 with:
+       gas gas_remaining wei
+      args _param1
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 160
+  require ext_code.size(unknown36569e77Address)
+  call unknown36569e77Address.0x2424be5c with:
+       gas gas_remaining wei
+      args _param1, _param2
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if not ext_call.return_data[32]:
+      if unknownee6447b5[_param1]:
+          require unknownee6447b5[_param1]
+          require not 0 / unknownee6447b5[_param1]
+      if ext_call.return_data > 0:
+          require unknowne6ee62aa[_param1] >= unknowne6ee62aa[_param1]
+          if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'End/overflow'
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0x7bab3f40 with:
+               gas gas_remaining wei
+              args 0, ext_call.return_dataaddr(this.address), unknown626cb3c5Address, 0, -ext_call.return_data[32]
+      else:
+          require -ext_call.return_data <= 0
+          require unknowne6ee62aa[_param1] - ext_call.return_data >= unknowne6ee62aa[_param1]
+          unknowne6ee62aa[_param1] -= ext_call.return_data[0]
+          if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'End/overflow'
+          if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+              revert with 0, 'End/overflow'
+          require ext_code.size(unknown36569e77Address)
+          call unknown36569e77Address.0x7bab3f40 with:
+               gas gas_remaining wei
+              args 0, ext_call.return_dataaddr(this.address), unknown626cb3c5Address, -ext_call.return_data[0], -ext_call.return_data[32]
+  else:
+      require ext_call.return_data[32]
+      require ext_call.return_data * ext_call.return_data / ext_call.return_data == ext_call.return_data[32]
+      if not unknownee6447b5[_param1]:
+          if ext_call.return_data > 0:
+              require unknowne6ee62aa[_param1] >= unknowne6ee62aa[_param1]
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(this.address), unknown626cb3c5Address, 0, -ext_call.return_data[32]
+          else:
+              require -ext_call.return_data <= 0
+              require unknowne6ee62aa[_param1] - ext_call.return_data >= unknowne6ee62aa[_param1]
+              unknowne6ee62aa[_param1] -= ext_call.return_data[0]
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(this.address), unknown626cb3c5Address, -ext_call.return_data[0], -ext_call.return_data[32]
+      else:
+          require unknownee6447b5[_param1]
+          require ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / unknownee6447b5[_param1] == ext_call.return_data * ext_call.return_data / 1000000000 * 10^18
+          if ext_call.return_data > ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18:
+              require 0 <= ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18
+              require unknowne6ee62aa[_param1] >= unknowne6ee62aa[_param1]
+              if ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18 > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(this.address), unknown626cb3c5Address, -ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18, -ext_call.return_data[32]
+          else:
+              require (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - ext_call.return_data <= ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18
+              require unknowne6ee62aa[_param1] + (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - ext_call.return_data >= unknowne6ee62aa[_param1]
+              unknowne6ee62aa[_param1] = unknowne6ee62aa[_param1] + (ext_call.return_data * ext_call.return_data / 1000000000 * 10^18 * unknownee6447b5[_param1] / 1000000000 * 10^18) - ext_call.return_data[0]
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              if ext_call.return_data > 0x8000000000000000000000000000000000000000000000000000000000000000:
+                  revert with 0, 'End/overflow'
+              require ext_code.size(unknown36569e77Address)
+              call unknown36569e77Address.0x7bab3f40 with:
+                   gas gas_remaining wei
+                  args 0, ext_call.return_dataaddr(this.address), unknown626cb3c5Address, -ext_call.return_data[0], -ext_call.return_data[32]
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  log 0x0: 32, 224, call.data1, _param2
+

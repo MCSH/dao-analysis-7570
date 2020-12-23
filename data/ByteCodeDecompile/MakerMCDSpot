@@ -1,0 +1,121 @@
+#
+#  Panoramix v4 Oct 2019 
+#  Decompiled source of 0x65C79fcB50Ca1594B025960e539eD7A9a6D434A3
+# 
+#  Let's make the world open source 
+# 
+
+def storage:
+  unknownbf353dbb is mapping of uint256 at storage 0
+  unknownd9638d36 is mapping of struct at storage 1
+  unknown36569e77Address is addr at storage 2
+  par is uint256 at storage 3
+  live is uint256 at storage 4
+
+def unknown36569e77() payable: 
+  return unknown36569e77Address
+
+def par() payable: 
+  return par
+
+def live() payable: 
+  return live
+
+def unknownbf353dbb(addr _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownbf353dbb[_param1]
+
+def unknownd9638d36(uint256 _param1) payable: 
+  require calldata.size - 4 >= 32
+  return unknownd9638d36[_param1].field_0, unknownd9638d36[_param1].field_256
+
+#
+#  Regular functions
+#
+
+def _fallback() payable: # default function
+  revert
+
+def cage() payable: 
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Spotter/not-authorized'
+  live = 0
+  log 0x0: 32, 224, call.data1, _param2
+
+def deny(address _operator) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Spotter/not-authorized'
+  unknownbf353dbb[addr(_operator)] = 0
+  log 0x0: 32, 224, call.data
+
+def unknown65fae35e(addr _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 32
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Spotter/not-authorized'
+  unknownbf353dbb[addr(_param1)] = 1
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown29ae8114(uint256 _param1, uint256 _param2) payable: 
+  require calldata.size - 4 >= 64
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Spotter/not-authorized'
+  if live != 1:
+      revert with 0, 'Spotter/not-live'
+  if _param1 != 'par':
+      revert with 0, 'Spotter/file-unrecognized-param'
+  par = _param2
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknownebecb39d(uint256 _param1, uint256 _param2, addr _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Spotter/not-authorized'
+  if live != 1:
+      revert with 0, 'Spotter/not-live'
+  if _param2 != 'pip':
+      revert with 0, 'Spotter/file-unrecognized-param'
+  unknownd9638d36[_param1].field_0 = _param3
+  log 0x0: 32, 224, call.data1, _param2
+
+def unknown1a0b287e(uint256 _param1, uint256 _param2, uint256 _param3) payable: 
+  require calldata.size - 4 >= 96
+  if unknownbf353dbb[caller] != 1:
+      revert with 0, 'Spotter/not-authorized'
+  if live != 1:
+      revert with 0, 'Spotter/not-live'
+  if _param2 != 'mat':
+      revert with 0, 'Spotter/file-unrecognized-param'
+  unknownd9638d36[_param1].field_256 = _param3
+  log 0x0: 32, 224, call.data1, _param2
+
+def poke(bytes32 _wut) payable: 
+  require calldata.size - 4 >= 32
+  require ext_code.size(unknownd9638d36[_wut].field_0)
+  call unknownd9638d36[_wut].field_0.peek() with:
+       gas gas_remaining wei
+  if not ext_call.success:
+      revert with ext_call.return_data[0 len return_data.size]
+  require return_data.size >= 64
+  if not ext_call.return_data[32]:
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0x1a0b287e with:
+           gas gas_remaining wei
+          args _wut, 'spot', 0
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      log 0xdfd7467e: _wut, ext_call.return_data
+  else:
+      require 10^9 * ext_call.return_data / 10^9 == ext_call.return_data[0]
+      require 1000000000000000000 * 10^18 * ext_call.return_data / 1000000000 * 10^18 == 10^9 * ext_call.return_data[0]
+      require par
+      require 1000000000 * 10^18 * 1000000000000000000 * 10^18 * ext_call.return_data / par / 1000000000 * 10^18 == 1000000000000000000 * 10^18 * ext_call.return_data / par
+      require unknownd9638d36[_wut].field_256
+      require ext_code.size(unknown36569e77Address)
+      call unknown36569e77Address.0x1a0b287e with:
+           gas gas_remaining wei
+          args _wut, 'spot', 1000000000 * 10^18 * 1000000000000000000 * 10^18 * ext_call.return_data / par / unknownd9638d36[_wut].field_256
+      if not ext_call.success:
+          revert with ext_call.return_data[0 len return_data.size]
+      log 0xdfd7467e: _wut, ext_call.return_data
+
