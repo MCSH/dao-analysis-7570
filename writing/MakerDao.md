@@ -77,7 +77,7 @@ Then the next question is what is motivating the individual or organization node
  Keepers keep the DAI soft pegged on USD, the target is 1 DAI = 1 USD. They buy DAI when 1DAI < 1USD, they sell DAI when 1DAI > 1 USD.
 
  ![MakerDAO!](pics/Picture9.png "MakerDao Relationship")
- 
+
 Next, we can talk about the other role player is Governors.
 Before we talk about who are or what the responsibilities of Governor, we have to introduce the ERC-token in MakerDao Protocol: MKR.
 
@@ -87,6 +87,36 @@ To answer this question, MKR is created with the launching of MakerDao protocol,
 https://etherscan.io/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2#balances
 
 Here is the top 15 MKR holders who are individuals, organizations or smart contracts.
+
+We also made the data gathering process to analyze the patterns of using MakerDao. We gathered data from Smart Contracts, Transaction Blocks, Running Contracts. There are Accounts: 146356, Actions: 918816, Ethereum Blocks: 316423.
+
+The first pattern we found is the network usesage over time.
+ ![MakerDAO!](pics/Picture11.png "Network Usage over Time")
+
+Those are the main functions called in the smartcontracts.
+
+- Open: Create a new collateralized debt position
+- Lock: Post additional SKR collateral to a cup
+- Draw: Issue the specified amount of sai stablecoins
+- Free: Remove excess SKR collateral from a cup
+- Wipe: Repay some portion of your existing sai debt
+- Bite: Initiate liquidation of an undercollateral cup
+- Shut: Close a cup
+- Give: Transfer ownership of a cup
+
+Then we found the actions in graph.
+
+![MakerDAO!](pics/Picture15.png "actions")
+
+And actions over time pattern.
+![MakerDAO!](pics/Picture12.png "actions over Time")
+
+Then we found the patterns in debt collaterals.
+
+![MakerDAO!](pics/Picture13.png "debt collateral")
+![MakerDAO!](pics/Picture14.png "debt collateral2")
+
+
 
 In conclusion, MakerDAO is not as simple as Bitcoin. The inner relationships existing inside MakerDAO is much more complicated and complex. That's why MakerDAO is can be more updated and full functional in mutiple domains, such as borrowing and lending processes. MakerDAO also makes sure to keep DAI soft pegged on US dollar, in order to secure the assest value to investors and users. MakerDAO protocol is driving the decentralized financial system into a new era.
 
