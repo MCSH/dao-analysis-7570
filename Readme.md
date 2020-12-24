@@ -2,6 +2,9 @@
 
 The content of this repository is broken into different sections.
 
+## writing
+
+This includes the writing report of MakerDAO. We introduce you the relationships behind MakerDAO protocol, the effects beyond Bitcoin and Ethereum, and the analysis in this project.
 
 ## Resources (res)
 
